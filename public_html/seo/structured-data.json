@@ -1,0 +1,21 @@
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "TechXNinjas",
+  "url": "https://techxninjas.com",
+  "logo": "https://techxninjas.com/icons/icon-512x512.png",
+  "sameAs": [
+    "https://www.youtube.com/@techxninjas",
+    "https://www.linkedin.com/company/techxninjas",
+    "https://www.instagram.com/cipherschools",
+    "https://t.me/thetechxninjas"
+  ],
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "telephone": "+91-91229-85472",
+    "contactType": "customer service",
+    "email": "thetechxninjas@gmail.com",
+    "availableLanguage": "English"
+  },
+  "description": "Your gateway to hackathons, tech challenges, inspiring speakers, and innovation. We empower tech enthusiasts across India."
+}

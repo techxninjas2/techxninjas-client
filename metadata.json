@@ -1,0 +1,6 @@
+{
+  "name": "TechXNinjas",
+  "description": "A React SPA demonstrating core frontend features, responsive design, Tailwind CSS styling, and Gemini API integration for a simplified TechXNinjas concept. Note: This showcase uses process.env.API_KEY for Gemini API, which needs to be properly configured in the deployment environment to be accessible client-side.",
+  "requestFramePermissions": [],
+  "prompt": ""
+}

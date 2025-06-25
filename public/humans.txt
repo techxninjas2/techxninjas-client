@@ -1,0 +1,12 @@
+/* TEAM */
+  Developer: TechXNinjas Team
+  Contact: thetechxninjas@gmail.com
+  Twitter: @techxninjas
+  From: India
+
+/* SITE */
+  Last update: 2025-06-22
+  Language: English
+  Doctype: HTML5
+  IDE: Visual Studio Code, StackBlitz
+  Stack: React, TypeScript, Tailwind CSS, Supabase

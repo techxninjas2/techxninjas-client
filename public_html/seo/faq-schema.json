@@ -1,0 +1,38 @@
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is TechXNinjas?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "TechXNinjas is a platform for tech enthusiasts that provides access to hackathons, tech challenges, community interaction, and professional growth opportunities in the world of technology."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How can I join TechXNinjas?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "You can join TechXNinjas by creating a free account on our website. This gives you access to events, courses, articles, and our community."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Are the courses on TechXNinjas free?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, most courses on TechXNinjas are free. We curate high-quality YouTube content from verified creators to help you learn at your own pace."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How can I participate in hackathons?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "You can browse upcoming hackathons on our Events page, register for the ones you're interested in, and follow the instructions provided for each event."
+      }
+    }
+  ]
+}

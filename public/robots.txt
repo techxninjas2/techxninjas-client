@@ -1,0 +1,12 @@
+# robots.txt for TechXNinjas
+
+User-agent: *
+Allow: /
+
+# Sitemaps
+Sitemap: https://techxninjas.com/sitemap.xml
+
+# Disallow specific paths
+Disallow: /dashboard
+Disallow: /creator-dashboard
+Disallow: /admin

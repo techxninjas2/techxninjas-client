@@ -3,6 +3,14 @@ import ReactDOM from 'react-dom/client';
 import App from './App';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { AuthProvider } from './contexts/AuthContext';
+// Adding for tracking of referral code
+import ReactGA from 'react-ga4';
+
+// ✅ Initialize GA4 with your ID to track the Referral Code as UTM medium and campaign
+ReactGA.initialize('G-7M7G6QM7Q2');
+
+// ✅ Track the initial pageview for REFERRAL
+ReactGA.send('pageview');
 
 const rootElement = document.getElementById('root');
 if (!rootElement) {

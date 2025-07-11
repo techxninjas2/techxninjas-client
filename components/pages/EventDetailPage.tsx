@@ -134,9 +134,7 @@ const EventDetailPage: React.FC = () => {
       // Fetch event stages
       if (eventData.id) {
         try {
-          console.log('Fetching stages for event:', eventData.id);
           const stages = await getEventStages(eventData.id);
-          console.log('Fetched stages:', stages);
           setEventStages(stages);
         } catch (stageError: any) {
           console.error('Failed to load event stages:', stageError);
@@ -145,13 +143,10 @@ const EventDetailPage: React.FC = () => {
 
         // Fetch event FAQs
         try {
-          console.log('Fetching FAQs for event:', eventData.id);
           const faqs = await getEventFAQs(eventData.id);
-          console.log('Fetched FAQs:', faqs);
           setEventFAQs(faqs);
         } catch (faqError: any) {
           console.error('Failed to load event FAQs:', faqError);
-          // Don't set error state here to allow the page to load even if FAQs fail
         }
       }
 

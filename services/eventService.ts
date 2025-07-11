@@ -46,7 +46,6 @@ export const getEventBySlug = async (slug: string): Promise<TechEvent | null> =>
 };
 
 export const getEventStages = async (eventId: string): Promise<EventStage[]> => {
-  console.log('Fetching stages for event ID:', eventId);
   
   const { data, error } = await supabase
     .from('event_stages')
@@ -59,12 +58,10 @@ export const getEventStages = async (eventId: string): Promise<EventStage[]> => 
     throw error;
   }
 
-  console.log('Fetched stages:', data);
   return data as EventStage[];
 };
 
 export const getEventFAQs = async (eventId: string): Promise<EventFAQ[]> => {
-  console.log('Fetching FAQs for event ID:', eventId);
   
   const { data, error } = await supabase
     .from('event_faqs')
@@ -78,7 +75,6 @@ export const getEventFAQs = async (eventId: string): Promise<EventFAQ[]> => {
     throw error;
   }
 
-  console.log('Fetched FAQs:', data);
   return data as EventFAQ[];
 };
 

@@ -1,5 +1,15 @@
 {
+  "redirects": [
+    {
+      "source": "/tvs",
+      "destination": "https://unstop.com/o/ZFNOKea?lb=70BMsNY&utm_medium=Share&utm_source=shortUrl",
+      "permanent": false
+    }
+  ],
   "rewrites": [
-    { "source": "/(.*)", "destination": "/" }
+    {
+      "source": "/(.*)",
+      "destination": "/"
+    }
   ]
 }

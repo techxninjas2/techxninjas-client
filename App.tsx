@@ -123,6 +123,7 @@ const App: React.FC = () => {
           <ScrollToTopButton />
           <WhatsAppButton />
         </div>
+        <SpeedInsights />
       </BrowserRouter>
     </ErrorBoundary>
   );

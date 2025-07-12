@@ -25,6 +25,7 @@ import CodingBackground from './components/CodingBackground';
 import ThemeToggle from './components/ThemeToggle';
 import TechFactGenerator from './components/TechFactGenerator';
 import { SpeedInsights } from "@vercel/speed-insights/react";
+import { Analytics } from '@vercel/analytics/react';
 
 const PlaceholderPage: React.FC<{ title: string }> = ({ title }) => {
   usePageTitle(title); 
@@ -124,6 +125,7 @@ const App: React.FC = () => {
           <WhatsAppButton />
         </div>
         <SpeedInsights />
+        <Analytics />
       </BrowserRouter>
     </ErrorBoundary>
   );

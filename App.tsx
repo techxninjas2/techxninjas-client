@@ -24,6 +24,7 @@ import ErrorBoundary from './components/ErrorBoundary';
 import CodingBackground from './components/CodingBackground';
 import ThemeToggle from './components/ThemeToggle';
 import TechFactGenerator from './components/TechFactGenerator';
+import { SpeedInsights } from "@vercel/speed-insights/react";
 
 const PlaceholderPage: React.FC<{ title: string }> = ({ title }) => {
   usePageTitle(title); 

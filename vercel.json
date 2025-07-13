@@ -4,6 +4,11 @@
       "source": "/tvs",
       "destination": "https://unstop.com/o/ZFNOKea?lb=70BMsNY&utm_medium=Share&utm_source=shortUrl",
       "permanent": false
+    },
+    {
+      "source": "/hackrx",
+      "destination": "https://unstop.com/o/37jY2rs?lb=70BMsNY&utm_medium=Share&utm_source=shortUrl",
+      "permanent": false
     }
   ],
   "rewrites": [

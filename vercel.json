@@ -26,6 +26,11 @@
       "permanent": false
     },
     {
+      "source": "/doubt2403",
+      "destination": "https://chat.whatsapp.com/HX0LLjR1cZvDWIXWcQ1cso",
+      "permanent": false
+    },
+    {
       "source": "/arcade2503",
       "destination": "https://chat.whatsapp.com/BZczJZSamtX144BCTagYxk",
       "permanent": false
@@ -41,6 +46,11 @@
       "permanent": false
     },
     {
+      "source": "/doubt2503",
+      "destination": "https://chat.whatsapp.com/JKYXauVxIqH3BlrM8SH0qW",
+      "permanent": false
+    },
+    {
       "source": "/arcade0504",
       "destination": "https://chat.whatsapp.com/B7uNN97yIwRHQnlYux2Tmn",
       "permanent": false
@@ -53,6 +63,11 @@
     {
       "source": "/linkedin0504",
       "destination": "https://chat.whatsapp.com/GpIJNkeldA7I6z2qAr70Xv",
+      "permanent": false
+    },
+    {
+      "source": "/doubt0504",
+      "destination": "https://chat.whatsapp.com/KY5qpmdTogr15xzavV2JWt",
       "permanent": false
     }
   ],

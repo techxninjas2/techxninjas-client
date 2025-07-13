@@ -9,6 +9,51 @@
       "source": "/hackrx",
       "destination": "https://unstop.com/o/37jY2rs?lb=70BMsNY&utm_medium=Share&utm_source=shortUrl",
       "permanent": false
+    },
+    {
+      "source": "/arcade2403",
+      "destination": "https://chat.whatsapp.com/C2D2rafuum34C7GAo6Vs2l",
+      "permanent": false
+    },
+    {
+      "source": "/career-wa-group2403",
+      "destination": "https://chat.whatsapp.com/C2EU17v9WC60M0aO4kLhAn",
+      "permanent": false
+    },
+    {
+      "source": "/linkedin2403",
+      "destination": "https://chat.whatsapp.com/HX0LLjR1cZvDWIXWcQ1cso",
+      "permanent": false
+    },
+    {
+      "source": "/arcade2503",
+      "destination": "https://chat.whatsapp.com/BZczJZSamtX144BCTagYxk",
+      "permanent": false
+    },
+    {
+      "source": "/career-wa-group2503",
+      "destination": "https://chat.whatsapp.com/IFBRg1UOqUM3QK8U58BmFY",
+      "permanent": false
+    },
+    {
+      "source": "/linkedin2503",
+      "destination": "https://chat.whatsapp.com/D2phZ6tqN0HCQWkbSLHa8S",
+      "permanent": false
+    },
+    {
+      "source": "/arcade0504",
+      "destination": "https://chat.whatsapp.com/B7uNN97yIwRHQnlYux2Tmn",
+      "permanent": false
+    },
+    {
+      "source": "/career-wa-group0504",
+      "destination": "https://chat.whatsapp.com/ISFR4Re8B3z7hvWF4GwtY7",
+      "permanent": false
+    },
+    {
+      "source": "/linkedin0504",
+      "destination": "https://chat.whatsapp.com/GpIJNkeldA7I6z2qAr70Xv",
+      "permanent": false
     }
   ],
   "rewrites": [

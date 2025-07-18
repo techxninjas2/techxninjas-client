@@ -1,19 +1,4 @@
 {
-  "functions": {
-    "api/*.js": {
-      "runtime": "nodejs18.x"
-    }
-  },
-  "rewrites": [
-    {
-      "source": "/api/(.*)",
-      "destination": "/api/$1"
-    },
-    {
-      "source": "/(.*)",
-      "destination": "/"
-    }
-  ],
   "redirects": [
     {
       "source": "/tvs",
@@ -87,8 +72,14 @@
     },
     {
       "source": "/giveaway7-form",
-      "destination": "https://forms.gle/aHfF5r9aTGVX6utd9",
+      "destination": "https://chat.whatsapp.com/ETp2b1k0d3X5a6Z7Y8H9xT",
       "permanent": false
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/"
     }
   ]
 }

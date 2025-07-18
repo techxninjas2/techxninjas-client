@@ -15,6 +15,7 @@ node_modules
 dist-ssr
 .env*
 !.env.example
+.ssh
 
 # Editor directories and files
 .vscode/*

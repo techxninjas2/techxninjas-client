@@ -69,6 +69,11 @@
       "source": "/doubt0504",
       "destination": "https://chat.whatsapp.com/KY5qpmdTogr15xzavV2JWt",
       "permanent": false
+    },
+    {
+      "source": "/giveaway7-form",
+      "destination": "https://forms.gle/aHfF5r9aTGVX6utd9",
+      "permanent": false
     }
   ],
   "rewrites": [

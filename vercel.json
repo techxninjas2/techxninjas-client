@@ -1,4 +1,19 @@
 {
+  "functions": {
+    "api/*.js": {
+      "runtime": "nodejs18.x"
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "/api/$1"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/"
+    }
+  ],
   "redirects": [
     {
       "source": "/tvs",
@@ -74,12 +89,6 @@
       "source": "/giveaway7-form",
       "destination": "https://forms.gle/aHfF5r9aTGVX6utd9",
       "permanent": false
-    }
-  ],
-  "rewrites": [
-    {
-      "source": "/(.*)",
-      "destination": "/"
     }
   ]
 }

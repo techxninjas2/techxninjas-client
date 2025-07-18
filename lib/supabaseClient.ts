@@ -1,15 +1,7 @@
 
 import { createClient } from '@supabase/supabase-js';
 
-// Ensure you have a .env file at the root of your project with:
-// VITE_SUPABASE_URL=your_supabase_url
-// VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
-
-// Wants to fetch from environment variables
-// If you're using Vite, these should be prefixed with VITE_
-// If you're using another build tool, adjust accordingly.
-// For example, in Vite, you would access them as import.meta.env.VITE_SUPABASE_URL and import.meta.env.VITE_SUPABASE_ANON_KEY
-// Here, we
+// Ensure that the environment variables are defined before creating the Supabase client
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 

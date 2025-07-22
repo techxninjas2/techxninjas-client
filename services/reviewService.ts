@@ -90,7 +90,7 @@ export const getEventReviews = async (eventId: string, limit: number = 10, offse
     .from('event_reviews')
     .select(`
       *,
-      user_profiles!event_reviews_user_profiles_fk (
+      user_profiles!event_reviews_user_id_fkey (
         username
       )
     `)

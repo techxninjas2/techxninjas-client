@@ -54,6 +54,13 @@ across colleges and universities.
 | **Auth**            | Supabase Auth                           |
 | **SEO & Analytics** | Meta tags, Open Graph, Google Analytics |
 
+## 📋 GSSoC 2025 Contributor Task Board
+
+Track all open tasks, progress, and completed contributions on our live board:  
+👉 [![Project Board](https://img.shields.io/badge/Project-View%20Board-blue?style=for-the-badge)](https://github.com/users/techxninjas/projects/1/views/4)
+
+We regularly update this board with new issues, assignments, and progress – check here before picking an issue!
+
 ## 🔑 Environment Variables
 
 To run the project locally, create a `.env.local` file and include:

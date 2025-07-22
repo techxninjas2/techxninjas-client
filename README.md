@@ -77,7 +77,7 @@ VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
 1. **Clone the Repository**
 
 ```bash
-git clone https://github.com/iaadillatif/techxninjas.git
+git clone https://github.com/techxninjas/techxninjas.git
 cd techxninjas
 ```
 
@@ -135,7 +135,7 @@ Feel free to reach out for discussions, suggestions, or contributions!
 
 ## 📄 License
 
-This project is licensed under the **MIT License**.
+This project is licensed under the **GPL-3.0 license**.
 
 ---
 

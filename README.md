@@ -77,7 +77,7 @@ VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
 1. **Clone the Repository**
 
 ```bash
-git clone https://github.com/techxninjas/techxninjas.git
+git clone https://github.com/techxninjas/techxninjas-client.git
 cd techxninjas
 ```
 

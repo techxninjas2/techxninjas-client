@@ -125,6 +125,14 @@ creators!
 
 ---
 
+## 💬 Join Our Community Discussions!
+We’re using GitHub Discussions to build a strong community for GSSoC 2025 and beyond!
+
+👉 [Click here to ask questions, introduce yourself, or share ideas!](https://github.com/techxninjas/techxninjas-client/discussions)
+
+
+---
+
 ## 👨‍💻 Maintainers
 
 - **Aadil Latif** – [LinkedIn](https://www.linkedin.com/in/iaadillatif/)

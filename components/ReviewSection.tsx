@@ -256,9 +256,9 @@ const ReviewSection: React.FC<ReviewSectionProps> = ({ eventId }) => {
       {reviews.length > 0 && (
         <div className="border-t border-gray-200 dark:border-gray-700 pt-6">
           <h3 className="font-semibold text-gray-900 dark:text-white mb-4">Recent Reviews</h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+          <div className="space-y-4">
             {reviews.map((review) => (
-              <div key={review.id} className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg h-full flex flex-col justify-between">
+              <div key={review.id} className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
                 <div className="flex items-center justify-between mb-2">
                   <div className="flex items-center space-x-2">
                     {renderStars(review.rating)}

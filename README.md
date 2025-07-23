@@ -1,4 +1,4 @@
-# 🌐 TechXNinjas – The Student-Centric Tech Community Platform
+# 🌐 DEMO – The Student-Centric Tech Community Platform
 
 Welcome to the official repository of **TechXNinjas**, a student-first community
 platform built to empower learners across India (and beyond) with tech
@@ -9,11 +9,11 @@ under one roof.
 
 <details>
   <summary><strong>📑 Table of Contents</strong></summary>
-  
+
 - [🚀 What is TechXNinjas?](#-what-is-techxninjas)
 - [🧩 Key Features](#-key-features)
-    - [✅ Public Features](#-public-features)
-    - [🔐 Logged-in User Features](#-logged-in-user-features)
+  - [✅ Public Features](#-public-features)
+  - [🔐 Logged-in User Features](#-logged-in-user-features)
 - [⚙️ Tech Stack](#️-tech-stack)
 - [📋 GSSoC 2025 Contributor Task Board](#-gssoc-2025-contributor-task-board)
 - [🔑 Environment Variables](#-environment-variables)
@@ -76,10 +76,12 @@ across colleges and universities.
 
 ## 📋 GSSoC 2025 Contributor Task Board
 
-Track all open tasks, progress, and completed contributions on our live board:  
-👉 [![Project Board](https://img.shields.io/badge/Project-View%20Board-blue?style=for-the-badge)](https://github.com/users/techxninjas/projects/1/views/4)
+Track all open tasks, progress, and completed contributions on our live board:\
+👉
+[![Project Board](https://img.shields.io/badge/Project-View%20Board-blue?style=for-the-badge)](https://github.com/users/techxninjas/projects/1/views/4)
 
-We regularly update this board with new issues, assignments, and progress – check here before picking an issue!
+We regularly update this board with new issues, assignments, and progress –
+check here before picking an issue!
 
 ## 🔑 Environment Variables
 
@@ -146,10 +148,12 @@ creators!
 ---
 
 ## 💬 Join Our Community Discussions!
-We’re using GitHub Discussions to build a strong community for GSSoC 2025 and beyond!
 
-👉 [Click here to ask questions, introduce yourself, or share ideas!](https://github.com/techxninjas/techxninjas-client/discussions)
+We’re using GitHub Discussions to build a strong community for GSSoC 2025 and
+beyond!
 
+👉
+[Click here to ask questions, introduce yourself, or share ideas!](https://github.com/techxninjas/techxninjas-client/discussions)
 
 ---
 

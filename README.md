@@ -62,6 +62,48 @@ across colleges and universities.
 
 ---
 
+## 📁 Project Folder Structure
+
+Overview of the main directories and files used in this project:
+
+techxninjas-client/
+├── .github/                     # GitHub issue/pull request templates
+│   └── ISSUE_TEMPLATE/          # Markdown templates (bug_report.md, feature_request.md)
+├── assets/                      # Static media used in the frontend
+│   └── images/                  # Project-related images
+├── components/                  # Modular and reusable UI elements
+│   ├── auth/                    # Forms and components for authentication(login,register..)
+│   ├── layout/                  # Structural components (Header, Footer, Sidebar)
+│   ├── shared/                  # Common widgets (Buttons, Cards, Modals)
+│   ├── dashboard/               # Admin/Editor dashboard components
+│   └── editor/                  # Rich text editor components
+├── context/                     # React Context APIs for managing global state
+├── hooks/                       # Custom React hooks
+├── lib/                         # Helper libraries, constants, API utilities
+│   ├── axiosInstance.ts         # Axios setup for API calls
+│   └── constants.ts             # Centralized constants
+├── pages/                       # Next.js routing pages
+│   ├── index.tsx                # Homepage
+│   ├── about.tsx                # About us
+│   ├── articles/                # Articles listing and detail pages
+│   │   └── [slug].tsx           # Dynamic routing for individual articles
+│   ├── contact.tsx              # Contact us page
+│   ├── dashboard.tsx            # Admin dashboard view
+│   └── editor.tsx(many more..)  # Page for article creation/editing
+├── public/                      # Static assets for global use
+│   ├── assets/                  # Images and icons
+│   └── favicon.ico              # Website favicon
+├── seo/                         # Metadata and structured data for SEO
+├── styles/                      # Tailwind CSS config and global styles
+├── utils/                       # Utility functions shared across components
+├── .env.local                   # Environment variable definitions (ignored in repo)
+├── App.tsx                      # App layout and router logic
+├── CODE_OF_CONDUCT.md           # Contributor guidelines and expectations
+├── LICENSE                      # License information
+├── next.config.js               # Next.js configuration
+├── tsconfig.json                # TypeScript configuration
+└── README.md                    # You’re reading it now!
+
 ## ⚙️ Tech Stack
 
 | Category            | Technology                              |

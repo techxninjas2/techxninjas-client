@@ -29,6 +29,7 @@ const navLinks: NavLinkItem[] = [
   { to: '/', label: 'Home', icon: HomeIcon },
   { to: '/events', label: 'Events', icon: CalendarDaysIcon },
   { to: '/courses', label: 'Courses', icon: GraduationCapIcon },
+  { to: '/resume-builder', label: 'Resume Builder', icon: FileTextIcon },
   { to: '/giveaways', label: 'Giveaways', icon: GiftIcon },
   { to: '/articles', label: 'Articles', icon: FileTextIcon },
 ];

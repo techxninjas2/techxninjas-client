@@ -364,7 +364,7 @@ const MentorsSection: React.FC = () => {
 
 const ExploreFeaturesSection: React.FC = () => {
   const features = [
-    { name: 'Resume Builder', icon: FileText, dev: true },
+    { name: 'Resume Builder', icon: FileText, dev: false, link: '/resume-builder', external: false },
     { name: 'Shareable Portfolio Page', icon: Globe, dev: true },
     { name: 'Earn TechPoints', icon: Gift, dev: true },
     { name: 'Join Our WhatsApp Community', icon: MessageSquare, dev: false, link: WHATSAPP_COMMUNITY_LINK, external: true },
@@ -389,17 +389,26 @@ const ExploreFeaturesSection: React.FC = () => {
           {features.map((feature, index) => (
             <RevealOnScroll key={index} direction="up" delay={300 + index * 150} duration={800}>
               <div className="relative bg-brand-off-white dark:bg-brand-dark-gray p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 group backdrop-blur-sm bg-opacity-90 dark:bg-opacity-90">
-                <feature.icon className="w-12 h-12 mx-auto mb-4 text-brand-primary dark:text-brand-ninja-gold" />
-                <h4 className="text-xl font-semibold mb-2 text-brand-dark-gray dark:text-white">{feature.name}</h4>
+                {feature.link ? (
+                  <Link to={feature.link} className="block">
+                    <feature.icon className="w-12 h-12 mx-auto mb-4 text-brand-primary dark:text-brand-ninja-gold" />
+                    <h4 className="text-xl font-semibold mb-2 text-brand-dark-gray dark:text-white">{feature.name}</h4>
+                  </Link>
+                ) : (
+                  <>
+                    <feature.icon className="w-12 h-12 mx-auto mb-4 text-brand-primary dark:text-brand-ninja-gold" />
+                    <h4 className="text-xl font-semibold mb-2 text-brand-dark-gray dark:text-white">{feature.name}</h4>
+                  </>
+                )}
                 {feature.dev && (
                   <span className="absolute top-2 right-2 bg-yellow-400 text-yellow-800 text-xs font-semibold px-2 py-0.5 rounded-full">
                     In Development
                   </span>
                 )}
                 {feature.link && (
-                   <Link to={feature.link} target={feature.external ? "_blank" : "_self"} rel={feature.external ? "noopener noreferrer" : ""} className="text-sm text-brand-light-blue hover:underline mt-2 inline-block">
-                      Access Now <ArrowRight className="inline w-4 h-4"/>
-                   </Link>
+                  <Link to={feature.link} target={feature.external ? "_blank" : "_self"} rel={feature.external ? "noopener noreferrer" : ""} className="text-sm text-brand-light-blue hover:underline mt-2 inline-block">
+                    Access Now <ArrowRight className="inline w-4 h-4"/>
+                  </Link>
                 )}
               </div>
             </RevealOnScroll>

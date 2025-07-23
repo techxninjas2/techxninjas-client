@@ -62,11 +62,11 @@ const TestimonialsSlider: React.FC<TestimonialsSliderProps> = ({
           pauseOnMouseEnter: true
         } : false}
         loop={true}
-        className="py-8"
+        className="py-8 h-[320px] md:h-[320px]"
       >
         {testimonials.map((testimonial) => (
-          <SwiperSlide key={testimonial.id}>
-            <div className="bg-brand-off-white dark:bg-brand-dark-gray p-6 rounded-xl shadow-lg flex flex-col items-center text-center transform hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 backdrop-blur-sm bg-opacity-90 dark:bg-opacity-90 h-full">
+          <SwiperSlide key={testimonial.id} className="h-full flex">
+            <div className="bg-brand-off-white dark:bg-brand-dark-gray p-6 rounded-xl shadow-lg flex flex-col justify-between items-center text-center min-h-[260px] h-full w-full transform hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 backdrop-blur-sm bg-opacity-90 dark:bg-opacity-90">
               <img 
                 src={testimonial.avatarUrl || `https://ui-avatars.com/api/?name=${encodeURIComponent(testimonial.name)}&background=random&color=fff&size=96`} 
                 alt={testimonial.name} 

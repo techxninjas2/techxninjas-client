@@ -280,7 +280,7 @@ const Sidebar: React.FC<SidebarProps> = ({
         ref={sidebarRef}
         onMouseEnter={handleMouseEnterSidebar}
         onMouseLeave={handleMouseLeaveSidebar}
-        className={`fixed top-0 left-0 h-full bg-white dark:bg-gray-800 shadow-lg transition-all duration-300 ease-in-out flex flex-col ${currentWidthClass} py-4`}
+        className={`fixed top-[64px] left-0 h-[calc(100vh-64px)] bg-white dark:bg-gray-800 shadow-lg transition-all duration-300 ease-in-out flex flex-col ${currentWidthClass} py-4`}
         style={{ 
           zIndex: 40,
           position: 'fixed'

@@ -67,42 +67,59 @@ across colleges and universities.
 Overview of the main directories and files used in this project:
 
 techxninjas-client/
-├── .github/                     # GitHub issue/pull request templates
-│   └── ISSUE_TEMPLATE/          # Markdown templates (bug_report.md, feature_request.md)
-├── assets/                      # Static media used in the frontend
-│   └── images/                  # Project-related images
-├── components/                  # Modular and reusable UI elements
-│   ├── auth/                    # Forms and components for authentication(login,register..)
-│   ├── layout/                  # Structural components (Header, Footer, Sidebar)
-│   ├── shared/                  # Common widgets (Buttons, Cards, Modals)
-│   ├── dashboard/               # Admin/Editor dashboard components
-│   └── editor/                  # Rich text editor components
-├── context/                     # React Context APIs for managing global state
-├── hooks/                       # Custom React hooks
-├── lib/                         # Helper libraries, constants, API utilities
-│   ├── axiosInstance.ts         # Axios setup for API calls
-│   └── constants.ts             # Centralized constants
-├── pages/                       # Next.js routing pages
-│   ├── index.tsx                # Homepage
-│   ├── about.tsx                # About us
-│   ├── articles/                # Articles listing and detail pages
-│   │   └── [slug].tsx           # Dynamic routing for individual articles
-│   ├── contact.tsx              # Contact us page
-│   ├── dashboard.tsx            # Admin dashboard view
-│   └── editor.tsx(many more..)  # Page for article creation/editing
-├── public/                      # Static assets for global use
-│   ├── assets/                  # Images and icons
-│   └── favicon.ico              # Website favicon
-├── seo/                         # Metadata and structured data for SEO
-├── styles/                      # Tailwind CSS config and global styles
-├── utils/                       # Utility functions shared across components
-├── .env.local                   # Environment variable definitions (ignored in repo)
-├── App.tsx                      # App layout and router logic
-├── CODE_OF_CONDUCT.md           # Contributor guidelines and expectations
-├── LICENSE                      # License information
-├── next.config.js               # Next.js configuration
-├── tsconfig.json                # TypeScript configuration
-└── README.md                    # You’re reading it now!
+├── .github/                            # GitHub issue templates and workflows
+│ └── ISSUE_TEMPLATE/                   # Predefined templates (bug_report.md, etc.)
+│
+├── assets/                             # Static media used in the frontend
+│ └── images/                           # Project-related images
+│
+├── components/                         # Reusable UI components
+│ ├── auth/                             # Login, Register, ForgotPassword forms
+│ ├── layout/                           # Header, Footer, Sidebar, etc.
+│ └── pages/                            # Page content sections like Cards, Sliders, etc.
+│
+├── context/                            # React Context for global state (e.g., AuthContext)
+├── hooks/                              # Custom React hooks
+├── lib/                                # External service setups and configs
+│ └── supabaseClient.ts                 # Supabase client initialization
+│
+├── pages/                              # Next.js routing pages
+│ ├── index.tsx                         # Homepage
+│ ├── about.tsx                         # About Us page
+│ ├── contactUsPage.tsx                 # Contact page
+│ ├── creatorDashboardPage.tsx          # Creator Dashboard
+│ ├── articlesPage.tsx                  # Article listing
+│ └── ...                               # Other pages like event, profile, course, etc.
+│
+├── public/                             # Publicly accessible static files
+│ ├── icons/                            # SEO and app icons
+│ ├── favicon.ico                       # Site favicon
+│ └── manifest.json                     # PWA or metadata manifest
+│
+├── seo/                                # SEO configurations and structured metadata
+├── services/                           # API calls and data-fetching functions
+├── styles/                             # Tailwind and global CSS styles
+├── utils/                              # General-purpose utility functions
+│
+├── .env.local                          # Local environment variables (excluded from Git)
+├── App.tsx                             # Root App component
+├── CODE_OF_CONDUCT.md                  # Community contribution rules
+├── CONTRIBUTING.md                     # Steps and standards for contributors
+├── SECURITY.md                         # Security guidelines and reporting
+├── constants.ts                        # Centralized app-wide constants
+├── index.tsx                           # App entry point
+├── index.css                           # Global stylesheet
+├── index.html                          # HTML shell (if using Vite)
+├── metadata.json                       # Metadata (used in SEO or integrations)
+├── next.config.js                      # Next.js configuration
+├── package.json                        # Project metadata and scripts
+├── package-lock.json                   # Dependency lockfile
+├── postcss.config.js                   # PostCSS config (used with Tailwind)
+├── tailwind.config.js                  # Tailwind CSS configuration
+├── tsconfig.json                       # TypeScript configuration
+├── types.ts                            # Custom TypeScript types
+├── vercel.json                         # Vercel deployment configuration
+└── README.md                           # You’re reading it now!
 
 ## ⚙️ Tech Stack
 

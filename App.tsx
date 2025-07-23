@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import Header from './components/layout/Header';
 import Footer from './components/layout/Footer';
 import ScrollToTopButton from './components/ScrollToTopButton';
@@ -18,6 +18,7 @@ import PublicProfilePage from './components/pages/PublicProfilePage';
 import ContactUsPage from './components/pages/ContactUsPage';
 import PrivacyPolicyPage from './components/pages/PrivacyPolicyPage';
 import TermsOfServicePage from './components/pages/TermsOfServicePage';
+import ResumeBuilderPage from './components/pages/ResumeBuilderPage';
 import usePageTitle from './components/usePageTitle'; 
 import { useAuth } from './contexts/AuthContext';
 import ErrorBoundary from './components/ErrorBoundary';
@@ -26,6 +27,69 @@ import ThemeToggle from './components/ThemeToggle';
 import TechFactGenerator from './components/TechFactGenerator';
 import { SpeedInsights } from "@vercel/speed-insights/react";
 import { Analytics } from '@vercel/analytics/react';
+
+const AppContent: React.FC = () => {
+  const [mainContentLayout, setMainContentLayout] = useState<React.CSSProperties>({
+    paddingTop: '80px',
+    paddingBottom: '0px',
+    marginLeft: '0px'
+  });
+  const location = useLocation();
+  const showFooter = location.pathname !== '/resume-builder';
+
+  const handleMainContentLayoutChange = (style: React.CSSProperties) => {
+    setMainContentLayout(style);
+  };
+
+  return (
+    <div className="flex flex-col min-h-screen">
+      <Header onMainContentLayoutChange={handleMainContentLayoutChange} />
+      <main 
+        id="main-content" 
+        className="flex-grow transition-all duration-300 ease-in-out"
+        style={mainContentLayout}
+      >
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/events" element={<EventsPage />} />
+          <Route path="/events/:slug" element={<EventDetailPage />} />
+          <Route path="/articles" element={<ArticlesPage />} />
+          <Route path="/articles/:slug" element={<ArticleDetailPage />} />
+          <Route path="/courses" element={<CoursesPage />} />
+          <Route path="/courses/:slug" element={<CourseDetailPage />} />
+          <Route path="/resume-builder" element={<ResumeBuilderPage />} />
+          <Route path="/giveaways" element={<PlaceholderPage title="Giveaways" />} />
+          <Route path="/contact-us" element={<ContactUsPage />} />
+          <Route path="/about-us" element={<PlaceholderPage title="About Us" />} />
+          <Route 
+            path="/dashboard" 
+            element={
+              <ProtectedRoute>
+                <UserProfilePage />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/creator-dashboard" 
+            element={
+              <ProtectedRoute>
+                <CreatorDashboardPage />
+              </ProtectedRoute>
+            } 
+          />
+          <Route path="/profile/:username" element={<PublicProfilePage />} />
+          <Route path="/terms" element={<TermsOfServicePage />} />
+          <Route path="/privacy" element={<PrivacyPolicyPage />} />
+          {/* Catch all route for 404 */}
+          <Route path="*" element={<PlaceholderPage title="Page Not Found" />} />
+        </Routes>
+      </main>
+      {showFooter && <Footer layoutStyle={mainContentLayout} />}
+      <ScrollToTopButton />
+      <WhatsAppButton />
+    </div>
+  );
+};
 
 const PlaceholderPage: React.FC<{ title: string }> = ({ title }) => {
   usePageTitle(title); 
@@ -52,7 +116,7 @@ const PlaceholderPage: React.FC<{ title: string }> = ({ title }) => {
   );
 };
 
-const ProtectedRoute: React.FC<{ children: JSX.Element }> = ({ children }) => {
+const ProtectedRoute: React.FC<{ children: React.ReactElement }> = ({ children }) => {
   const { user, loading } = useAuth();
   if (loading) {
     return (
@@ -65,65 +129,11 @@ const ProtectedRoute: React.FC<{ children: JSX.Element }> = ({ children }) => {
 };
 
 const App: React.FC = () => {
-  const [mainContentLayout, setMainContentLayout] = useState<React.CSSProperties>({
-    paddingTop: '80px',
-    paddingBottom: '0px',
-    marginLeft: '0px'
-  });
-
-  const handleMainContentLayoutChange = (style: React.CSSProperties) => {
-    setMainContentLayout(style);
-  };
-
   return (
     <ErrorBoundary>
       <BrowserRouter> 
         <ScrollToTop />
-        <div className="flex flex-col min-h-screen">
-          <Header onMainContentLayoutChange={handleMainContentLayoutChange} />
-          <main 
-            id="main-content" 
-            className="flex-grow transition-all duration-300 ease-in-out"
-            style={mainContentLayout}
-          >
-            <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/events" element={<EventsPage />} />
-              <Route path="/events/:slug" element={<EventDetailPage />} />
-              <Route path="/articles" element={<ArticlesPage />} />
-              <Route path="/articles/:slug" element={<ArticleDetailPage />} />
-              <Route path="/courses" element={<CoursesPage />} />
-              <Route path="/courses/:slug" element={<CourseDetailPage />} />
-              <Route path="/giveaways" element={<PlaceholderPage title="Giveaways" />} />
-              <Route path="/contact-us" element={<ContactUsPage />} />
-              <Route path="/about-us" element={<PlaceholderPage title="About Us" />} />
-              <Route 
-                path="/dashboard" 
-                element={
-                  <ProtectedRoute>
-                    <UserProfilePage />
-                  </ProtectedRoute>
-                } 
-              />
-              <Route 
-                path="/creator-dashboard" 
-                element={
-                  <ProtectedRoute>
-                    <CreatorDashboardPage />
-                  </ProtectedRoute>
-                } 
-              />
-              <Route path="/profile/:username" element={<PublicProfilePage />} />
-              <Route path="/terms" element={<TermsOfServicePage />} />
-              <Route path="/privacy" element={<PrivacyPolicyPage />} />
-              {/* Catch all route for 404 */}
-              <Route path="*" element={<PlaceholderPage title="Page Not Found" />} />
-            </Routes>
-          </main>
-          <Footer layoutStyle={mainContentLayout} />
-          <ScrollToTopButton />
-          <WhatsAppButton />
-        </div>
+        <AppContent />
         <SpeedInsights />
         <Analytics />
       </BrowserRouter>

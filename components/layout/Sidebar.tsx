@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { Theme, User } from '../../types';
 import { BRAND_NAME } from '../../constants';
 import {
@@ -77,6 +77,11 @@ const SidebarNavItem: React.FC<{
   </NavLink>
 );
 
+const mockNotifications = [
+  { id: 1, read: false },
+  { id: 2, read: true },
+];
+
 const Sidebar: React.FC<SidebarProps> = ({
   user,
   logout,
@@ -87,6 +92,7 @@ const Sidebar: React.FC<SidebarProps> = ({
   closeUserDropdown,
   userDropdownRef
 }) => {
+  const navigate = useNavigate();
   const [sidebarState, setSidebarState] = useState<SidebarState>('collapsed');
   const [activeTooltip, setActiveTooltip] = useState<{ text: string; top: number; left: number } | null>(null);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
@@ -156,6 +162,7 @@ const Sidebar: React.FC<SidebarProps> = ({
   };
   
   const authControls = (isSidebarCollapsed: boolean) => {
+    const unreadCount = mockNotifications.filter(n => !n.read).length;
     if (user) {
       if (isSidebarCollapsed) {
         return (
@@ -242,29 +249,30 @@ const Sidebar: React.FC<SidebarProps> = ({
       }
     }
     return (
-       <button
-        onClick={openAuthModal}
-        className={`
-          w-full text-sm rounded-md border border-brand-primary text-brand-primary 
-          hover:bg-brand-primary hover:text-white transition-colors duration-200
-          ${isSidebarCollapsed 
-            ? 'p-2 aspect-square flex items-center justify-center' 
-            : 'px-3 py-2 flex items-center' 
-          } 
-        `}
-        title="Login / Register"
-      >
-        {isSidebarCollapsed ? (
-          <UserCircleIcon className="w-5 h-5" />
-        ) : (
-          <>
-            <UserCircleIcon className="w-5 h-5 mr-2" />
-            <span className="flex-shrink-0">Login</span>
-          </>
-        )}
-      </button>
+      <div className="flex items-center space-x-2 w-full justify-center">
+        <button
+          onClick={openAuthModal}
+          className="px-3 py-2 flex items-center text-sm rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 transition-colors duration-200"
+          aria-label="Login / Register"
+        >
+          <UserCircleIcon className="w-5 h-5 mr-2" />
+          <span className="flex-shrink-0">Login</span>
+        </button>
+        <button
+          onClick={() => navigate('/notifications')}
+          className="relative p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-300"
+          aria-label="Notifications"
+        >
+          <BellIcon className="w-5 h-5 lucide" />
+          {unreadCount > 0 && (
+            <span className="absolute top-1 right-1 block w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-white dark:border-gray-800"></span>
+          )}
+        </button>
+      </div>
     );
   };
+
+  const unreadCount = mockNotifications.filter(n => !n.read).length;
 
   return (
     <>
@@ -287,7 +295,8 @@ const Sidebar: React.FC<SidebarProps> = ({
 
         <nav className={`flex-grow space-y-1.5 ${isEffectivelyOpen ? 'px-4' : 'px-2'}`}>
           {navLinks.map((link) => {
-            const IconComponent = link.icon || SettingsIcon; 
+            const IconComponent = link.icon || SettingsIcon;
+            const isNotifications = link.to === '/notifications';
             return (
               <SidebarNavItem
                 key={link.to}
@@ -297,7 +306,12 @@ const Sidebar: React.FC<SidebarProps> = ({
                 onMouseLeave={handleIconMouseLeave}
                 title={link.label}
               >
-                <IconComponent className="w-5 h-5 lucide" />
+                <span className="relative">
+                  <IconComponent className="w-5 h-5 lucide" />
+                  {isNotifications && unreadCount > 0 && (
+                    <span className="absolute top-0 right-0 block w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-white dark:border-gray-800"></span>
+                  )}
+                </span>
                 {isEffectivelyOpen && <span className="ml-3">{link.label}</span>}
               </SidebarNavItem>
             );
@@ -307,19 +321,11 @@ const Sidebar: React.FC<SidebarProps> = ({
         <div className={`mt-auto pt-4 border-t border-gray-200 dark:border-gray-700 ${isEffectivelyOpen ? 'px-4' : 'px-2'}`}>
           <div className={`flex ${isEffectivelyOpen ? 'justify-between items-center' : 'flex-col space-y-3 items-center'} mb-3 w-full`}>
             <ThemeToggle />
-            <button 
-                className="p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-300"
-                aria-label="Notifications"
-            >
-              <BellIcon className="w-5 h-5 lucide" />
-              {isEffectivelyOpen && <span className="sr-only">Notifications</span>}
-            </button>
           </div>
           <div className={`${isEffectivelyOpen ? '' : 'flex flex-col items-center'}`}>
             {authControls(!isEffectivelyOpen)}
           </div>
         </div>
-        
         <button
           onClick={handleTogglePin}
           className="absolute -right-0 bottom-10 transform translate-x-1/2 translate-y-1/2 bg-white dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 text-brand-primary dark:text-ninja-gold p-2 rounded-full shadow-md border border-gray-200 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-brand-primary"
@@ -329,7 +335,6 @@ const Sidebar: React.FC<SidebarProps> = ({
           {sidebarState === 'pinned-expanded' ? <PanelLeftCloseIcon className="w-5 h-5 lucide" /> : <PanelRightOpenIcon className="w-5 h-5 lucide" />}
         </button>
       </aside>
-
       {activeTooltip && (
         <div
           className="fixed bg-gray-900 text-white text-xs px-2 py-1 rounded-md shadow-lg pointer-events-none"

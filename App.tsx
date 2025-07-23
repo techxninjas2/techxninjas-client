@@ -1,3 +1,4 @@
+// src/App.tsx
 import React, { useState } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Header from './components/layout/Header';
@@ -16,6 +17,7 @@ import CreatorDashboardPage from './components/pages/CreatorDashboardPage';
 import UserProfilePage from './components/pages/UserProfilePage';
 import PublicProfilePage from './components/pages/PublicProfilePage';
 import ContactUsPage from './components/pages/ContactUsPage';
+import FeedbackPage from './components/pages/FeedbackPage';
 import PrivacyPolicyPage from './components/pages/PrivacyPolicyPage';
 import TermsOfServicePage from './components/pages/TermsOfServicePage';
 import usePageTitle from './components/usePageTitle'; 
@@ -41,7 +43,6 @@ const PlaceholderPage: React.FC<{ title: string }> = ({ title }) => {
           className="mt-8 rounded-lg shadow-md mx-auto" 
         />
         
-        {/* Add TechFactGenerator to placeholder pages for engagement */}
         {title === 'Giveaways' && (
           <div className="mt-12">
             <TechFactGenerator />
@@ -116,7 +117,7 @@ const App: React.FC = () => {
               <Route path="/profile/:username" element={<PublicProfilePage />} />
               <Route path="/terms" element={<TermsOfServicePage />} />
               <Route path="/privacy" element={<PrivacyPolicyPage />} />
-              {/* Catch all route for 404 */}
+              <Route path="/feedback" element={<FeedbackPage />} />
               <Route path="*" element={<PlaceholderPage title="Page Not Found" />} />
             </Routes>
           </main>

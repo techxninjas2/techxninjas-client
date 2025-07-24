@@ -338,7 +338,7 @@ const CoursesPage: React.FC = () => {
               <RevealOnScroll key={category.id} direction="up" delay={600 + index * 100} duration={800}>
                 <button
                   onClick={() => setSelectedCategory(category.slug)}
-                  className={`p-4 rounded-lg border-2 transition-all duration-300 text-center hover:shadow-lg ${
+                  className={`p-4 h-[10rem] w-[10rem] rounded-lg border-2 transition-all duration-300 text-center hover:shadow-lg ${
                     selectedCategory === category.slug
                       ? 'border-brand-primary bg-brand-primary bg-opacity-10 dark:bg-brand-ninja-gold dark:bg-opacity-10'
                       : 'border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:border-brand-primary'

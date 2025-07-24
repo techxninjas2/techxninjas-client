@@ -380,7 +380,7 @@ const CoursesPage: React.FC = () => {
           
           <div className={`grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8 gap-4 lg:gap-6 transition-opacity duration-300 ${isFiltering ? 'opacity-70' : 'opacity-100'}`}>
             {filteredCategories.slice(0, 16).map((category, index) => (
-              <RevealOnScroll key={category.id} direction="up" delay={600 + index * 50} duration={800}>
+              <RevealOnScroll key={category.id} direction="up" delay={600 + index * 50} duration={400}>
                 <button
                   onClick={() => setSelectedCategory(category.slug)}
                   className={`group relative w-full aspect-square p-4 rounded-2xl border transition-all duration-500 text-center backdrop-blur-sm overflow-hidden ${

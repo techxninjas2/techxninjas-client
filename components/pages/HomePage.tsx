@@ -378,7 +378,8 @@ const ExploreFeaturesSection: React.FC = () => {
         style="terminal"
         className="absolute inset-0 z-0"
       />
-      <div className="container mx-auto px-4 text-center relative z-10">
+      <div className="relative flex flex-col justify-between container mx-auto px-4 md:px-8 max-w-screen-xl text-center relative z-10">
+
         <RevealOnScroll direction="up" duration={800}>
           <h2 className="text-3xl font-bold mb-12 text-brand-dark-gray dark:text-white">
             Explore What's Inside TechXNinjas
@@ -388,7 +389,7 @@ const ExploreFeaturesSection: React.FC = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
           {features.map((feature, index) => (
             <RevealOnScroll key={index} direction="up" delay={300 + index * 150} duration={800}>
-              <div className="relative bg-brand-off-white dark:bg-brand-dark-gray p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 group backdrop-blur-sm bg-opacity-90 dark:bg-opacity-90">
+              <div className="relative flex flex-col items-center justify-center bg-brand-off-white h-[230px] dark:bg-brand-dark-gray p-6 rounded-xl border-2 border-brand-primary shadow-lg hover:shadow-xl transition-shadow duration-200 group backdrop-blur-sm bg-opacity-90 dark:bg-opacity-90 ">
                 <feature.icon className="w-12 h-12 mx-auto mb-4 text-brand-primary dark:text-brand-ninja-gold" />
                 <h4 className="text-xl font-semibold mb-2 text-brand-dark-gray dark:text-white">{feature.name}</h4>
                 {feature.dev && (

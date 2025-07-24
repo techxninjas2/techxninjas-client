@@ -31,9 +31,10 @@ const Footer: React.FC<FooterProps> = ({ layoutStyle }) => {
       style={layoutStyle}
     >
       <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-10">
+        <div className="flex flex-wrap justify-between gap-8 mb-10 text-sm text-gray-600 dark:text-gray-300">
+
           {/* Column 1: TechXNinjas */}
-          <div>
+          <div className="w-[200px] flex-shrink-0">
             <h5 className="text-xl font-bold text-brand-primary mb-4">{BRAND_NAME}</h5>
             <p className="text-sm leading-relaxed">
               Your gateway to hackathons, tech challenges, inspiring speakers, and innovation. We empower tech enthusiasts across India.
@@ -41,7 +42,7 @@ const Footer: React.FC<FooterProps> = ({ layoutStyle }) => {
           </div>
 
           {/* Column 2: Pages */}
-          <div>
+          <div className="w-[200px] flex-shrink-0">
             <h5 className="text-lg font-semibold text-gray-800 dark:text-brand-off-white mb-4">Pages</h5>
             <ul className="space-y-2 text-sm">
               <li><Link to="/" className="hover:text-brand-primary dark:hover:text-brand-ninja-gold">Home</Link></li>
@@ -53,7 +54,7 @@ const Footer: React.FC<FooterProps> = ({ layoutStyle }) => {
           </div>
 
           {/* Column 3: Support & Community */}
-          <div>
+          <div className="w-[200px] flex-shrink-0">
             <h5 className="text-lg font-semibold text-gray-800 dark:text-brand-off-white mb-4">Support & Community</h5>
             <ul className="space-y-2 text-sm mb-4">
               <li><Link to="/dashboard" className="hover:text-brand-primary dark:hover:text-brand-ninja-gold">My Profile</Link></li>
@@ -71,25 +72,11 @@ const Footer: React.FC<FooterProps> = ({ layoutStyle }) => {
               <li><Link to="/privacy" className="hover:text-brand-primary dark:hover:text-brand-ninja-gold">Privacy Policy</Link></li>
               <li><Link to="/terms" className="hover:text-brand-primary dark:hover:text-brand-ninja-gold">Terms of Service</Link></li>
             </ul>
-            <h6 className="text-md font-semibold text-gray-700 dark:text-brand-off-white mb-2 mt-4">Connect with us:</h6>
-            <div className="flex space-x-3">
-              {socialLinks.map(social => (
-                <a 
-                  key={social.label}
-                  href={social.href} 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
-                  aria-label={social.label} 
-                  className={`text-gray-500 dark:text-brand-medium-gray ${social.color} transition-colors duration-200`}
-                >
-                  <social.icon className="w-6 h-6" />
-                </a>
-              ))}
-            </div>
+            
           </div>
           
           {/* Column 4: Contact Info */}
-          <div>
+          <div className="w-[200px] flex-shrink-0">
             <h5 className="text-lg font-semibold text-gray-800 dark:text-brand-off-white mb-4">Contact Info</h5>
             <ul className="space-y-2 text-sm">
               <li className="flex items-center">
@@ -102,12 +89,33 @@ const Footer: React.FC<FooterProps> = ({ layoutStyle }) => {
               </li>
             </ul>
           </div>
-        </div>
+        
+        {/* Column 5: Connect With Us */}
+<div className="w-[200px] flex-shrink-0">
+  <h5 className="text-lg font-semibold text-gray-800 dark:text-brand-off-white mb-4">Connect with us</h5>
+  <ul className="space-y-3">
+    {socialLinks.map(social => (
+      <li key={social.label}>
+        <a 
+          href={social.href}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={`flex items-center text-gray-600 dark:text-brand-medium-gray ${social.color} hover:underline transition-colors duration-200`}
+        >
+          <social.icon className="w-5 h-5 mr-2" />
+          {social.label}
+        </a>
+      </li>
+    ))}
+  </ul>
+</div>
+</div>
 
-        <div className="border-t border-gray-300 dark:border-gray-700 pt-8 text-center text-sm">
-          <p>&copy; {currentYear + 1} {BRAND_NAME}. All rights reserved.</p> {/* Updated to 2025 as per prompt */}
-          <p className="mt-1">Built with ❤️ by TechXNinjas Student Community.</p>
-        </div>
+        <div className="border-t border-gray-300 dark:border-gray-700 flex flex-col items-center justify-center gap-1 pt-2 mt-[-20px] text-sm text-center">
+  <p>&copy; {currentYear + 1} {BRAND_NAME}. All rights reserved.</p>
+  <p>Built with ❤️ by TechXNinjas Student Community.</p>
+</div>
+
       </div>
     </footer>
   );

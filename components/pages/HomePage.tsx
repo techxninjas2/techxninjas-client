@@ -48,12 +48,14 @@ const HeroSection: React.FC = () => {
       <div className="container mx-auto px-4 text-center relative z-10">
         <RevealOnScroll direction="down" duration={1000}>
           <h1 className="text-4xl md:text-5xl  text-orange-600 lg:text-6xl font-bold mb-6">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-orange-500 dark:text-white">
             Welcome to TechXNinjas
           </h1>
         </RevealOnScroll>
         
         <RevealOnScroll direction="up" delay={300} duration={1000}>
           <p className="text-lg md:text-xl text-gray-700 font-semibold mb-8 max-w-3xl mx-auto">
+          <p className="text-lg md:text-xl text-gray-700 dark:text-gray-200 mb-8 max-w-3xl mx-auto">
             Your ultimate platform for hackathons, tech challenges, community interaction, and professional growth in the world of technology.
           </p>
         </RevealOnScroll>
@@ -65,6 +67,11 @@ const HeroSection: React.FC = () => {
                 <highlight.icon className="w-5 h-5 mr-2 text-brand-primary" />
                 {highlight.text}
               </div>
+              <div className="flex items-center bg-white/70 dark:bg-white/20 backdrop-blur-sm text-gray-800 dark:text-white rounded-full shadow-md text-xs md:text-sm py-1 md:py-2 px-3 md:px-4">
+  <highlight.icon className="w-5 h-5 mr-2 text-brand-primary" />
+  {highlight.text}
+</div>
+
             </RevealOnScroll>
           ))}
         </div>
@@ -378,7 +385,8 @@ const ExploreFeaturesSection: React.FC = () => {
         style="terminal"
         className="absolute inset-0 z-0"
       />
-      <div className="container mx-auto px-4 text-center relative z-10">
+      <div className="relative flex flex-col justify-between container mx-auto px-4 md:px-8 max-w-screen-xl text-center relative z-10">
+
         <RevealOnScroll direction="up" duration={800}>
           <h2 className="text-3xl font-bold mb-12 text-brand-dark-gray dark:text-white">
             Explore What's Inside TechXNinjas
@@ -388,7 +396,7 @@ const ExploreFeaturesSection: React.FC = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
           {features.map((feature, index) => (
             <RevealOnScroll key={index} direction="up" delay={300 + index * 150} duration={800}>
-              <div className="relative bg-brand-off-white dark:bg-brand-dark-gray p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 group backdrop-blur-sm bg-opacity-90 dark:bg-opacity-90">
+              <div className="relative flex flex-col items-center justify-center bg-brand-off-white h-[230px] dark:bg-brand-dark-gray p-6 rounded-xl border-2 border-brand-primary shadow-lg hover:shadow-xl transition-shadow duration-200 group backdrop-blur-sm bg-opacity-90 dark:bg-opacity-90 ">
                 <feature.icon className="w-12 h-12 mx-auto mb-4 text-brand-primary dark:text-brand-ninja-gold" />
                 <h4 className="text-xl font-semibold mb-2 text-brand-dark-gray dark:text-white">{feature.name}</h4>
                 {feature.dev && (

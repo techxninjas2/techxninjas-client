@@ -66,7 +66,7 @@ const SidebarNavItem: React.FC<{
     onMouseLeave={!isExpanded && onMouseLeave ? onMouseLeave : undefined}
     onClick={onClick}
     className={({ isActive }) =>
-      `flex items-center space-x-3 px-3 py-2.5 rounded-md transition-colors duration-200 ${
+      `flex items-center space-x-3 px-3 py-2.5 rounded-md transition-colors duration-200 mt-10 ${
         isActive
           ? 'bg-brand-primary text-white'
           : 'text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'

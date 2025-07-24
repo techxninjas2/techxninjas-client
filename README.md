@@ -67,59 +67,127 @@ across colleges and universities.
 Overview of the main directories and files used in this project:
 
 techxninjas-client/
-├── .github/                            # GitHub issue templates and workflows
-│ └── ISSUE_TEMPLATE/                   # Predefined templates (bug_report.md, etc.)
+├── .github/                                 # GitHub-specific settings
+│   └── ISSUE_TEMPLATE/
+│       ├── bug_report.md                    # Bug report issue template
+│       ├── feature_request.md               # Feature request template
+│       └── other---general-issue.md         # General issue template
 │
-├── assets/                             # Static media used in the frontend
-│ └── images/                           # Project-related images
+├── components/                              # Reusable UI components and pages
+│   ├── auth/                                # Authentication-related components
+│   │   ├── AuthModal.tsx                    # Modal for login/register
+│   │   ├── ForgotPasswordForm.tsx           # Forgot password form
+│   │   ├── LoginForm.tsx                    # Login form UI
+│   │   └── RegisterForm.tsx                 # Register form UI
 │
-├── components/                         # Reusable UI components
-│ ├── auth/                             # Login, Register, ForgotPassword forms
-│ ├── layout/                           # Header, Footer, Sidebar, etc.
-│ └── pages/                            # Page content sections like Cards, Sliders, etc.
+│   ├── layout/                              # Common layout components
+│   │   ├── Footer.tsx                       # Site footer
+│   │   ├── FormattedText.tsx                # Renders HTML-safe rich text
+│   │   ├── Header.tsx                       # Top navigation/header
+│   │   ├── SearchHeader.tsx                 # Search bar header
+│   │   └── Sidebar.tsx                      # Sidebar navigation
 │
-├── context/                            # React Context for global state (e.g., AuthContext)
-├── hooks/                              # Custom React hooks
-├── lib/                                # External service setups and configs
-│ └── supabaseClient.ts                 # Supabase client initialization
+│   ├── pages/                               # Page-level UI components
+│   │   ├── ArticleDetailPage.tsx            # Page to show detailed article content
+│   │   ├── ArticlePage.tsx                  # List of articles or blogs
+│   │   ├── ContactUsPage.tsx                # Contact form and details
+│   │   ├── CourseDetailPage.tsx             # Detailed view of a course
+│   │   ├── CoursePage.tsx                   # Course listing page
+│   │   ├── CreaterDashboardPage.tsx         # Dashboard for content creators
+│   │   ├── EventDetailPage.tsx              # Event detail view
+│   │   ├── EventsPage.tsx                   # List of all events
+│   │   ├── HomePage.tsx                     # Homepage
+│   │   ├── PrivacyPolicyPage.tsx            # Privacy policy content
+│   │   ├── PublicProfilePage.tsx            # View other users’ public profiles
+│   │   ├── TermsOfServicePage.tsx           # Terms and conditions
+│   │   └── UserProfilePage.tsx              # User's personal profile dashboard
 │
-├── pages/                              # Next.js routing pages
-│ ├── index.tsx                         # Homepage
-│ ├── about.tsx                         # About Us page
-│ ├── contactUsPage.tsx                 # Contact page
-│ ├── creatorDashboardPage.tsx          # Creator Dashboard
-│ ├── articlesPage.tsx                  # Article listing
-│ └── ...                               # Other pages like event, profile, course, etc.
+│   ├── AddSectionModal.tsx                  # Modal to add a section
+│   ├── AnimatedCounter.tsx                  # Animated numeric counter
+│   ├── CodingBackground.tsx                 # Coding animation background
+│   ├── CreatorApplicationModal.tsx          # Modal for creator application
+│   ├── EditProfileModal.tsx                 # Modal for editing profile
+│   ├── ErrorBoundary.tsx                    # Error fallback UI
+│   ├── EventCard.tsx                        # Compact event preview card
+│   ├── EventDetailHeader.tsx                # Header section for event detail page
+│   ├── icons.tsx                            # Centralized icons
+│   ├── LazyImage.tsx                        # Lazy loading images
+│   ├── MentorsSlider.tsx                    # Mentor profiles carousel
+│   ├── OptimizedArticleCard.tsx             # Performance-tuned article card
+│   ├── OptimizedEventCard.tsx               # Performance-tuned event card
+│   ├── RevealOnScroll.tsx                   # Scroll-triggered animation
+│   ├── ReviewSection.tsx                    # User reviews/testimonials section
+│   ├── ScrollToTop.tsx                      # Auto-scroll to top on nav
+│   ├── ScrollToTopButton.tsx                # Button to scroll up
+│   ├── TechFactGenerator.tsx                # Generates fun tech facts
+│   ├── TestimonialsSlider.tsx               # Carousel for user testimonials
+│   ├── ThemeToggle.tsx                      # Dark/light mode toggle
+│   ├── usePageTitle.tsx                     # Hook to update page title
+│   ├── VirtualizedList.tsx                  # Efficient long list renderer
+│   └── WhatsAppButton.tsx                   # WhatsApp CTA floating button
 │
-├── public/                             # Publicly accessible static files
-│ ├── icons/                            # SEO and app icons
-│ ├── favicon.ico                       # Site favicon
-│ └── manifest.json                     # PWA or metadata manifest
+├── context/                                 # Global context providers
+│   ├── AuthContext.tsx                      # Authentication state provider
+│   └── ThemeContext.tsx                     # Theme (light/dark) context
 │
-├── seo/                                # SEO configurations and structured metadata
-├── services/                           # API calls and data-fetching functions
-├── styles/                             # Tailwind and global CSS styles
-├── utils/                              # General-purpose utility functions
+├── hooks/                                   # Custom React hooks
+│   ├── useDebounce.ts                       # Debounce hook for inputs
+│   └── useInfiniteScroll.ts                 # Infinite scroll for lists
 │
-├── .env.local                          # Local environment variables (excluded from Git)
-├── App.tsx                             # Root App component
-├── CODE_OF_CONDUCT.md                  # Community contribution rules
-├── CONTRIBUTING.md                     # Steps and standards for contributors
-├── SECURITY.md                         # Security guidelines and reporting
-├── constants.ts                        # Centralized app-wide constants
-├── index.tsx                           # App entry point
-├── index.css                           # Global stylesheet
-├── index.html                          # HTML shell (if using Vite)
-├── metadata.json                       # Metadata (used in SEO or integrations)
-├── next.config.js                      # Next.js configuration
-├── package.json                        # Project metadata and scripts
-├── package-lock.json                   # Dependency lockfile
-├── postcss.config.js                   # PostCSS config (used with Tailwind)
-├── tailwind.config.js                  # Tailwind CSS configuration
-├── tsconfig.json                       # TypeScript configuration
-├── types.ts                            # Custom TypeScript types
-├── vercel.json                         # Vercel deployment configuration
-└── README.md                           # You’re reading it now!
+├── lib/                                     # External clients or libraries
+│   └── supabaseClient.ts                    # Supabase DB client setup
+│
+├── node_modules/                            # Auto-generated packages (ignored by Git)
+│
+├── public/                                  # Static files like images and SEO
+│   ├── icons/                               # Icon set
+│   ├── seo/                                 # SEO-related assets
+│   ├── .well-known/                         # Site ownership and verification files
+│   ├── browserconfig.xml                    # Browser config for Windows tiles
+│   ├── humans.txt                           # Humans.txt with credits
+│   ├── manifest.json                        # Web app manifest
+│   ├── robots.txt                           # Robots exclusion protocol
+│   └── sitemap.xml                          # Sitemap for SEO
+│
+├── services/                                # API service handlers
+│   ├── articleInteractionService.ts         # Track article likes, comments etc.
+│   ├── articleService.ts                    # Fetch articles from backend
+│   ├── contactService.ts                    # Handles contact form submission
+│   ├── courseService.ts                     # Fetch courses
+│   ├── eventService.ts                      # Fetch events
+│   ├── geminiService.ts                     # Gemini API integration
+│   ├── homeService.ts                       # Data for homepage
+│   ├── profileSectionService.ts             # Modular profile section fetcher
+│   ├── profileService.ts                    # Profile data service
+│   ├── reviewService.ts                     # Fetch and submit reviews
+│   └── viewTrackingService.ts               # Track user views
+│
+├── utils/                                   # Utility/helper functions
+│   ├── imageOptimization.ts                 # Resize & optimize images
+│   └── performance.ts                       # Measure and enhance performance
+│
+├── .env.local                               # Environment variables (local)
+├── .gitignore                               # Files/folders to ignore by Git
+├── App.tsx                                  # App root component
+├── CODE_OF_CONDUCT.md                       # Open source code of conduct
+├── constants.ts                             # Shared constant values
+├── CONTRIBUTING.md                          # Contribution guidelines
+├── index.css                                # Global CSS (Tailwind base)
+├── index.html                               # Main HTML template
+├── index.tsx                                # App entry point
+├── LICENSE                                  # License file
+├── metadata.json                            # Metadata and manifest info
+├── package-lock.json                        # Locked package versions
+├── package.json                             # Project dependencies and scripts
+├── postcss.config.js                        # PostCSS config (used with Tailwind)
+├── README.md                                # Project documentation
+├── SECURITY.md                              # Security policy
+├── tailwind.config.js                       # Tailwind CSS config
+├── techxninjas_logo.png                     # App logo
+├── tsconfig.json                            # TypeScript config
+├── types.ts                                 # Shared TypeScript types
+├── vercel.json                              # Vercel deployment settings
+├── vite.config.ts                           # Vite build tool config
 
 ## ⚙️ Tech Stack
 

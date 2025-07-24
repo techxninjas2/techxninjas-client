@@ -7,6 +7,26 @@ under one roof.
 
 ---
 
+<details>
+  <summary><strong>📑 Table of Contents</strong></summary>
+  
+- [🚀 What is TechXNinjas?](#-what-is-techxninjas)
+- [🧩 Key Features](#-key-features)
+    - [✅ Public Features](#-public-features)
+    - [🔐 Logged-in User Features](#-logged-in-user-features)
+- [⚙️ Tech Stack](#️-tech-stack)
+- [📋 GSSoC 2025 Contributor Task Board](#-gssoc-2025-contributor-task-board)
+- [🔑 Environment Variables](#-environment-variables)
+- [🧪 How to Run Locally](#-how-to-run-locally)
+- [🤝 Contribution Guide](#-contribution-guide)
+- [💬 Join Our Community Discussions!](#-join-our-community-discussions)
+- [👨‍💻 Maintainers](#-maintainers)
+- [📄 License](#-license)
+
+</details>
+
+---
+
 ## 🚀 What is TechXNinjas?
 
 **TechXNinjas** is a full-fledged, production-ready community platform that:
@@ -143,11 +163,10 @@ Feel free to reach out for discussions, suggestions, or contributions!
 
 ## 📄 License
 
-This project is licensed under the **GPL-3.0 license**.
+This project is licensed under the [GPL-3.0 license](LICENSE)
 
 ---
 
 **Made with ❤️ for students, by students.**
 
-```
-```
+---

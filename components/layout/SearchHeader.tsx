@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 // Added for icon use and consistent styling
 import { Search, X } from 'lucide-react';
+import { UserCircle } from 'lucide-react';
 import { supabase } from '../../lib/supabaseClient';
 import { BRAND_NAME } from '../../constants';
 
@@ -205,6 +206,8 @@ const SearchHeader: React.FC = () => {
         zIndex: 60
       }}
     >
+      
+
       <div className="border-b border-gray-200 dark:border-gray-700">
         <div className="container mx-auto px-4 py-3">
           <div className="flex items-center justify-between gap-4">
@@ -322,9 +325,22 @@ const SearchHeader: React.FC = () => {
   }}
 />
                 </div>
-                <div className="hidden lg:flex items-center">
-                 
-                </div>
+                <div className="hidden lg:flex items-center gap-2">
+  <img
+    src="https://jzzyrbaapysjydvjyars.supabase.co/storage/v1/object/sign/techxninjas/TechXNinjas_Text.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8xZjMxMzJhZC04ZDM5LTQ1NGMtODUwMS05NWY1Y2Y5Mzg0MjciLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ0ZWNoeG5pbmphcy9UZWNoWE5pbmphc19UZXh0LnBuZyIsImlhdCI6MTc1MDQ2MTMzMywiZXhwIjoxNzgxOTk3MzMzfQ.0VCZ-IVZyA6GlsNkhJFwH_OaXa4c6gtFiwzx6QKBTHc"
+    alt="TechXNinjas Text Logo"
+    className="h-6 object-contain"
+    onError={(e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+      const target = e.currentTarget;
+      target.style.display = 'none';
+      const parent = target.parentElement;
+      if (parent) {
+        parent.innerHTML = `<span class='text-base font-semibold text-brand-primary'>TechXNinjas</span>`;
+      }
+    }}
+  />
+</div>
+
               </Link>
             </div>
           </div>

@@ -372,6 +372,7 @@ const ExploreFeaturesSection: React.FC = () => {
     { name: 'Take Smart Notes', icon: NotebookText, dev: true },
     { name: 'Track Your Progress', icon: TrendingUp, dev: true },
   ];
+
   return (
     <section className="relative py-16 bg-white dark:bg-gray-800 overflow-hidden">
       <CodingBackground 
@@ -390,27 +391,44 @@ const ExploreFeaturesSection: React.FC = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
           {features.map((feature, index) => (
             <RevealOnScroll key={index} direction="up" delay={300 + index * 150} duration={800}>
-              <div className="relative flex flex-col items-center justify-center bg-brand-off-white h-[230px] dark:bg-brand-dark-gray p-6 rounded-xl border-2 border-brand-primary shadow-lg hover:shadow-xl transition-shadow duration-200 group backdrop-blur-sm bg-opacity-90 dark:bg-opacity-90 ">
-                <feature.icon className="w-12 h-12 mx-auto mb-4 text-brand-primary dark:text-brand-ninja-gold" />
-                <h4 className="text-xl font-semibold mb-2 text-brand-dark-gray dark:text-white">{feature.name}</h4>
-                {feature.dev && (
-                  <span className="absolute top-2 right-2 bg-yellow-400 text-yellow-800 text-xs font-semibold px-2 py-0.5 rounded-full">
-                    In Development
-                  </span>
-                )}
-                {feature.link && (
-                   <Link to={feature.link} target={feature.external ? "_blank" : "_self"} rel={feature.external ? "noopener noreferrer" : ""} className="text-sm text-brand-light-blue hover:underline mt-2 inline-block">
-                      Access Now <ArrowRight className="inline w-4 h-4"/>
-                   </Link>
-                )}
+              <div className="group perspective-[1200px]">
+                <div className="relative flex flex-col items-center justify-center 
+                  bg-brand-off-white h-[230px] dark:bg-brand-dark-gray 
+                  p-6 rounded-xl border-2 border-brand-primary shadow-lg 
+                  hover:shadow-2xl transition-all duration-300 
+                  transform hover:-translate-y-2 hover:scale-[1.03] hover:rotate-[0.6deg] 
+                  backdrop-blur-sm bg-opacity-90 dark:bg-opacity-90">
+
+                  <feature.icon className="w-12 h-12 mx-auto mb-4 text-brand-primary dark:text-brand-ninja-gold" />
+                  <h4 className="text-xl font-semibold mb-2 text-brand-dark-gray dark:text-white">
+                    {feature.name}
+                  </h4>
+
+                  {feature.dev && (
+                    <span className="absolute top-2 right-2 bg-yellow-400 text-yellow-800 text-xs font-semibold px-2 py-0.5 rounded-full">
+                      In Development
+                    </span>
+                  )}
+
+                  {feature.link && (
+                    <Link
+                      to={feature.link}
+                      target={feature.external ? "_blank" : "_self"}
+                      rel={feature.external ? "noopener noreferrer" : ""}
+                      className="text-sm text-brand-light-blue hover:underline mt-2 inline-block"
+                    >
+                      Access Now <ArrowRight className="inline w-4 h-4" />
+                    </Link>
+                  )}
+                </div>
               </div>
             </RevealOnScroll>
           ))}
         </div>
-        
+
         <RevealOnScroll direction="up" delay={900} duration={800}>
           <Link
-            to="/events" 
+            to="/events"
             className="bg-brand-primary hover:bg-opacity-80 text-white font-semibold py-3 px-10 rounded-lg shadow-lg transition duration-300 text-lg transform hover:scale-105"
           >
             Explore Features

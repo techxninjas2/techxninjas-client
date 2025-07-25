@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import { Theme, User } from '../../types';
+import { Rating, Theme, User } from '../../types';
 import { BRAND_NAME } from '../../constants';
 import {
   BellIcon,
@@ -15,7 +15,8 @@ import {
   PanelRightOpen as PanelRightOpenIcon,
   Settings as SettingsIcon, 
   GraduationCap as GraduationCapIcon, 
-  Youtube as YoutubeIcon
+  Youtube as YoutubeIcon,
+  StarIcon  as RatingIcon
 } from 'lucide-react';
 import ThemeToggle from '../ThemeToggle'; 
 
@@ -31,6 +32,7 @@ const navLinks: NavLinkItem[] = [
   { to: '/courses', label: 'Courses', icon: GraduationCapIcon },
   { to: '/giveaways', label: 'Giveaways', icon: GiftIcon },
   { to: '/articles', label: 'Articles', icon: FileTextIcon },
+  { to: '/feedback', label: 'Feedback', icon: RatingIcon},
 ];
 
 const COLLAPSED_WIDTH = "80px"; 

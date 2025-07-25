@@ -552,3 +552,19 @@ export interface HomepageMentor {
   created_at: string;
   updated_at: string;
 }
+
+export enum Rating{
+  RateUs='Rate us',
+  Excellent= 'Excellent',
+  Good= "Good",
+  Average= "Average",
+  Poor= "Poor"
+}
+
+export interface Feedback {
+  id: string,
+  name: string;
+  email: string;
+  message: string;
+  rating: Rating;
+}

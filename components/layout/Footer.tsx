@@ -100,10 +100,13 @@ const Footer: React.FC<FooterProps> = ({ layoutStyle }) => {
           href={social.href}
           target="_blank"
           rel="noopener noreferrer"
-          className={`flex items-center text-gray-600 dark:text-brand-medium-gray ${social.color} hover:underline transition-colors duration-200`}
-        >
-          <social.icon className="w-5 h-5 mr-2" />
-          {social.label}
+          className="group flex items-center transition-colors duration-200">
+          <social.icon className="w-5 h-5 mr-2 text-gray-600 dark:text-gray-300 group-hover:text-brand-primary dark:group-hover:text-brand-ninja-gold transition-colors duration-200" />
+<span className="text-gray-600 dark:text-gray-300 group-hover:text-brand-primary dark:group-hover:text-brand-ninja-gold transition-colors duration-200">
+
+  {social.label}
+</span>
+
         </a>
       </li>
     ))}

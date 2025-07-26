@@ -61,7 +61,131 @@ across colleges and universities.
 - ✍️ Article/Course **submission editor** (in development)
 
 ---
+<pre lang="md"><code>
+## 📁 Project Structure
 
+
+techxninjas-client/
+├── .github/                    # GitHub-specific configurations
+│   └── ISSUE_TEMPLATE/         # Issue templates
+│       ├── bug_report.md
+│       ├── feature_request.md
+│       └── other---general-issue.md
+│
+├── components/                 # Reusable UI components and modal/page elements
+│   ├── auth/                   # Authentication components
+│   │   ├── AuthModal.tsx
+│   │   ├── ForgotPasswordForm.tsx
+│   │   ├── LoginForm.tsx
+│   │   └── RegisterForm.tsx
+│   │
+│   ├── layout/                 # Shared layout components
+│   │   ├── Footer.tsx
+│   │   ├── FormattedText.tsx
+│   │   ├── Header.tsx
+│   │   ├── SearchHeader.tsx
+│   │   └── Sidebar.tsx
+│   │
+│   ├── pages/                  # Route-level pages
+│   │   ├── ArticleDetailPage.tsx
+│   │   ├── ArticlePage.tsx
+│   │   ├── ContactUsPage.tsx
+│   │   ├── CourseDetailPage.tsx
+│   │   ├── CoursePage.tsx
+│   │   ├── CreaterDashboardPage.tsx
+│   │   ├── EventDetailPage.tsx
+│   │   ├── EventsPage.tsx
+│   │   ├── HomePage.tsx
+│   │   ├── PrivacyPolicyPage.tsx
+│   │   ├── PublicProfilePage.tsx
+│   │   ├── TermsOfServicePage.tsx
+│   │   └── UserProfilePage.tsx
+│   │
+│   ├── AddSectionModal.tsx
+│   ├── AnimatedCounter.tsx
+│   ├── CodingBackground.tsx
+│   ├── CreatorApplicationModal.tsx
+│   ├── EditProfileModal.tsx
+│   ├── ErrorBoundary.tsx
+│   ├── EventCard.tsx
+│   ├── EventDetailHeader.tsx
+│   ├── icons.tsx
+│   ├── LazyImage.tsx
+│   ├── MentorsSlider.tsx
+│   ├── OptimizedArticleCard.tsx
+│   ├── OptimizedEventCard.tsx
+│   ├── RevealOnScroll.tsx
+│   ├── ReviewSection.tsx
+│   ├── ScrollToTop.tsx
+│   ├── ScrollToTopButton.tsx
+│   ├── TechFactGenerator.tsx
+│   ├── TestimonialsSlider.tsx
+│   ├── ThemeToggle.tsx
+│   ├── usePageTitle.tsx
+│   ├── VirtualizedList.tsx
+│   └── WhatsAppButton.tsx
+│
+├── context/                   # React context providers
+│   ├── AuthContext.tsx
+│   └── ThemeContext.tsx
+│
+├── hooks/                     # Custom React hooks
+│   ├── useDebounce.ts
+│   └── useInfiniteScroll.ts
+│
+├── lib/                       # External libraries and setups
+│   └── supabaseClient.ts
+│
+├── public/                    # Static assets and SEO files
+│   ├── .well-known/
+│   ├── icons/
+│   ├── seo/
+│   ├── browserconfig.xml
+│   ├── humans.txt
+│   ├── manifest.json
+│   ├── robots.txt
+│   └── sitemap.xml
+│
+├── services/                  # API interaction layer
+│   ├── articleInteractionService.ts
+│   ├── articleService.ts
+│   ├── contactService.ts
+│   ├── courseService.ts
+│   ├── eventService.ts
+│   ├── geminiService.ts
+│   ├── homeService.ts
+│   ├── profileSectionService.ts
+│   ├── profileService.ts
+│   ├── reviewService.ts
+│   └── viewTrackingService.ts
+│
+├── utils/                     # Utility/helper functions
+│   ├── imageOptimization.ts
+│   └── performance.ts
+│
+├── .env.local                 # Local environment variables
+├── .gitignore
+├── App.tsx                    # Root app component
+├── CODE_OF_CONDUCT.md
+├── constants.ts
+├── CONTRIBUTING.md
+├── index.css                  # Global styles (Tailwind base)
+├── index.html                 # App HTML shell
+├── index.tsx                  # App entry point
+├── LICENSE
+├── metadata.json
+├── package-lock.json
+├── package.json
+├── postcss.config.js
+├── README.md
+├── SECURITY.md
+├── tailwind.config.js
+├── techxninjas_logo.png
+├── tsconfig.json
+├── types.ts                   # Shared TypeScript interfaces
+└── vercel.json                # Vercel deployment settings
+
+</code></pre>
 ## ⚙️ Tech Stack
 
 | Category            | Technology                              |

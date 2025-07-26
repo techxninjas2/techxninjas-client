@@ -428,3 +428,105 @@ html {
 .register-button-pulse {
   animation: pulse 2s infinite;
 }
+
+/* Essential Swiper styles for proper functionality */
+.swiper {
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  overflow: hidden;
+  list-style: none;
+  padding: 0;
+  z-index: 1;
+}
+
+.swiper-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  display: flex;
+  transition-property: transform;
+  box-sizing: content-box;
+}
+
+.swiper-slide {
+  flex-shrink: 0;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transition-property: transform;
+}
+
+/* Swiper pagination */
+.swiper-pagination {
+  position: absolute;
+  text-align: center;
+  transition: 0.3s opacity;
+  transform: translate3d(0, 0, 0);
+  z-index: 10;
+}
+
+.swiper-pagination-bullet {
+  width: 8px;
+  height: 8px;
+  display: inline-block;
+  border-radius: 50%;
+  background: #000;
+  opacity: 0.2;
+  margin: 0 4px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.swiper-pagination-bullet-active {
+  opacity: 1;
+  background: #007aff;
+}
+
+/* Custom pagination colors for better visibility */
+.mentor-pagination .swiper-pagination-bullet {
+  background-color: #9d9fa0 !important; /* brand-medium-gray for inactive dots */
+  opacity: 0.6 !important;
+}
+
+.mentor-pagination .swiper-pagination-bullet-active {
+  background-color: #ff6806 !important; /* brand-primary orange for active dot */
+  opacity: 1 !important;
+}
+
+.mentor-pagination .swiper-pagination-bullet:hover {
+  background-color: #ff6806 !important; /* brand-primary orange on hover */
+  opacity: 0.8 !important;
+}
+
+.testimonial-pagination .swiper-pagination-bullet {
+  background-color: #9d9fa0 !important; /* brand-medium-gray for inactive dots */
+  opacity: 0.6 !important;
+}
+
+.testimonial-pagination .swiper-pagination-bullet-active {
+  background-color: #ff6806 !important; /* brand-primary orange for active dot */
+  opacity: 1 !important;
+}
+
+.testimonial-pagination .swiper-pagination-bullet:hover {
+  background-color: #ff6806 !important; /* brand-primary orange on hover */
+  opacity: 0.8 !important;
+}
+
+/* Dark mode support */
+.dark .mentor-pagination .swiper-pagination-bullet,
+.dark .testimonial-pagination .swiper-pagination-bullet {
+  background-color: #6b7280 !important; /* darker gray for dark mode */
+}
+
+.dark .mentor-pagination .swiper-pagination-bullet-active,
+.dark .testimonial-pagination .swiper-pagination-bullet-active {
+  background-color: #ff6806 !important; /* same orange for dark mode */
+}
+
+.dark .mentor-pagination .swiper-pagination-bullet:hover,
+.dark .testimonial-pagination .swiper-pagination-bullet:hover {
+  background-color: #ff6806 !important; /* same orange for dark mode hover */
+}

@@ -61,134 +61,131 @@ across colleges and universities.
 - ✍️ Article/Course **submission editor** (in development)
 
 ---
+<pre lang="md"><code>
+## 📁 Project Structure
 
-## 📁 Project Folder Structure
-
-Overview of the main directories and files used in this project:
 
 techxninjas-client/
-├── .github/                                 # GitHub-specific settings
-│   └── ISSUE_TEMPLATE/
-│       ├── bug_report.md                    # Bug report issue template
-│       ├── feature_request.md               # Feature request template
-│       └── other---general-issue.md         # General issue template
+├── .github/                    # GitHub-specific configurations
+│   └── ISSUE_TEMPLATE/         # Issue templates
+│       ├── bug_report.md
+│       ├── feature_request.md
+│       └── other---general-issue.md
 │
-├── components/                              # Reusable UI components and pages
-│   ├── auth/                                # Authentication-related components
-│   │   ├── AuthModal.tsx                    # Modal for login/register
-│   │   ├── ForgotPasswordForm.tsx           # Forgot password form
-│   │   ├── LoginForm.tsx                    # Login form UI
-│   │   └── RegisterForm.tsx                 # Register form UI
+├── components/                 # Reusable UI components and modal/page elements
+│   ├── auth/                   # Authentication components
+│   │   ├── AuthModal.tsx
+│   │   ├── ForgotPasswordForm.tsx
+│   │   ├── LoginForm.tsx
+│   │   └── RegisterForm.tsx
+│   │
+│   ├── layout/                 # Shared layout components
+│   │   ├── Footer.tsx
+│   │   ├── FormattedText.tsx
+│   │   ├── Header.tsx
+│   │   ├── SearchHeader.tsx
+│   │   └── Sidebar.tsx
+│   │
+│   ├── pages/                  # Route-level pages
+│   │   ├── ArticleDetailPage.tsx
+│   │   ├── ArticlePage.tsx
+│   │   ├── ContactUsPage.tsx
+│   │   ├── CourseDetailPage.tsx
+│   │   ├── CoursePage.tsx
+│   │   ├── CreaterDashboardPage.tsx
+│   │   ├── EventDetailPage.tsx
+│   │   ├── EventsPage.tsx
+│   │   ├── HomePage.tsx
+│   │   ├── PrivacyPolicyPage.tsx
+│   │   ├── PublicProfilePage.tsx
+│   │   ├── TermsOfServicePage.tsx
+│   │   └── UserProfilePage.tsx
+│   │
+│   ├── AddSectionModal.tsx
+│   ├── AnimatedCounter.tsx
+│   ├── CodingBackground.tsx
+│   ├── CreatorApplicationModal.tsx
+│   ├── EditProfileModal.tsx
+│   ├── ErrorBoundary.tsx
+│   ├── EventCard.tsx
+│   ├── EventDetailHeader.tsx
+│   ├── icons.tsx
+│   ├── LazyImage.tsx
+│   ├── MentorsSlider.tsx
+│   ├── OptimizedArticleCard.tsx
+│   ├── OptimizedEventCard.tsx
+│   ├── RevealOnScroll.tsx
+│   ├── ReviewSection.tsx
+│   ├── ScrollToTop.tsx
+│   ├── ScrollToTopButton.tsx
+│   ├── TechFactGenerator.tsx
+│   ├── TestimonialsSlider.tsx
+│   ├── ThemeToggle.tsx
+│   ├── usePageTitle.tsx
+│   ├── VirtualizedList.tsx
+│   └── WhatsAppButton.tsx
 │
-│   ├── layout/                              # Common layout components
-│   │   ├── Footer.tsx                       # Site footer
-│   │   ├── FormattedText.tsx                # Renders HTML-safe rich text
-│   │   ├── Header.tsx                       # Top navigation/header
-│   │   ├── SearchHeader.tsx                 # Search bar header
-│   │   └── Sidebar.tsx                      # Sidebar navigation
+├── context/                   # React context providers
+│   ├── AuthContext.tsx
+│   └── ThemeContext.tsx
 │
-│   ├── pages/                               # Page-level UI components
-│   │   ├── ArticleDetailPage.tsx            # Page to show detailed article content
-│   │   ├── ArticlePage.tsx                  # List of articles or blogs
-│   │   ├── ContactUsPage.tsx                # Contact form and details
-│   │   ├── CourseDetailPage.tsx             # Detailed view of a course
-│   │   ├── CoursePage.tsx                   # Course listing page
-│   │   ├── CreaterDashboardPage.tsx         # Dashboard for content creators
-│   │   ├── EventDetailPage.tsx              # Event detail view
-│   │   ├── EventsPage.tsx                   # List of all events
-│   │   ├── HomePage.tsx                     # Homepage
-│   │   ├── PrivacyPolicyPage.tsx            # Privacy policy content
-│   │   ├── PublicProfilePage.tsx            # View other users’ public profiles
-│   │   ├── TermsOfServicePage.tsx           # Terms and conditions
-│   │   └── UserProfilePage.tsx              # User's personal profile dashboard
+├── hooks/                     # Custom React hooks
+│   ├── useDebounce.ts
+│   └── useInfiniteScroll.ts
 │
-│   ├── AddSectionModal.tsx                  # Modal to add a section
-│   ├── AnimatedCounter.tsx                  # Animated numeric counter
-│   ├── CodingBackground.tsx                 # Coding animation background
-│   ├── CreatorApplicationModal.tsx          # Modal for creator application
-│   ├── EditProfileModal.tsx                 # Modal for editing profile
-│   ├── ErrorBoundary.tsx                    # Error fallback UI
-│   ├── EventCard.tsx                        # Compact event preview card
-│   ├── EventDetailHeader.tsx                # Header section for event detail page
-│   ├── icons.tsx                            # Centralized icons
-│   ├── LazyImage.tsx                        # Lazy loading images
-│   ├── MentorsSlider.tsx                    # Mentor profiles carousel
-│   ├── OptimizedArticleCard.tsx             # Performance-tuned article card
-│   ├── OptimizedEventCard.tsx               # Performance-tuned event card
-│   ├── RevealOnScroll.tsx                   # Scroll-triggered animation
-│   ├── ReviewSection.tsx                    # User reviews/testimonials section
-│   ├── ScrollToTop.tsx                      # Auto-scroll to top on nav
-│   ├── ScrollToTopButton.tsx                # Button to scroll up
-│   ├── TechFactGenerator.tsx                # Generates fun tech facts
-│   ├── TestimonialsSlider.tsx               # Carousel for user testimonials
-│   ├── ThemeToggle.tsx                      # Dark/light mode toggle
-│   ├── usePageTitle.tsx                     # Hook to update page title
-│   ├── VirtualizedList.tsx                  # Efficient long list renderer
-│   └── WhatsAppButton.tsx                   # WhatsApp CTA floating button
+├── lib/                       # External libraries and setups
+│   └── supabaseClient.ts
 │
-├── context/                                 # Global context providers
-│   ├── AuthContext.tsx                      # Authentication state provider
-│   └── ThemeContext.tsx                     # Theme (light/dark) context
+├── public/                    # Static assets and SEO files
+│   ├── .well-known/
+│   ├── icons/
+│   ├── seo/
+│   ├── browserconfig.xml
+│   ├── humans.txt
+│   ├── manifest.json
+│   ├── robots.txt
+│   └── sitemap.xml
 │
-├── hooks/                                   # Custom React hooks
-│   ├── useDebounce.ts                       # Debounce hook for inputs
-│   └── useInfiniteScroll.ts                 # Infinite scroll for lists
+├── services/                  # API interaction layer
+│   ├── articleInteractionService.ts
+│   ├── articleService.ts
+│   ├── contactService.ts
+│   ├── courseService.ts
+│   ├── eventService.ts
+│   ├── geminiService.ts
+│   ├── homeService.ts
+│   ├── profileSectionService.ts
+│   ├── profileService.ts
+│   ├── reviewService.ts
+│   └── viewTrackingService.ts
 │
-├── lib/                                     # External clients or libraries
-│   └── supabaseClient.ts                    # Supabase DB client setup
+├── utils/                     # Utility/helper functions
+│   ├── imageOptimization.ts
+│   └── performance.ts
 │
-├── node_modules/                            # Auto-generated packages (ignored by Git)
-│
-├── public/                                  # Static files like images and SEO
-│   ├── icons/                               # Icon set
-│   ├── seo/                                 # SEO-related assets
-│   ├── .well-known/                         # Site ownership and verification files
-│   ├── browserconfig.xml                    # Browser config for Windows tiles
-│   ├── humans.txt                           # Humans.txt with credits
-│   ├── manifest.json                        # Web app manifest
-│   ├── robots.txt                           # Robots exclusion protocol
-│   └── sitemap.xml                          # Sitemap for SEO
-│
-├── services/                                # API service handlers
-│   ├── articleInteractionService.ts         # Track article likes, comments etc.
-│   ├── articleService.ts                    # Fetch articles from backend
-│   ├── contactService.ts                    # Handles contact form submission
-│   ├── courseService.ts                     # Fetch courses
-│   ├── eventService.ts                      # Fetch events
-│   ├── geminiService.ts                     # Gemini API integration
-│   ├── homeService.ts                       # Data for homepage
-│   ├── profileSectionService.ts             # Modular profile section fetcher
-│   ├── profileService.ts                    # Profile data service
-│   ├── reviewService.ts                     # Fetch and submit reviews
-│   └── viewTrackingService.ts               # Track user views
-│
-├── utils/                                   # Utility/helper functions
-│   ├── imageOptimization.ts                 # Resize & optimize images
-│   └── performance.ts                       # Measure and enhance performance
-│
-├── .env.local                               # Environment variables (local)
-├── .gitignore                               # Files/folders to ignore by Git
-├── App.tsx                                  # App root component
-├── CODE_OF_CONDUCT.md                       # Open source code of conduct
-├── constants.ts                             # Shared constant values
-├── CONTRIBUTING.md                          # Contribution guidelines
-├── index.css                                # Global CSS (Tailwind base)
-├── index.html                               # Main HTML template
-├── index.tsx                                # App entry point
-├── LICENSE                                  # License file
-├── metadata.json                            # Metadata and manifest info
-├── package-lock.json                        # Locked package versions
-├── package.json                             # Project dependencies and scripts
-├── postcss.config.js                        # PostCSS config (used with Tailwind)
-├── README.md                                # Project documentation
-├── SECURITY.md                              # Security policy
-├── tailwind.config.js                       # Tailwind CSS config
-├── techxninjas_logo.png                     # App logo
-├── tsconfig.json                            # TypeScript config
-├── types.ts                                 # Shared TypeScript types
-├── vercel.json                              # Vercel deployment settings
-├── vite.config.ts                           # Vite build tool config
+├── .env.local                 # Local environment variables
+├── .gitignore
+├── App.tsx                    # Root app component
+├── CODE_OF_CONDUCT.md
+├── constants.ts
+├── CONTRIBUTING.md
+├── index.css                  # Global styles (Tailwind base)
+├── index.html                 # App HTML shell
+├── index.tsx                  # App entry point
+├── LICENSE
+├── metadata.json
+├── package-lock.json
+├── package.json
+├── postcss.config.js
+├── README.md
+├── SECURITY.md
+├── tailwind.config.js
+├── techxninjas_logo.png
+├── tsconfig.json
+├── types.ts                   # Shared TypeScript interfaces
+└── vercel.json                # Vercel deployment settings
 
+</code></pre>
 ## ⚙️ Tech Stack
 
 | Category            | Technology                              |

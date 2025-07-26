@@ -141,6 +141,7 @@ export interface AuthContextType {
   logout: () => Promise<void>;
   resetPasswordForEmail: (email: string, captchaToken?: string) => Promise<void>;
   signInWithGoogle: (captchaToken?: string) => Promise<void>; 
+  signInWithGitHub: (captchaToken?: string) => Promise<void>;
   sendMagicLink: (email: string, captchaToken?: string) => Promise<void>;
   clearError: () => void;
 }

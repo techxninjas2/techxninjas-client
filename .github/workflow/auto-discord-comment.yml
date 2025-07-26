@@ -3,26 +3,28 @@ name: Auto Comment with Discord Invite
 on:
   issues:
     types: [opened]
-  pull_request_target:
-    types: [opened]
 
 permissions:
   issues: write
-  pull-requests: write
 
 jobs:
   comment:
     runs-on: ubuntu-latest
+
     steps:
+      - name: Get issue number
+        id: vars
+        run: echo "TARGET_NUMBER=${{ github.event.issue.number }}" >> $GITHUB_OUTPUT
+
       - name: Post Discord invite comment
         uses: peter-evans/create-or-update-comment@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          issue-number: ${{ github.event.issue.number || github.event.pull_request.number }}
+          issue-number: ${{ steps.vars.outputs.TARGET_NUMBER }}
           body: |
             ## 👋 Welcome, Contributor!
 
-            Thank you for opening this Issue/PR on the [Advanced-Discord-Bot](https://github.com/harshendram/Advanced-Discord-Bot) project!
+            Thank you for opening this **issue**. We're glad to have you here!
 
             > 💡 **Need help, want to share ideas, or just hang out with the team?**
 

@@ -8,7 +8,7 @@ permissions:
   issues: write
 
 jobs:
-  assign-and-label:
+  assign-label-comment:
     runs-on: ubuntu-latest
     steps:
       - name: Add labels to issue
@@ -18,10 +18,37 @@ jobs:
           labels: |
             gssoc25
             level-required
-          # handles duplicates gracefully — no error
 
       - name: Assign issue to author
         uses: pozil/auto-assign-issue@v1
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           assignees: ${{ github.actor }}
+
+      - name: Post welcome comment
+        uses: peter-evans/create-or-update-comment@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          issue-number: ${{ github.event.issue.number }}
+          body: |
+            ---
+            ## 👋 Hello @${{ github.actor }}!
+
+            🎯 Your issue has been:
+            - 🏷️ **Labeled:** `gssoc25`, `level-required`
+            - 🙋‍♂️ **Assigned to you**
+
+            ---
+            ### ✅ You may now start working on this issue!
+
+            💬 **Strict Rule for Communication:**
+            > 📌 _All doubts must be asked **only on [our Discord Server](https://discord.gg/zsuxfG76PS)**._
+
+            🚫 **Avoid:**
+            - Tagging mentors or project admins unnecessarily
+            - Asking for label/assignment changes
+
+            ---
+            🛠️ Let's build something awesome together!
+
+            > 🤖 *This is an auto-generated message by the TechX Ninjas bot.*

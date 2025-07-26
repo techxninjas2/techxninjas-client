@@ -1,0 +1,27 @@
+name: Auto Assign & Label Issues
+
+on:
+  issues:
+    types: [opened]
+
+permissions:
+  issues: write
+
+jobs:
+  assign-and-label:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Add labels to issue
+        uses: actions-ecosystem/action-add-labels@v1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          labels: |
+            gssoc25
+            level-required
+          # handles duplicates gracefully — no error
+
+      - name: Assign issue to author
+        uses: pozil/auto-assign-issue@v1
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          assignees: ${{ github.actor }}

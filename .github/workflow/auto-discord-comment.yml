@@ -3,8 +3,12 @@ name: Auto Comment with Discord Invite
 on:
   issues:
     types: [opened]
-  pull_request:
+  pull_request_target:
     types: [opened]
+
+permissions:
+  issues: write
+  pull-requests: write
 
 jobs:
   comment:
@@ -18,9 +22,7 @@ jobs:
           body: |
             ## 👋 Welcome, Contributor!
 
-            Thank you for opening this ${{
-              github.event_name == 'issues' && 'issue' || 'pull request'
-            }}. We're glad to have you here!
+            Thank you for opening this Issue/PR on the [Advanced-Discord-Bot](https://github.com/harshendram/Advanced-Discord-Bot) project!
 
             > 💡 **Need help, want to share ideas, or just hang out with the team?**
 

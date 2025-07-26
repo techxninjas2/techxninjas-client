@@ -26,6 +26,7 @@ import ThemeToggle from './components/ThemeToggle';
 import TechFactGenerator from './components/TechFactGenerator';
 import { SpeedInsights } from "@vercel/speed-insights/react";
 import { Analytics } from '@vercel/analytics/react';
+import FeedbackPage from './components/pages/FeedbackPage';
 
 const PlaceholderPage: React.FC<{ title: string }> = ({ title }) => {
   usePageTitle(title); 
@@ -97,6 +98,7 @@ const App: React.FC = () => {
               <Route path="/giveaways" element={<PlaceholderPage title="Giveaways" />} />
               <Route path="/contact-us" element={<ContactUsPage />} />
               <Route path="/about-us" element={<PlaceholderPage title="About Us" />} />
+              <Route path="/feedback" element={<FeedbackPage />} />
               <Route 
                 path="/dashboard" 
                 element={

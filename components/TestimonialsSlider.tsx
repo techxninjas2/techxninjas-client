@@ -1,14 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { Testimonial } from '../types';
-import { useInView } from 'react-intersection-observer';
+import React, { useEffect, useState } from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import { Testimonial } from "../types";
+import { useInView } from "react-intersection-observer";
 
 // Import Swiper React components and styles
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Autoplay, Pagination } from 'swiper/modules';
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Autoplay, Pagination } from "swiper/modules";
 
 interface TestimonialsSliderProps {
   testimonials: Testimonial[];
@@ -21,7 +18,7 @@ const TestimonialsSlider: React.FC<TestimonialsSliderProps> = ({
   testimonials,
   autoplay = true,
   delay = 3000,
-  className = ''
+  className = "",
 }) => {
   const [isMounted, setIsMounted] = useState(false);
   const { ref, inView } = useInView({
@@ -46,37 +43,51 @@ const TestimonialsSlider: React.FC<TestimonialsSliderProps> = ({
         slidesPerView={1}
         breakpoints={{
           640: { slidesPerView: 2 },
-          1024: { slidesPerView: 3 }
+          1024: { slidesPerView: 3 },
         }}
         navigation={{
-          prevEl: '.testimonial-prev',
-          nextEl: '.testimonial-next',
+          prevEl: ".testimonial-prev",
+          nextEl: ".testimonial-next",
         }}
         pagination={{
           clickable: true,
-          el: '.testimonial-pagination',
+          el: ".testimonial-pagination",
         }}
-        autoplay={autoplay && inView ? {
-          delay: delay,
-          disableOnInteraction: false,
-          pauseOnMouseEnter: true
-        } : false}
+        autoplay={
+          autoplay && inView
+            ? {
+                delay: delay,
+                disableOnInteraction: false,
+                pauseOnMouseEnter: true,
+              }
+            : false
+        }
         loop={true}
         className="py-8"
       >
         {testimonials.map((testimonial) => (
           <SwiperSlide key={testimonial.id} className="flex">
             <div className="bg-brand-off-white dark:bg-brand-dark-gray p-6 rounded-xl shadow-lg flex flex-col items-center text-center transform hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 backdrop-blur-sm bg-opacity-90 dark:bg-opacity-90 min-h-[340px] h-full w-full">
-
-              <img 
-                src={testimonial.avatarUrl || `https://ui-avatars.com/api/?name=${encodeURIComponent(testimonial.name)}&background=random&color=fff&size=96`} 
-                alt={testimonial.name} 
+              <img
+                src={
+                  testimonial.avatarUrl ||
+                  `https://ui-avatars.com/api/?name=${encodeURIComponent(
+                    testimonial.name
+                  )}&background=random&color=fff&size=96`
+                }
+                alt={testimonial.name}
                 className="w-20 h-20 sm:w-24 sm:h-24 rounded-full mb-4 shadow-md"
               />
-              <p className="text-gray-600 dark:text-gray-300 mb-4 italic text-sm sm:text-base">"{testimonial.review}"</p>
+              <p className="text-gray-600 dark:text-gray-300 mb-4 italic text-sm sm:text-base">
+                "{testimonial.review}"
+              </p>
               <div className="mt-auto">
-                <h4 className="font-semibold text-brand-primary dark:text-brand-ninja-gold text-sm sm:text-base">{testimonial.name}</h4>
-                <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">{testimonial.designation}</p>
+                <h4 className="font-semibold text-brand-primary dark:text-brand-ninja-gold text-sm sm:text-base">
+                  {testimonial.name}
+                </h4>
+                <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">
+                  {testimonial.designation}
+                </p>
               </div>
             </div>
           </SwiperSlide>

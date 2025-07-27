@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useLocation } from 'react-router-dom';
 import { Theme, User } from '../../types';
 import { BRAND_NAME } from '../../constants';
 import {
@@ -24,6 +24,8 @@ type NavLinkItem = {
   label: string;
   icon: React.ElementType;
 };
+// Add at the top (helper function)
+const isSidebarFullyCollapsed = (state: SidebarState) => state === 'collapsed';
 
 const navLinks: NavLinkItem[] = [
   { to: '/', label: 'Home', icon: HomeIcon },
@@ -66,7 +68,7 @@ const SidebarNavItem: React.FC<{
     onMouseLeave={!isExpanded && onMouseLeave ? onMouseLeave : undefined}
     onClick={onClick}
     className={({ isActive }) =>
-      `flex items-center space-x-3 px-3 py-2.5 rounded-md transition-colors duration-200 mt-10 ${
+      `flex items-center space-x-3 px-3 py-2.5 rounded-md transition-colors duration-200 ${
         isActive
           ? 'bg-brand-primary text-white'
           : 'text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
@@ -90,7 +92,9 @@ const Sidebar: React.FC<SidebarProps> = ({
   const [sidebarState, setSidebarState] = useState<SidebarState>('collapsed');
   const [activeTooltip, setActiveTooltip] = useState<{ text: string; top: number; left: number } | null>(null);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
+  const [lastRouteChange, setLastRouteChange] = useState<number>(Date.now());
   const sidebarRef = useRef<HTMLElement>(null);
+  const location = useLocation();
 
   const isEffectivelyOpen = sidebarState === 'hover-expanded' || sidebarState === 'pinned-expanded';
   const currentWidthClass = isEffectivelyOpen ? 'w-64' : 'w-20';
@@ -98,6 +102,11 @@ const Sidebar: React.FC<SidebarProps> = ({
   useEffect(() => {
     onWidthChange(isEffectivelyOpen ? EXPANDED_WIDTH : COLLAPSED_WIDTH);
   }, [isEffectivelyOpen, onWidthChange]);
+
+  useEffect(() => {
+    setActiveTooltip(null);
+    setLastRouteChange(Date.now());
+  }, [location.pathname]);
 
   const handleMouseEnterSidebar = useCallback(() => {
     if (sidebarState === 'collapsed') {
@@ -141,15 +150,19 @@ const Sidebar: React.FC<SidebarProps> = ({
   };
 
   const handleIconMouseEnter = (event: React.MouseEvent<HTMLAnchorElement>, label: string) => {
-    if (!isEffectivelyOpen) {
-      const rect = event.currentTarget.getBoundingClientRect();
-      setActiveTooltip({
-        text: label,
-        top: rect.top + rect.height / 2, 
-        left: rect.right + 10, 
-      });
-    }
-  };
+  if (!isSidebarFullyCollapsed(sidebarState)) return; // Only allow tooltip when fully collapsed
+
+  if (Date.now() - lastRouteChange < 300) return;
+
+  const rect = event.currentTarget.getBoundingClientRect();
+  setActiveTooltip({
+    text: label,
+    top: rect.top + rect.height / 2,
+    left: rect.right + 10,
+  });
+};
+
+
 
   const handleIconMouseLeave = () => {
     setActiveTooltip(null);
@@ -272,6 +285,7 @@ const Sidebar: React.FC<SidebarProps> = ({
         ref={sidebarRef}
         onMouseEnter={handleMouseEnterSidebar}
         onMouseLeave={handleMouseLeaveSidebar}
+        onClick={() => setActiveTooltip(null)}
         className={`fixed top-[64px] left-0 h-[calc(100vh-64px)] bg-white dark:bg-gray-800 shadow-lg transition-all duration-300 ease-in-out flex flex-col ${currentWidthClass} py-4`}
         style={{ 
           zIndex: 40,
@@ -295,6 +309,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                 isExpanded={isEffectivelyOpen}
                 onMouseEnter={handleIconMouseEnter}
                 onMouseLeave={handleIconMouseLeave}
+                onClick={() => setActiveTooltip(null)}
                 title={link.label}
               >
                 <IconComponent className="w-5 h-5 lucide" />
@@ -330,20 +345,21 @@ const Sidebar: React.FC<SidebarProps> = ({
         </button>
       </aside>
 
-      {activeTooltip && (
-        <div
-          className="fixed bg-gray-900 text-white text-xs px-2 py-1 rounded-md shadow-lg pointer-events-none"
-          style={{ 
-            top: activeTooltip.top, 
-            left: activeTooltip.left, 
-            transform: 'translateY(-50%)',
-            zIndex: 1000
-          }}
-          role="tooltip"
-        >
-          {activeTooltip.text}
-        </div>
-      )}
+      {isSidebarFullyCollapsed(sidebarState) && activeTooltip && (
+  <div
+    className="fixed bg-gray-900 text-white text-xs px-2 py-1 rounded-md shadow-lg pointer-events-none"
+    style={{ 
+      top: activeTooltip.top, 
+      left: activeTooltip.left, 
+      transform: 'translateY(-50%)',
+      zIndex: 1000
+    }}
+    role="tooltip"
+  >
+    {activeTooltip.text}
+  </div>
+)}
+
     </>
   );
 };

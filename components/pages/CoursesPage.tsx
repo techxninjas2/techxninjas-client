@@ -9,6 +9,7 @@ import CodingBackground from '../CodingBackground';
 import RevealOnScroll from '../RevealOnScroll';
 import CreatorApplicationModal from '../CreatorApplicationModal';
 import LazyImage from '../LazyImage';
+import PlaylistPanel from '../PlaylistPanel';
 
 const CourseCard: React.FC<{ course: Course; featured?: boolean }> = ({ course, featured = false }) => {
   const cardClasses = featured 
@@ -141,6 +142,44 @@ const CoursesPage: React.FC = () => {
   const [isCreatorModalOpen, setIsCreatorModalOpen] = useState(false);
   const [isSearching, setIsSearching] = useState(false);
 
+  const playlists = [
+    {
+      title: 'Python for Beginners (Full Course) | #100DaysOfCode Programming Tutorial',
+      thumbnailUrl: 'https://i.ytimg.com/vi/7wnove7K-ZQ/hqdefault.jpg?sqp=-oaymwEjCNACELwBSFryq4qpAxUIARUAAAAAGAElAADIQj0AgKJDeAE=&rs=AOn4CLCoAU6Bn0_g_jlxaUl8nsnDLLuPJQ',
+      playlistUrl: 'https://youtube.com/playlist?list=PLu0W_9lII9agwh1XjRt242xIpHhPT2llg&si=-eT3t4ATiG0k5rgc',
+      channelName: 'by CodeWithHarry',
+      tags: ['programming-languages', 'python', 'all'],
+    },
+    {
+      title: 'Java Programming',
+      thumbnailUrl: 'https://i.ytimg.com/vi/VHbSopMyc4M/hqdefault.jpg?sqp=-oaymwEjCNACELwBSFryq4qpAxUIARUAAAAAGAElAADIQj0AgKJDeAE=&rs=AOn4CLD6BgDzPLPry1Wa5BofxB1om5j69A',
+      playlistUrl: 'https://youtube.com/playlist?list=PLBlnK6fEyqRjKA_NuK9mHmlk0dZzuP1P5&si=lwEr0EMYjMxQXo8e',
+      channelName: 'by Neso Academy',
+      tags: ['programming-languages', 'C', 'all'],
+    },
+    {
+      title: 'Full Stack Web Development Complete Course',
+      thumbnailUrl: 'https://i.ytimg.com/vi/bWACo_pvKxg/hqdefault.jpg?sqp=-oaymwEjCNACELwBSFryq4qpAxUIARUAAAAAGAElAADIQj0AgKJDeAE=&rs=AOn4CLAMaXaa4jZd9UHicttQow8_KXx2aQ',
+      playlistUrl: 'https://youtube.com/playlist?list=PLSDeUiTMfxW6VChKWb26Z_mPR4f6fAmMV&si=tYLA1InrIl0UR8Vr',
+      channelName: 'by HuXn WebDev',
+      tags: ['web-development', 'full-stack', 'all'],
+    },
+    {
+      title: 'C Programming for Beginners',
+      thumbnailUrl: 'https://s1.ezgif.com/tmp/ezgif-1d2a16232fb68.png',
+      playlistUrl: 'https://youtube.com/playlist?list=PL98qAXLA6aftD9ZlnjpLhdQAOFI8xIB6e&si=xMR-Gw4y8F6L2rbI',
+      channelName: 'by Programiz',
+      tags: ['programming-languages', 'C', 'all'],
+    },
+    {
+      title: 'Python Language Full Course (2025-26)',
+      thumbnailUrl: 'https://i.ytimg.com/vi/t2_Q2BRzeEE/hqdefault.jpg?sqp=-oaymwEjCNACELwBSFryq4qpAxUIARUAAAAAGAElAADIQj0AgKJDeAE=&rs=AOn4CLBgaayqAiGS05zcl33hpAyAeb1o5Q',
+      playlistUrl: 'https://youtube.com/playlist?list=PLGjplNEQ1it8-0CmoljS5yeV-GlKSUEt0&si=oXG72ITkWLzcJ3dh',
+      channelName: 'by Shradha Khapra',
+      tags: ['programming-languages', 'python', 'all'],
+    },
+  ];
+
   //  just load initial data only once
   useEffect(() => {
     loadInitialData();
@@ -239,7 +278,28 @@ const CoursesPage: React.FC = () => {
     );
   }, [allCourses, searchTerm]);
 
+  // Filter playlists for display based on search term
+  const displayedPlaylists = useMemo(() => {
+    if (!searchTerm.trim()) return playlists.filter(pl => selectedCategory === 'all' || pl.tags.includes(selectedCategory));
+    const lowerSearch = searchTerm.toLowerCase();
+    return playlists.filter(pl =>
+      (selectedCategory === 'all' || pl.tags.includes(selectedCategory)) &&
+      (
+        pl.title.toLowerCase().includes(lowerSearch) ||
+        pl.channelName.toLowerCase().includes(lowerSearch) ||
+        pl.tags.some(tag => tag.toLowerCase().includes(lowerSearch))
+      )
+    );
+  }, [playlists, searchTerm, selectedCategory]);
+
   const hasActiveFilters = selectedCategory !== 'all' || selectedDifficulty !== 'all' || searchTerm !== '';
+
+  // Determine if playlist should be shown in current filter
+  const showPlaylist = useMemo(() => {
+    if (selectedCategory === 'all') return true;
+    // Check if any playlist tag matches selectedCategory
+    return playlists.some(pl => pl.tags.includes(selectedCategory));
+  }, [selectedCategory]);
 
   if (loading) {
     return (
@@ -388,112 +448,107 @@ const CoursesPage: React.FC = () => {
           </RevealOnScroll>
         )}
 
-        {/* Categories Section */}
-        <section className="mb-12">
-          <RevealOnScroll direction="up" delay={500} duration={800}>
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8">
-              <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-4 sm:mb-0 flex items-center">
-                <BookOpen className="w-7 h-7 text-brand-primary dark:text-brand-ninja-gold mr-3" />
-                Browse by Category
-                {isSearching && (
-                  <div className="ml-3 w-4 h-4 border-2 border-brand-primary border-t-transparent rounded-full animate-spin"></div>
-                )}
-              </h2>
-              <div className="text-sm text-gray-500 dark:text-gray-400">
-                {isSearching ? (
-                  <span className="flex items-center gap-2">
-                    <div className="w-3 h-3 bg-brand-primary rounded-full animate-pulse"></div>
-                    Filtering...
-                  </span>
-                ) : (
-                  `${filteredCategories.length} categories available`
-                )}
-              </div>
-            </div>
-          </RevealOnScroll>
-          
-          <div className={`grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8 gap-4 lg:gap-6 transition-opacity duration-300 ${isSearching ? 'opacity-70' : 'opacity-100'}`}>
-            {filteredCategories.slice(0, 16).map((category, index) => (
-              <RevealOnScroll key={category.id} direction="up" delay={600 + index * 50} duration={800}>
-                <button
-                  onClick={() => setSelectedCategory(category.slug)}
-                  className={`group relative w-full aspect-square p-4 rounded-2xl border transition-all duration-500 text-center backdrop-blur-sm overflow-hidden ${
-                    selectedCategory === category.slug
-                      ? 'border-brand-primary bg-gradient-to-br from-brand-primary/15 to-brand-primary/5 dark:from-brand-ninja-gold/15 dark:to-brand-ninja-gold/5 shadow-xl shadow-brand-primary/20 dark:shadow-brand-ninja-gold/20 transform scale-105 -translate-y-2'
-                      : 'border-gray-200/60 dark:border-gray-700/60 bg-white/70 dark:bg-gray-800/70 hover:border-brand-primary/50 hover:bg-white/90 dark:hover:bg-gray-800/90 hover:shadow-lg hover:shadow-gray-400/20 dark:hover:shadow-gray-900/40 hover:scale-105 hover:-translate-y-1'
-                  }`}
-                >
-                  {/* Background pattern */}
-                  <div className="absolute inset-0 opacity-5">
-                    <div className="absolute top-2 right-2 w-8 h-8 rounded-full bg-current"></div>
-                    <div className="absolute bottom-2 left-2 w-4 h-4 rounded-full bg-current"></div>
-                  </div>
-                  
-                  {/* Content container */}
-                  <div className="relative z-10 h-full flex flex-col items-center justify-center gap-2">
-                    {/* Icon */}
-                    <div className={`text-4xl md:text-5xl transition-all duration-300 ${
-                      selectedCategory === category.slug 
-                        ? 'scale-110 filter drop-shadow-lg' 
-                        : 'group-hover:scale-110 group-hover:filter group-hover:drop-shadow-lg'
-                    }`}>
-                      {category.icon}
-                    </div>
-                    
-                    {/* Category name */}
-                    <h3 className={`text-xs sm:text-sm md:text-base font-semibold text-center leading-tight transition-all duration-300 px-1 ${
-                      selectedCategory === category.slug
-                        ? 'text-brand-primary dark:text-brand-ninja-gold'
-                        : 'text-gray-800 dark:text-gray-200 group-hover:text-brand-primary dark:group-hover:text-brand-ninja-gold'
-                    }`}>
-                      <span className="line-clamp-2 break-words">
-                        {category.name}
-                      </span>
-                    </h3>
-                  </div>
-
-                  {/* Selected indicator */}
-                  {selectedCategory === category.slug && (
-                    <div className="absolute -top-2 -right-2 w-6 h-6 bg-brand-primary dark:bg-brand-ninja-gold rounded-full flex items-center justify-center shadow-lg animate-pulse">
-                      <div className="w-2 h-2 bg-white rounded-full"></div>
-                    </div>
+        {/* Categories Section - hide when searching */}
+        {!searchTerm && (
+          <section className="mb-12">
+            <RevealOnScroll direction="up" delay={500} duration={800}>
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8">
+                <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-4 sm:mb-0 flex items-center">
+                  <BookOpen className="w-7 h-7 text-brand-primary dark:text-brand-ninja-gold mr-3" />
+                  Browse by Category
+                  {isSearching && (
+                    <div className="ml-3 w-4 h-4 border-2 border-brand-primary border-t-transparent rounded-full animate-spin"></div>
                   )}
-
-                  {/* Hover gradient overlay */}
-                  <div className={`absolute inset-0 bg-gradient-to-br from-brand-primary/8 via-transparent to-brand-primary/4 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl ${
-                    selectedCategory === category.slug ? 'opacity-100' : ''
-                  }`}></div>
-                  
-                  {/* Shine effect on hover */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -skew-x-12 transform -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-out"></div>
-                </button>
-              </RevealOnScroll>
-            ))}
-          </div>
-          
-          {filteredCategories.length === 0 && categorySearchTerm && (
-            <RevealOnScroll direction="up" delay={600} duration={800}>
-              <div className="text-center py-12 px-6 bg-gradient-to-br from-white/80 to-gray-50/80 dark:from-gray-800/80 dark:to-gray-900/80 rounded-3xl backdrop-blur-sm border border-gray-200/50 dark:border-gray-700/50">
-                <div className="text-6xl mb-4 opacity-50">🔍</div>
-                <h3 className="text-xl font-bold text-gray-700 dark:text-gray-300 mb-3">
-                  No categories found
-                </h3>
-                <p className="text-gray-500 dark:text-gray-400 max-w-md mx-auto">
-                  We couldn't find any categories matching <span className="font-semibold text-brand-primary dark:text-brand-ninja-gold">"{categorySearchTerm}"</span>. Try searching with different keywords.
-                </p>
-                <button 
-                  onClick={() => {
-                    setSearchTerm('');
-                    setCategorySearchTerm('');
-                  }}
-                  className="mt-4 px-6 py-2 bg-brand-primary hover:bg-brand-ninja-gold text-white rounded-full transition-colors duration-300 text-sm font-medium"
-                >
-                  Clear search
-                </button>
+                </h2>
+                <div className="text-sm text-gray-500 dark:text-gray-400">
+                  {isSearching ? (
+                    <span className="flex items-center gap-2">
+                      <div className="w-3 h-3 bg-brand-primary rounded-full animate-pulse"></div>
+                      Filtering...
+                    </span>
+                  ) : (
+                    `${filteredCategories.length} categories available`
+                  )}
+                </div>
               </div>
             </RevealOnScroll>
-          )}
-        </section>
+            <div className={`grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8 gap-4 lg:gap-6 transition-opacity duration-300 ${isSearching ? 'opacity-70' : 'opacity-100'}`}>
+              {filteredCategories.slice(0, 16).map((category, index) => (
+                <RevealOnScroll key={category.id} direction="up" delay={600 + index * 50} duration={800}>
+                  <button
+                    onClick={() => setSelectedCategory(category.slug)}
+                    className={`group relative w-full aspect-square p-4 rounded-2xl border transition-all duration-500 text-center backdrop-blur-sm overflow-hidden ${
+                      selectedCategory === category.slug
+                        ? 'border-brand-primary bg-gradient-to-br from-brand-primary/15 to-brand-primary/5 dark:from-brand-ninja-gold/15 dark:to-brand-ninja-gold/5 shadow-xl shadow-brand-primary/20 dark:shadow-brand-ninja-gold/20 transform scale-105 -translate-y-2'
+                        : 'border-gray-200/60 dark:border-gray-700/60 bg-white/70 dark:bg-gray-800/70 hover:border-brand-primary/50 hover:bg-white/90 dark:hover:bg-gray-800/90 hover:shadow-lg hover:shadow-gray-400/20 dark:hover:shadow-gray-900/40 hover:scale-105 hover:-translate-y-1'
+                    }`}
+                  >
+                    {/* Background pattern */}
+                    <div className="absolute inset-0 opacity-5">
+                      <div className="absolute top-2 right-2 w-8 h-8 rounded-full bg-current"></div>
+                      <div className="absolute bottom-2 left-2 w-4 h-4 rounded-full bg-current"></div>
+                    </div>
+                    {/* Content container */}
+                    <div className="relative z-10 h-full flex flex-col items-center justify-center gap-2">
+                      {/* Icon */}
+                      <div className={`text-4xl md:text-5xl transition-all duration-300 ${
+                        selectedCategory === category.slug 
+                          ? 'scale-110 filter drop-shadow-lg' 
+                          : 'group-hover:scale-110 group-hover:filter group-hover:drop-shadow-lg'
+                      }`}>
+                        {category.icon}
+                      </div>
+                      {/* Category name */}
+                      <h3 className={`text-xs sm:text-sm md:text-base font-semibold text-center leading-tight transition-all duration-300 px-1 ${
+                        selectedCategory === category.slug
+                          ? 'text-brand-primary dark:text-brand-ninja-gold'
+                          : 'text-gray-800 dark:text-gray-200 group-hover:text-brand-primary dark:group-hover:text-brand-ninja-gold'
+                      }`}>
+                        <span className="line-clamp-2 break-words">
+                          {category.name}
+                        </span>
+                      </h3>
+                    </div>
+                    {/* Selected indicator */}
+                    {selectedCategory === category.slug && (
+                      <div className="absolute -top-2 -right-2 w-6 h-6 bg-brand-primary dark:bg-brand-ninja-gold rounded-full flex items-center justify-center shadow-lg animate-pulse">
+                        <div className="w-2 h-2 bg-white rounded-full"></div>
+                      </div>
+                    )}
+                    {/* Hover gradient overlay */}
+                    <div className={`absolute inset-0 bg-gradient-to-br from-brand-primary/8 via-transparent to-brand-primary/4 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl ${
+                      selectedCategory === category.slug ? 'opacity-100' : ''
+                    }`}></div>
+                    {/* Shine effect on hover */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -skew-x-12 transform -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-out"></div>
+                  </button>
+                </RevealOnScroll>
+              ))}
+            </div>
+            {filteredCategories.length === 0 && categorySearchTerm && (
+              <RevealOnScroll direction="up" delay={600} duration={800}>
+                <div className="text-center py-12 px-6 bg-gradient-to-br from-white/80 to-gray-50/80 dark:from-gray-800/80 dark:to-gray-900/80 rounded-3xl backdrop-blur-sm border border-gray-200/50 dark:border-gray-700/50">
+                  <div className="text-6xl mb-4 opacity-50">🔍</div>
+                  <h3 className="text-xl font-bold text-gray-700 dark:text-gray-300 mb-3">
+                    No categories found
+                  </h3>
+                  <p className="text-gray-500 dark:text-gray-400 max-w-md mx-auto">
+                    We couldn't find any categories matching <span className="font-semibold text-brand-primary dark:text-brand-ninja-gold">"{categorySearchTerm}"</span>. Try searching with different keywords.
+                  </p>
+                  <button 
+                    onClick={() => {
+                      setSearchTerm('');
+                      setCategorySearchTerm('');
+                    }}
+                    className="mt-4 px-6 py-2 bg-brand-primary hover:bg-brand-ninja-gold text-white rounded-full transition-colors duration-300 text-sm font-medium"
+                  >
+                    Clear search
+                  </button>
+                </div>
+              </RevealOnScroll>
+            )}
+          </section>
+        )}
 
         {featuredCourses.length > 0 && !searchTerm && (
           <section className="mb-12">
@@ -531,7 +586,25 @@ const CoursesPage: React.FC = () => {
             </div>
           </RevealOnScroll>
 
-          {displayedCourses.length > 0 ? (
+          {/* Playlist Panels - show above course list if relevant */}
+          {showPlaylist && displayedPlaylists.length > 0 && (
+            <RevealOnScroll direction="up" delay={950} duration={800}>
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-8">
+                {displayedPlaylists.map((pl, idx) => (
+                  <PlaylistPanel
+                    key={pl.playlistUrl + idx}
+                    title={pl.title}
+                    thumbnailUrl={pl.thumbnailUrl}
+                    playlistUrl={pl.playlistUrl}
+                    channelName={pl.channelName}
+                  />
+                ))}
+              </div>
+            </RevealOnScroll>
+          )}
+
+          {/* Only show 'No courses found' if there are no courses AND no playlists for this filter/search */}
+          {(displayedCourses.length > 0 || (showPlaylist && displayedPlaylists.length > 0)) ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
               {displayedCourses.map((course, index) => (
                 <RevealOnScroll key={course.id} direction="up" delay={1000 + index * 100} duration={800}>

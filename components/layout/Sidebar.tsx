@@ -58,7 +58,8 @@ const SidebarNavItem: React.FC<{
   onClick?: () => void;
   title: string;
   children: React.ReactNode;
-}> = ({ to, isExpanded, onMouseEnter, onMouseLeave, onClick, title, children }) => (
+  className?: string;
+}> = ({ to, isExpanded, onMouseEnter, onMouseLeave, onClick, title, children, className }) => (
   <NavLink
     to={to}
     title={!isExpanded ? title : undefined}
@@ -66,11 +67,11 @@ const SidebarNavItem: React.FC<{
     onMouseLeave={!isExpanded && onMouseLeave ? onMouseLeave : undefined}
     onClick={onClick}
     className={({ isActive }) =>
-      `flex items-center space-x-3 px-3 py-2.5 rounded-md transition-colors duration-200 mt-10 ${
+      `flex items-center space-x-3 px-3 py-2.5 rounded-md transition-colors duration-200 ${
         isActive
           ? 'bg-brand-primary text-white'
           : 'text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
-      } ${!isExpanded ? 'justify-center' : ''}`
+      } ${!isExpanded ? 'justify-center' : ''} ${className || ''}`
     }
   >
     {children}
@@ -113,27 +114,19 @@ const Sidebar: React.FC<SidebarProps> = ({
   }, [sidebarState]);
 
   const handleTogglePin = () => {
-    if (sidebarState === 'pinned-expanded') {
-      setSidebarState('collapsed');
-    } else {
-      setSidebarState('pinned-expanded');
-    }
+    setSidebarState(sidebarState === 'pinned-expanded' ? 'collapsed' : 'pinned-expanded');
     setActiveTooltip(null); 
   };
-  
+
   const handleLogout = async () => {
-    if (isLoggingOut) return; // Prevent multiple logout attempts
-    
+    if (isLoggingOut) return;
     setIsLoggingOut(true);
     closeUserDropdown();
-    
     try {
       await logout();
-      // Optionally show success message
       console.log('Logout successful');
     } catch (error) {
       console.error('Logout failed:', error);
-      // Show error message to user if needed
       alert('Logout failed. Please try again.');
     } finally {
       setIsLoggingOut(false);
@@ -145,8 +138,8 @@ const Sidebar: React.FC<SidebarProps> = ({
       const rect = event.currentTarget.getBoundingClientRect();
       setActiveTooltip({
         text: label,
-        top: rect.top + rect.height / 2, 
-        left: rect.right + 10, 
+        top: rect.top + rect.height / 2,
+        left: rect.right + 10,
       });
     }
   };
@@ -154,7 +147,7 @@ const Sidebar: React.FC<SidebarProps> = ({
   const handleIconMouseLeave = () => {
     setActiveTooltip(null);
   };
-  
+
   const authControls = (isSidebarCollapsed: boolean) => {
     if (user) {
       if (isSidebarCollapsed) {
@@ -169,39 +162,16 @@ const Sidebar: React.FC<SidebarProps> = ({
               <UserCircleIcon className="w-5 h-5 text-gray-600 dark:text-gray-300" />
             </button>
             {isUserDropdownOpen && (
-              <div 
-                  className="absolute left-full ml-2 bottom-0 mb-0 w-48 bg-white dark:bg-gray-800 rounded-md shadow-lg py-1 ring-1 ring-black ring-opacity-5"
-                  style={{ zIndex: 1000 }}
-                  role="menu"
-                  aria-orientation="vertical"
-                  aria-labelledby="user-menu-button-collapsed"
-              >
-                <span className="block px-4 py-2 text-xs text-gray-500 dark:text-gray-400 truncate" role="none">{user.email}</span>
-                <Link 
-                  to="/dashboard" 
-                  onClick={closeUserDropdown} 
-                  className="flex items-center w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700"
-                  role="menuitem"
-                >
+              <div className="absolute left-full ml-2 bottom-0 mb-0 w-48 bg-white dark:bg-gray-800 rounded-md shadow-lg py-1 ring-1 ring-black ring-opacity-5" style={{ zIndex: 1000 }} role="menu">
+                <span className="block px-4 py-2 text-xs text-gray-500 dark:text-gray-400 truncate">{user.email}</span>
+                <Link to="/dashboard" onClick={closeUserDropdown} className="flex items-center w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">
                   <DashboardIcon className="w-4 h-4 mr-2 lucide" /> My Dashboard
                 </Link>
-                {/* Add Creator Dashboard link if user is a creator */}
-                <Link 
-                  to="/creator-dashboard" 
-                  onClick={closeUserDropdown} 
-                  className="flex items-center w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700"
-                  role="menuitem"
-                >
+                <Link to="/creator-dashboard" onClick={closeUserDropdown} className="flex items-center w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">
                   <YoutubeIcon className="w-4 h-4 mr-2 lucide" /> Creator Dashboard
                 </Link>
-                <button 
-                  onClick={handleLogout} 
-                  disabled={isLoggingOut}
-                  className="flex items-center w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed"
-                  role="menuitem"
-                >
-                  <LogoutIcon className="w-4 h-4 mr-2 lucide" /> 
-                  {isLoggingOut ? 'Logging out...' : 'Logout'}
+                <button onClick={handleLogout} disabled={isLoggingOut} className="flex items-center w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed">
+                  <LogoutIcon className="w-4 h-4 mr-2 lucide" /> {isLoggingOut ? 'Logging out...' : 'Logout'}
                 </button>
               </div>
             )}
@@ -210,30 +180,15 @@ const Sidebar: React.FC<SidebarProps> = ({
       } else {
         return (
           <div className="space-y-2 w-full">
-            <Link
-              to="/dashboard"
-              className="w-full text-sm rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 transition-colors duration-200 px-3 py-2 flex items-center"
-              aria-label="My Profile"
-              onClick={closeUserDropdown}
-            >
+            <Link to="/dashboard" className="w-full text-sm rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 transition-colors duration-200 px-3 py-2 flex items-center" aria-label="My Profile" onClick={closeUserDropdown}>
               <UserCircleIcon className="w-5 h-5 mr-2 text-gray-600 dark:text-gray-300" />
               <span className="flex-shrink-0">My Profile</span>
             </Link>
-            <Link
-              to="/creator-dashboard"
-              className="w-full text-sm rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 transition-colors duration-200 px-3 py-2 flex items-center"
-              aria-label="Creator Dashboard"
-              onClick={closeUserDropdown}
-            >
+            <Link to="/creator-dashboard" className="w-full text-sm rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 transition-colors duration-200 px-3 py-2 flex items-center" aria-label="Creator Dashboard" onClick={closeUserDropdown}>
               <YoutubeIcon className="w-5 h-5 mr-2 text-gray-600 dark:text-gray-300" />
               <span className="flex-shrink-0">Creator Dashboard</span>
             </Link>
-            <button
-              onClick={handleLogout}
-              disabled={isLoggingOut}
-              className="w-full text-sm rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 transition-colors duration-200 px-3 py-2 flex items-center disabled:opacity-50 disabled:cursor-not-allowed"
-              aria-label="Logout"
-            >
+            <button onClick={handleLogout} disabled={isLoggingOut} className="w-full text-sm rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 transition-colors duration-200 px-3 py-2 flex items-center disabled:opacity-50 disabled:cursor-not-allowed" aria-label="Logout">
               <LogoutIcon className="w-5 h-5 mr-2 text-gray-600 dark:text-gray-300" />
               <span className="flex-shrink-0">{isLoggingOut ? 'Logging out...' : 'Logout'}</span>
             </button>
@@ -242,52 +197,23 @@ const Sidebar: React.FC<SidebarProps> = ({
       }
     }
     return (
-       <button
-        onClick={openAuthModal}
-        className={`
-          w-full text-sm rounded-md border border-brand-primary text-brand-primary 
-          hover:bg-brand-primary hover:text-white transition-colors duration-200
-          ${isSidebarCollapsed 
-            ? 'p-2 aspect-square flex items-center justify-center' 
-            : 'px-3 py-2 flex items-center' 
-          } 
-        `}
-        title="Login / Register"
-      >
-        {isSidebarCollapsed ? (
-          <UserCircleIcon className="w-5 h-5" />
-        ) : (
-          <>
-            <UserCircleIcon className="w-5 h-5 mr-2" />
-            <span className="flex-shrink-0">Login</span>
-          </>
-        )}
+      <button onClick={openAuthModal} className={`w-full text-sm rounded-md border border-brand-primary text-brand-primary hover:bg-brand-primary hover:text-white transition-colors duration-200 ${isSidebarCollapsed ? 'p-2 aspect-square flex items-center justify-center' : 'px-3 py-2 flex items-center'}`} title="Login / Register">
+        {isSidebarCollapsed ? <UserCircleIcon className="w-5 h-5" /> : <><UserCircleIcon className="w-5 h-5 mr-2" /><span className="flex-shrink-0">Login</span></>}
       </button>
     );
   };
 
   return (
     <>
-      <aside
-        ref={sidebarRef}
-        onMouseEnter={handleMouseEnterSidebar}
-        onMouseLeave={handleMouseLeaveSidebar}
-        className={`fixed top-[64px] left-0 h-[calc(100vh-64px)] bg-white dark:bg-gray-800 shadow-lg transition-all duration-300 ease-in-out flex flex-col ${currentWidthClass} py-4`}
-        style={{ 
-          zIndex: 40,
-          position: 'fixed'
-        }}
-        aria-label="Main navigation sidebar"
-      >
+      <aside ref={sidebarRef} onMouseEnter={handleMouseEnterSidebar} onMouseLeave={handleMouseLeaveSidebar} className={`fixed top-[64px] left-0 h-[calc(100vh-64px)] bg-white dark:bg-gray-800 shadow-lg transition-all duration-300 ease-in-out flex flex-col ${currentWidthClass} py-4`} style={{ zIndex: 40 }} aria-label="Main navigation sidebar">
         <div className={`flex items-center mb-6 ${isEffectivelyOpen ? 'px-4 justify-between' : 'px-0 justify-center'}`}>
-          {isEffectivelyOpen && (
-            <Link to="/" className="text-2xl font-bold text-brand-primary">{BRAND_NAME}</Link>
-          )}
+          {isEffectivelyOpen && <Link to="/" className="text-2xl font-bold text-brand-primary">{BRAND_NAME}</Link>}
         </div>
 
         <nav className={`flex-grow space-y-1.5 ${isEffectivelyOpen ? 'px-4' : 'px-2'}`}>
-          {navLinks.map((link) => {
-            const IconComponent = link.icon || SettingsIcon; 
+          {navLinks.map((link, index) => {
+            const IconComponent = link.icon || SettingsIcon;
+            const isFirst = index === 0;
             return (
               <SidebarNavItem
                 key={link.to}
@@ -296,6 +222,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                 onMouseEnter={handleIconMouseEnter}
                 onMouseLeave={handleIconMouseLeave}
                 title={link.label}
+                className={isFirst ? 'mt-4' : 'mt-10'}
               >
                 <IconComponent className="w-5 h-5 lucide" />
                 {isEffectivelyOpen && <span className="ml-3">{link.label}</span>}
@@ -307,10 +234,7 @@ const Sidebar: React.FC<SidebarProps> = ({
         <div className={`mt-auto pt-4 border-t border-gray-200 dark:border-gray-700 ${isEffectivelyOpen ? 'px-4' : 'px-2'}`}>
           <div className={`flex ${isEffectivelyOpen ? 'justify-between items-center' : 'flex-col space-y-3 items-center'} mb-3 w-full`}>
             <ThemeToggle />
-            <button 
-                className="p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-300"
-                aria-label="Notifications"
-            >
+            <button className="p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-300" aria-label="Notifications">
               <BellIcon className="w-5 h-5 lucide" />
               {isEffectivelyOpen && <span className="sr-only">Notifications</span>}
             </button>
@@ -319,28 +243,14 @@ const Sidebar: React.FC<SidebarProps> = ({
             {authControls(!isEffectivelyOpen)}
           </div>
         </div>
-        
-        <button
-          onClick={handleTogglePin}
-          className="absolute -right-0 bottom-10 transform translate-x-1/2 translate-y-1/2 bg-white dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 text-brand-primary dark:text-ninja-gold p-2 rounded-full shadow-md border border-gray-200 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-brand-primary"
-          style={{ zIndex: 50 }}
-          aria-label={sidebarState === 'pinned-expanded' ? 'Collapse and unpin sidebar' : 'Expand and pin sidebar'}
-        >
+
+        <button onClick={handleTogglePin} className="absolute -right-0 bottom-10 transform translate-x-1/2 translate-y-1/2 bg-white dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 text-brand-primary dark:text-ninja-gold p-2 rounded-full shadow-md border border-gray-200 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-brand-primary" style={{ zIndex: 50 }} aria-label={sidebarState === 'pinned-expanded' ? 'Collapse and unpin sidebar' : 'Expand and pin sidebar'}>
           {sidebarState === 'pinned-expanded' ? <PanelLeftCloseIcon className="w-5 h-5 lucide" /> : <PanelRightOpenIcon className="w-5 h-5 lucide" />}
         </button>
       </aside>
 
       {activeTooltip && (
-        <div
-          className="fixed bg-gray-900 text-white text-xs px-2 py-1 rounded-md shadow-lg pointer-events-none"
-          style={{ 
-            top: activeTooltip.top, 
-            left: activeTooltip.left, 
-            transform: 'translateY(-50%)',
-            zIndex: 1000
-          }}
-          role="tooltip"
-        >
+        <div className="fixed bg-gray-900 text-white text-xs px-2 py-1 rounded-md shadow-lg pointer-events-none" style={{ top: activeTooltip.top, left: activeTooltip.left, transform: 'translateY(-50%)', zIndex: 1000 }} role="tooltip">
           {activeTooltip.text}
         </div>
       )}

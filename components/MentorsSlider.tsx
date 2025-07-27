@@ -92,11 +92,11 @@ const MentorsSlider: React.FC<MentorsSliderProps> = ({
       </Swiper>
 
       {/* Custom navigation buttons */}
-      <button className="mentor-prev absolute top-1/2 -left-4 z-10 bg-white dark:bg-gray-800 rounded-full shadow-md p-2 transform -translate-y-1/2 focus:outline-none hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors hidden sm:block">
-        <ChevronLeft className="w-5 h-5 text-gray-600 dark:text-gray-300" />
+      <button className="mentor-prev absolute top-1/2 -left-4 z-10 bg-white dark:bg-gray-800 rounded-full shadow-md p-2 transform -translate-y-1/2 focus:outline-none hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+        <ChevronLeft className="w-5 h-5 text-brand-primary dark:text-brand-primary" />
       </button>
-      <button className="mentor-next absolute top-1/2 -right-4 z-10 bg-white dark:bg-gray-800 rounded-full shadow-md p-2 transform -translate-y-1/2 focus:outline-none hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors hidden sm:block">
-        <ChevronRight className="w-5 h-5 text-gray-600 dark:text-gray-300" />
+      <button className="mentor-next absolute top-1/2 -right-4 z-10 bg-white dark:bg-gray-800 rounded-full shadow-md p-2 transform -translate-y-1/2 focus:outline-none hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+        <ChevronRight className="w-5 h-5 text-brand-primary dark:text-brand-primary" />
       </button>
 
       {/* Custom pagination */}

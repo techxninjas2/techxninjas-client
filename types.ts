@@ -552,3 +552,111 @@ export interface HomepageMentor {
   created_at: string;
   updated_at: string;
 }
+
+export interface PersonalInfo {
+  name: string;
+  professionalTitle: string;
+  email: string;
+  phone: string;
+  address: string;
+  linkedin: string;
+  portfolio: string;
+  summary: string;
+}
+export interface Experience {
+  title: string;
+  company: string;
+  location: string;
+  startDate: string;
+  endDate: string;
+  description: string;
+}
+export interface Education {
+  degree: string;
+  institution: string;
+  location: string;
+  startDate: string;
+  endDate: string;
+  gpa?: string;
+}
+
+export interface CustomSection {
+  id: string;
+  title: string;
+  description: string;
+}
+
+export interface Project {
+  name: string;
+  description: string;
+  technologies: string[];
+  outcomes: string;
+  url?: string;
+}
+
+export interface Certification {
+  name: string;
+  organization: string;
+  dateObtained: string;
+  expirationDate?: string;
+}
+
+export interface Language {
+  name: string;
+  proficiency: string;
+}
+
+export interface VolunteerWork {
+  organization: string;
+  role: string;
+  dates: string;
+  description: string;
+}
+
+export interface Award {
+  name: string;
+  issuer: string;
+  date: string;
+  description?: string;
+}
+
+export interface Publication {
+  title: string;
+  publisher: string;
+  date: string;
+  url?: string;
+}
+
+export interface Reference {
+  name: string;
+  relationship: string;
+  contact: string;
+}
+
+export interface ResumeData {
+  personal: PersonalInfo;
+  experience: Experience[];
+  education: Education[];
+  skills: { skill: string }[];
+  projects?: Project[];
+  certifications?: Certification[];
+  languages?: Language[];
+  volunteerWork?: VolunteerWork[];
+  awards?: Award[];
+  publications?: Publication[];
+  references?: Reference[];
+  customSections?: CustomSection[];
+  sectionsOrder?: string[];
+  visibleSections?: { [key: string]: boolean };
+  profileImage?: string;
+}
+
+export interface Resume {
+  id: string;
+  user_id: string;
+  name: string;
+  data: ResumeData;
+  template: string;
+  created_at: string;
+  updated_at: string;
+}

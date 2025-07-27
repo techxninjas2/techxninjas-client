@@ -12,6 +12,7 @@ import {
   GraduationCap as GraduationCapIcon,
   Gift as GiftIcon,
   UserCircle as UserCircleIconLucide, 
+  FileText,
 } from 'lucide-react';
 
 const COLLAPSED_SIDEBAR_WIDTH = "80px";
@@ -113,6 +114,7 @@ const Header: React.FC<HeaderProps> = ({ onMainContentLayoutChange }) => {
     { to: '/events', label: 'Events', icon: CalendarDaysIcon },
     { to: '/courses', label: 'Courses', icon: GraduationCapIcon, special: true },
     { to: '/giveaways', label: 'Giveaways', icon: GiftIcon },
+    { to: '/resume-builder', label: 'Resume', icon: FileText },
     { to: '/profile', label: 'Profile', icon: UserCircleIconLucide, action: true },
   ];
 

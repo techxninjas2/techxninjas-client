@@ -79,14 +79,23 @@ body {
 
 .modal-content {
   background-color: white;
-  padding: 2rem;
+  padding: 1.5rem;
   border-radius: 0.5rem;
   box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-  width: 90%;
+  width: 95%;
   max-width: 450px;
+  max-height: 90vh;
+  overflow-y: auto;
   /* GPU acceleration */
   will-change: transform;
   transform: translateZ(0);
+}
+
+@media (min-width: 640px) {
+  .modal-content {
+    padding: 2rem;
+    width: 90%;
+  }
 }
 
 .dark .modal-content {
@@ -529,4 +538,23 @@ html {
 .dark .mentor-pagination .swiper-pagination-bullet:hover,
 .dark .testimonial-pagination .swiper-pagination-bullet:hover {
   background-color: #ff6806 !important; /* same orange for dark mode hover */
+}
+
+/* CAPTCHA container styles to prevent cut-off */
+.captcha-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  min-height: 65px; /* Standard Turnstile height */
+  overflow: visible;
+}
+
+.captcha-wrapper {
+  width: 300px; /* Standard Turnstile width */
+  max-width: 100%;
+  min-width: 280px; /* Minimum width to prevent cut-off */
+  display: flex;
+  justify-content: center;
+  overflow: visible;
 }

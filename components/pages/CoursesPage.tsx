@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { Search, Filter, X, Plus, Star, Users, Clock, Play, BookOpen, TrendingUp, Award, Globe } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
@@ -128,7 +128,7 @@ const CoursesPage: React.FC = () => {
   usePageTitle("Courses");
   const { user } = useAuth();
   
-  const [courses, setCourses] = useState<Course[]>([]);
+  const [allCourses, setAllCourses] = useState<Course[]>([]);
   const [featuredCourses, setFeaturedCourses] = useState<Course[]>([]);
   const [categories, setCategories] = useState<CourseCategory[]>([]);
   const [loading, setLoading] = useState(true);
@@ -139,58 +139,76 @@ const CoursesPage: React.FC = () => {
   const [selectedDifficulty, setSelectedDifficulty] = useState<string>('all');
   const [showFilters, setShowFilters] = useState(false);
   const [isCreatorModalOpen, setIsCreatorModalOpen] = useState(false);
-  const [isFiltering, setIsFiltering] = useState(false);
+  const [isSearching, setIsSearching] = useState(false);
+
+  //  just load initial data only once
+  useEffect(() => {
+    loadInitialData();
+  },[])
 
   useEffect(() => {
-    loadData();
+    if (allCourses.length > 0) {
+      loadFilteredCourses();
+    }
   }, [selectedCategory, selectedDifficulty]);
 
-  // Real-time filtering effect
+  // search with debounce
   useEffect(() => {
     if (searchTerm.trim()) {
-      setIsFiltering(true);
+      setIsSearching(true);
       const timeoutId = setTimeout(() => {
-        loadData();
-        setIsFiltering(false);
+        loadFilteredCourses();
+        setIsSearching(false);
       }, 300); // Debounce for 300ms
+
       return () => {
         clearTimeout(timeoutId);
-        setIsFiltering(false);
+        setIsSearching(false);
       };
-    } else {
-      loadData();
-      setIsFiltering(false);
+    } else if(allCourses.length >0){
+      
+      setIsSearching(false);
     }
-  }, [searchTerm]);
+  }, [searchTerm,allCourses.length]);
 
-  const loadData = async () => {
+  const loadInitialData = async () => {
     try {
       setLoading(true);
       setError(null);
       
       const [coursesData, featuredData, categoriesData] = await Promise.all([
-        getCourses({ 
-          category: selectedCategory === 'all' ? undefined : selectedCategory,
-          difficulty: selectedDifficulty === 'all' ? undefined : selectedDifficulty,
-          search: searchTerm || undefined
-        }),
+        getCourses({ }),
         getFeaturedCourses(6),
         getCourseCategories()
       ]);
       
-      setCourses(coursesData);
+      setAllCourses(coursesData);
       setFeaturedCourses(featuredData);
       setCategories(categoriesData);
     } catch (err: any) {
-      console.error('Failed to load courses:', err);
+      console.error('Failed to load inital courses or data:', err);
       setError(err.message || 'Failed to load courses');
     } finally {
       setLoading(false);
     }
   };
 
+  const loadFilteredCourses = async () => {
+    try {
+      setError(null);
+      const courseData = await getCourses({
+        category: selectedCategory === 'all' ? undefined : selectedCategory,
+        difficulty: selectedDifficulty === 'all' ? undefined : selectedDifficulty,
+        search: searchTerm || undefined
+      })
+      setAllCourses(courseData)
+    } catch (err: any) {
+      console.error('Failed to load filtered courses:', err);
+      setError(err.message || 'Failed to load courses');
+    }
+  }
   const handleSearch = () => {
-    loadData();
+    loadFilteredCourses();
   };
 
   const clearFilters = () => {
@@ -198,13 +216,28 @@ const CoursesPage: React.FC = () => {
     setSelectedDifficulty('all');
     setSearchTerm('');
     setCategorySearchTerm('');
-    loadData();
+    loadInitialData();
   };
 
-  // Filter categories based on search term
-  const filteredCategories = categories.filter(category =>
-    category.name.toLowerCase().includes(categorySearchTerm.toLowerCase())
-  );
+  // Filter categories based on search term (client side)
+  const filteredCategories = useMemo(() => {
+    return categories.filter(category => 
+      category.name.toLowerCase().includes(categorySearchTerm.toLowerCase())
+    )
+  },[categories,categorySearchTerm])
+
+  // Filter courses for display (client-side for immediate feedback)
+  const displayedCourses = useMemo(() => {
+    if (!searchTerm.trim()) return allCourses;
+    
+    return allCourses.filter(course =>
+      course.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      course.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      course.short_description?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      course.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase())) ||
+      course.creator?.creator_name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  }, [allCourses, searchTerm]);
 
   const hasActiveFilters = selectedCategory !== 'all' || selectedDifficulty !== 'all' || searchTerm !== '';
 
@@ -256,6 +289,7 @@ const CoursesPage: React.FC = () => {
                   onChange={(e) => {
                     const value = e.target.value;
                     setSearchTerm(value);
+                    // update only category  search term , don't trigger course reload
                     setCategorySearchTerm(value);
                   }}
                   onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
@@ -345,7 +379,7 @@ const CoursesPage: React.FC = () => {
               <p className="font-semibold text-sm">Error loading courses:</p>
               <p className="text-sm">{error}</p>
               <button
-                onClick={loadData}
+                onClick={loadInitialData}
                 className="mt-2 bg-red-600 hover:bg-red-700 text-white px-3 py-1.5 rounded-lg text-sm"
               >
                 Try Again
@@ -361,12 +395,12 @@ const CoursesPage: React.FC = () => {
               <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-4 sm:mb-0 flex items-center">
                 <BookOpen className="w-7 h-7 text-brand-primary dark:text-brand-ninja-gold mr-3" />
                 Browse by Category
-                {isFiltering && (
+                {isSearching && (
                   <div className="ml-3 w-4 h-4 border-2 border-brand-primary border-t-transparent rounded-full animate-spin"></div>
                 )}
               </h2>
               <div className="text-sm text-gray-500 dark:text-gray-400">
-                {isFiltering ? (
+                {isSearching ? (
                   <span className="flex items-center gap-2">
                     <div className="w-3 h-3 bg-brand-primary rounded-full animate-pulse"></div>
                     Filtering...
@@ -378,8 +412,10 @@ const CoursesPage: React.FC = () => {
             </div>
           </RevealOnScroll>
           
+
           {/* <div className={`grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8 gap-4 lg:gap-6 transition-opacity duration-300 ${isFiltering ? 'opacity-70' : 'opacity-100'}`}> */}
           <div className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-4 lg:gap-6 transition-opacity duration-300 ${isFiltering ? 'opacity-70' : 'opacity-100'}`}>
+
 
             {filteredCategories.slice(0, 16).map((category, index) => (
               <RevealOnScroll key={category.id} direction="up" delay={600 + index * 50} duration={800}>
@@ -439,7 +475,7 @@ const CoursesPage: React.FC = () => {
             ))}
           </div>
           
-          {filteredCategories.length === 0 && searchTerm && (
+          {filteredCategories.length === 0 && categorySearchTerm && (
             <RevealOnScroll direction="up" delay={600} duration={800}>
               <div className="text-center py-12 px-6 bg-gradient-to-br from-white/80 to-gray-50/80 dark:from-gray-800/80 dark:to-gray-900/80 rounded-3xl backdrop-blur-sm border border-gray-200/50 dark:border-gray-700/50">
                 <div className="text-6xl mb-4 opacity-50">🔍</div>
@@ -447,7 +483,7 @@ const CoursesPage: React.FC = () => {
                   No categories found
                 </h3>
                 <p className="text-gray-500 dark:text-gray-400 max-w-md mx-auto">
-                  We couldn't find any categories matching <span className="font-semibold text-brand-primary dark:text-brand-ninja-gold">"{searchTerm}"</span>. Try searching with different keywords.
+                  We couldn't find any categories matching <span className="font-semibold text-brand-primary dark:text-brand-ninja-gold">"{categorySearchTerm}"</span>. Try searching with different keywords.
                 </p>
                 <button 
                   onClick={() => {
@@ -491,17 +527,17 @@ const CoursesPage: React.FC = () => {
                   {searchTerm ? 'Search Results' : selectedCategory === 'all' ? 'All Courses' : `${categories.find(c => c.slug === selectedCategory)?.name} Courses`}
                 </h2>
               </div>
-              {courses.length > 0 && (
+              {displayedCourses.length > 0 && (
                 <span className="text-sm text-gray-500 dark:text-gray-400">
-                  {courses.length} course{courses.length !== 1 ? 's' : ''}
+                  {displayedCourses.length} course{displayedCourses.length !== 1 ? 's' : ''}
                 </span>
               )}
             </div>
           </RevealOnScroll>
 
-          {courses.length > 0 ? (
+          {displayedCourses.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              {courses.map((course, index) => (
+              {displayedCourses.map((course, index) => (
                 <RevealOnScroll key={course.id} direction="up" delay={1000 + index * 100} duration={800}>
                   <CourseCard course={course} />
                 </RevealOnScroll>

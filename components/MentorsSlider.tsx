@@ -1,14 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { HomepageMentor } from '../types';
-import { useInView } from 'react-intersection-observer';
+import React, { useEffect, useState } from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import { HomepageMentor } from "../types";
+import { useInView } from "react-intersection-observer";
 
 // Import Swiper React components and styles
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Autoplay, Pagination } from 'swiper/modules';
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Autoplay, Pagination } from "swiper/modules";
 
 interface MentorsSliderProps {
   mentors: HomepageMentor[];
@@ -21,7 +18,7 @@ const MentorsSlider: React.FC<MentorsSliderProps> = ({
   mentors,
   autoplay = true,
   delay = 3000,
-  className = ''
+  className = "",
 }) => {
   const [isMounted, setIsMounted] = useState(false);
   const { ref, inView } = useInView({
@@ -47,34 +44,47 @@ const MentorsSlider: React.FC<MentorsSliderProps> = ({
         breakpoints={{
           480: { slidesPerView: 3 },
           640: { slidesPerView: 4 },
-          1024: { slidesPerView: 5 }
+          1024: { slidesPerView: 5 },
         }}
         navigation={{
-          prevEl: '.mentor-prev',
-          nextEl: '.mentor-next',
+          prevEl: ".mentor-prev",
+          nextEl: ".mentor-next",
         }}
         pagination={{
           clickable: true,
-          el: '.mentor-pagination',
+          el: ".mentor-pagination",
         }}
-        autoplay={autoplay && inView ? {
-          delay: delay,
-          disableOnInteraction: false,
-          pauseOnMouseEnter: true
-        } : false}
+        autoplay={
+          autoplay && inView
+            ? {
+                delay: delay,
+                disableOnInteraction: false,
+                pauseOnMouseEnter: true,
+              }
+            : false
+        }
         loop={true}
         className="py-8"
       >
         {mentors.map((mentor) => (
           <SwiperSlide key={mentor.id}>
             <div className="text-center group">
-              <img 
-                src={mentor.avatarUrl || `https://ui-avatars.com/api/?name=${encodeURIComponent(mentor.name)}&background=random&color=fff&size=128`} 
-                alt={mentor.name} 
+              <img
+                src={
+                  mentor.avatarUrl ||
+                  `https://ui-avatars.com/api/?name=${encodeURIComponent(
+                    mentor.name
+                  )}&background=random&color=fff&size=128`
+                }
+                alt={mentor.name}
                 className="w-20 h-20 md:w-24 md:h-24 rounded-full mx-auto mb-3 shadow-lg group-hover:shadow-xl group-hover:scale-105 transition-all duration-300 border-2 border-brand-ninja-gold"
               />
-              <h4 className="font-semibold text-brand-dark-gray dark:text-white group-hover:text-brand-primary dark:group-hover:text-brand-ninja-gold transition-colors text-sm sm:text-base">{mentor.name}</h4>
-              <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">{mentor.role}</p>
+              <h4 className="font-semibold text-brand-dark-gray dark:text-white group-hover:text-brand-primary dark:group-hover:text-brand-ninja-gold transition-colors text-sm sm:text-base">
+                {mentor.name}
+              </h4>
+              <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">
+                {mentor.role}
+              </p>
               <p className="text-xs text-brand-light-blue">{mentor.company}</p>
             </div>
           </SwiperSlide>

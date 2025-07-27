@@ -414,13 +414,13 @@ const CoursesPage: React.FC = () => {
           
           <div className={`grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8 gap-4 lg:gap-6 transition-opacity duration-300 ${isSearching ? 'opacity-70' : 'opacity-100'}`}>
             {filteredCategories.slice(0, 16).map((category, index) => (
-              <RevealOnScroll key={category.id} direction="up" delay={600 + index * 50} duration={800}>
+              <RevealOnScroll key={category.id} direction="up" delay={600 + index * 50} duration={400}>
                 <button
                   onClick={() => setSelectedCategory(category.slug)}
                   className={`group relative w-full aspect-square p-4 rounded-2xl border transition-all duration-500 text-center backdrop-blur-sm overflow-hidden ${
                     selectedCategory === category.slug
                       ? 'border-brand-primary bg-gradient-to-br from-brand-primary/15 to-brand-primary/5 dark:from-brand-ninja-gold/15 dark:to-brand-ninja-gold/5 shadow-xl shadow-brand-primary/20 dark:shadow-brand-ninja-gold/20 transform scale-105 -translate-y-2'
-                      : 'border-gray-200/60 dark:border-gray-700/60 bg-white/70 dark:bg-gray-800/70 hover:border-brand-primary/50 hover:bg-white/90 dark:hover:bg-gray-800/90 hover:shadow-lg hover:shadow-gray-400/20 dark:hover:shadow-gray-900/40 hover:scale-105 hover:-translate-y-1'
+                      : 'border-gray-200/60 dark:border-gray-700/60 bg-white/70 dark:bg-gray-800/70 hover:border-orange-500 hover:bg-white/90 dark:hover:bg-gray-800/90 hover:shadow-lg hover:shadow-gray-400/20 dark:hover:shadow-gray-900/40 hover:scale-105 hover:-translate-y-1'
                   }`}
                 >
                   {/* Background pattern */}

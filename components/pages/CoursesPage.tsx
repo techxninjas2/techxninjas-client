@@ -246,8 +246,8 @@ const CoursesPage: React.FC = () => {
 
         <RevealOnScroll direction="up" delay={300} duration={800}>
           <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 mb-8 backdrop-blur-sm bg-opacity-95 dark:bg-opacity-95">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="flex-1 relative">
+            <div className="flex flex-col sm:flex-row sm:items-center gap-3 mb-4">
+              <div className="w-full relative">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
                 <input
                   type="text"
@@ -265,14 +265,14 @@ const CoursesPage: React.FC = () => {
 
               <button
                 onClick={handleSearch}
-                className="px-4 py-2.5 bg-brand-primary text-white rounded-lg hover:bg-brand-ninja-gold transition-colors text-sm font-medium"
+                className="w-full sm:w-auto px-4 py-2.5 bg-brand-primary text-white rounded-lg hover:bg-brand-ninja-gold transition-colors text-sm font-medium"
               >
                 Search
               </button>
 
               <button
                 onClick={() => setShowFilters(!showFilters)}
-                className={`flex items-center gap-2 px-3 py-2.5 text-sm border rounded-lg transition-colors ${
+                className={`relative flex items-center justify-center gap-2 px-3 py-2.5 text-sm border rounded-lg transition-colors ${
                   showFilters || hasActiveFilters
                     ? 'bg-brand-primary text-white border-brand-primary'
                     : 'border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700'
@@ -304,14 +304,14 @@ const CoursesPage: React.FC = () => {
             </div>
 
             {showFilters && (
-              <div className="pt-4 border-t border-gray-200 dark:border-gray-700">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="pt-2 sm:pt-4 border-t border-gray-200 dark:border-gray-700">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                   <div>
-                    <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-2">Category</label>
+                    <label className="block text-[11px] sm:text-xs font-medium text-gray-700 dark:text-gray-300 mb-2">Category</label>
                     <select
                       value={selectedCategory}
                       onChange={(e) => setSelectedCategory(e.target.value)}
-                      className="w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-primary dark:bg-gray-700 dark:text-white"
+                      className="w-full px-2 py-1.5 text-sm sm:text-base border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-primary dark:bg-gray-700 dark:text-white"
                     >
                       <option value="all">All Categories</option>
                       {categories.map(category => (
@@ -321,11 +321,11 @@ const CoursesPage: React.FC = () => {
                   </div>
 
                   <div>
-                    <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-2">Difficulty</label>
+                    <label className="block text-[11px] sm:text-xs font-medium text-gray-700 dark:text-gray-300 mb-2">Difficulty</label>
                     <select
                       value={selectedDifficulty}
                       onChange={(e) => setSelectedDifficulty(e.target.value)}
-                      className="w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-primary dark:bg-gray-700 dark:text-white"
+                      className="w-full px-2 py-1.5 text-sm sm:text-base border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-primary dark:bg-gray-700 dark:text-white"
                     >
                       <option value="all">All Levels</option>
                       <option value="beginner">Beginner</option>
@@ -378,7 +378,9 @@ const CoursesPage: React.FC = () => {
             </div>
           </RevealOnScroll>
           
-          <div className={`grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8 gap-4 lg:gap-6 transition-opacity duration-300 ${isFiltering ? 'opacity-70' : 'opacity-100'}`}>
+          {/* <div className={`grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8 gap-4 lg:gap-6 transition-opacity duration-300 ${isFiltering ? 'opacity-70' : 'opacity-100'}`}> */}
+          <div className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-4 lg:gap-6 transition-opacity duration-300 ${isFiltering ? 'opacity-70' : 'opacity-100'}`}>
+
             {filteredCategories.slice(0, 16).map((category, index) => (
               <RevealOnScroll key={category.id} direction="up" delay={600 + index * 50} duration={800}>
                 <button

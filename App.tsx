@@ -1,5 +1,6 @@
-import React, { JSX, useState } from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { JSX } from 'react/jsx-runtime';
 import Header from './components/layout/Header';
 import Footer from './components/layout/Footer';
 import ScrollToTopButton from './components/ScrollToTopButton';

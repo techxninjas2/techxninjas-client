@@ -194,6 +194,31 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       setLoading(false);
     }
   };
+
+  const signInWithGitHub = async (captchaToken?: string): Promise<void> => {
+    setLoading(true);
+    clearError();
+    try {
+      // The captchaToken parameter is for UI gating (e.g., ensuring user completed Turnstile)
+      // before initiating OAuth. It is not passed to Supabase's signInWithOAuth options.
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: 'github',
+        options: {
+          redirectTo: window.location.origin,
+          // captchaToken is not a valid Supabase OAuth option.
+        },
+      });
+      if (error) throw error;
+    } catch (e: any) {
+      console.error("Sign in with GitHub error:", e);
+      setError(e);
+      throw e; 
+    } finally {
+      // This will run if an error occurs before redirect, or if signInWithOAuth
+      // itself doesn't cause an immediate redirect for some reason.
+      setLoading(false);
+    }
+  };
   
   const sendMagicLink = async (email: string, captchaToken?: string): Promise<void> => {
     setLoading(true);
@@ -229,6 +254,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     logout,
     resetPasswordForEmail,
     signInWithGoogle,
+    signInWithGitHub,
     sendMagicLink,
     clearError
   };

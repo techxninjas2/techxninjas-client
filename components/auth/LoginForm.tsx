@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../contexts/AuthContext';
 import { AuthContextType } from '../../types';
-import { GoogleIcon } from '../icons';
+import { GoogleIcon, GitHubIcon } from '../icons';
 import { Turnstile } from '@marsidev/react-turnstile';
 
 interface LoginFormProps {
@@ -68,6 +68,23 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSwitchToRegister, onSwitchToFor
       console.error("Google Sign in failed from button:", error);
     } finally {
         setCaptchaToken(undefined); // Reset token for Google sign-in if it was used for gating
+    }
+  };
+
+  const handleGitHubSignIn = async () => {
+    if (!auth) return;
+    // CAPTCHA for GitHub sign-in button itself is optional, as GitHub has its own checks.
+    // If you want to gate the button click with Turnstile:
+    // if (!captchaToken) { setCaptchaError("Please complete the CAPTCHA first."); return; }
+    auth.clearError();
+    setMagicLinkMessage(null); 
+    setMagicLinkError(null);
+    try {
+      await auth.signInWithGitHub(captchaToken); // Pass token if gating
+    } catch (error) {
+      console.error("GitHub Sign in failed from button:", error);
+    } finally {
+        setCaptchaToken(undefined); // Reset token for GitHub sign-in if it was used for gating
     }
   };
 
@@ -140,7 +157,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSwitchToRegister, onSwitchToFor
 
       {activeTab === 'emailPassword' && (
         <form onSubmit={handleEmailPasswordSubmit} className="space-y-4">
-          <div>
+          <div className="space-y-3">
             <button
               type="button"
               onClick={handleGoogleSignIn}
@@ -149,6 +166,16 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSwitchToRegister, onSwitchToFor
             >
               <GoogleIcon className="w-5 h-5 mr-2" />
               Sign in with Google
+            </button>
+            
+            <button
+              type="button"
+              onClick={handleGitHubSignIn}
+              disabled={auth.loading /* Potentially add || !captchaToken if gating GitHub button */}
+              className="w-full flex items-center justify-center py-2.5 px-4 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm text-sm font-medium text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-primary disabled:opacity-50 dark:focus:ring-offset-gray-800"
+            >
+              <GitHubIcon className="w-5 h-5 mr-2" />
+              Sign in with GitHub
             </button>
           </div>
 

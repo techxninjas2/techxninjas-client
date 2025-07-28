@@ -66,7 +66,7 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(32, 2, 2, 0.5);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -81,7 +81,7 @@ body {
   background-color: white;
   padding: 2rem;
   border-radius: 0.5rem;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  box-shadow: 0 10px 25px rgba(15, 4, 4, 0.1);
   width: 90%;
   max-width: 450px;
   /* GPU acceleration */

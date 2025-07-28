@@ -1,18 +1,18 @@
-import React, { useEffect, useRef } from 'react';
-import { useContext } from 'react';
-import { ThemeContext } from '../contexts/ThemeContext';
-import { Theme } from '../types';
+import React, { useEffect, useRef } from "react";
+import { useContext } from "react";
+import { ThemeContext } from "../contexts/ThemeContext";
+import { Theme } from "../types";
 
 interface CodingBackgroundProps {
   className?: string;
-  intensity?: 'low' | 'medium' | 'high';
-  style?: 'matrix' | 'terminal' | 'code' | 'binary';
+  intensity?: "low" | "medium" | "high";
+  style?: "matrix" | "terminal" | "code" | "binary";
 }
 
-const CodingBackground: React.FC<CodingBackgroundProps> = ({ 
-  className = '', 
-  intensity = 'medium',
-  style = 'matrix'
+const CodingBackground: React.FC<CodingBackgroundProps> = ({
+  className = "",
+  intensity = "medium",
+  style = "matrix",
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animationRef = useRef<number>();
@@ -22,7 +22,7 @@ const CodingBackground: React.FC<CodingBackgroundProps> = ({
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    const ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
     // Set canvas size
@@ -32,14 +32,14 @@ const CodingBackground: React.FC<CodingBackgroundProps> = ({
     };
 
     resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
+    window.addEventListener("resize", resizeCanvas);
 
     // Animation parameters based on intensity
     const getIntensityConfig = () => {
       switch (intensity) {
-        case 'low':
+        case "low":
           return { dropCount: 30, speed: 0.5, opacity: 0.4 };
-        case 'high':
+        case "high":
           return { dropCount: 100, speed: 2, opacity: 0.9 };
         default:
           return { dropCount: 60, speed: 1, opacity: 0.6 };
@@ -52,65 +52,65 @@ const CodingBackground: React.FC<CodingBackgroundProps> = ({
     const getColorScheme = () => {
       if (theme === Theme.DARK) {
         switch (style) {
-          case 'matrix':
+          case "matrix":
             return {
-              primary: '#00FF00',
-              secondary: '#008F11',
-              tertiary: '#00AA00',
-              background: 'rgba(0, 0, 0, 0.02)'
+              primary: "#00FF00",
+              secondary: "#008F11",
+              tertiary: "#00AA00",
+              background: "rgba(0, 0, 0, 0.02)",
             };
-          case 'terminal':
+          case "terminal":
             return {
-              primary: '#00FFFF',
-              secondary: '#0088AA',
-              tertiary: '#00AAAA',
-              background: 'rgba(0, 0, 0, 0.02)'
+              primary: "#00FFFF",
+              secondary: "#0088AA",
+              tertiary: "#00AAAA",
+              background: "rgba(0, 0, 0, 0.02)",
             };
-          case 'code':
+          case "code":
             return {
-              primary: '#9933FF',
-              secondary: '#6600CC',
-              tertiary: '#7722DD',
-              background: 'rgba(0, 0, 0, 0.02)'
+              primary: "#9933FF",
+              secondary: "#6600CC",
+              tertiary: "#7722DD",
+              background: "rgba(0, 0, 0, 0.02)",
             };
-          case 'binary':
+          case "binary":
             return {
-              primary: '#0066CC',
-              secondary: '#004499',
-              tertiary: '#0055BB',
-              background: 'rgba(0, 0, 0, 0.02)'
+              primary: "#0066CC",
+              secondary: "#004499",
+              tertiary: "#0055BB",
+              background: "rgba(0, 0, 0, 0.02)",
             };
         }
       } else {
         // Light theme - more visible colors
         switch (style) {
-          case 'matrix':
+          case "matrix":
             return {
-              primary: '#FF6B35',
-              secondary: '#F7931E',
-              tertiary: '#FFB627',
-              background: 'rgba(255, 255, 255, 0.05)'
+              primary: "#FF6B35",
+              secondary: "#F7931E",
+              tertiary: "#FFB627",
+              background: "rgba(255, 255, 255, 0.05)",
             };
-          case 'terminal':
+          case "terminal":
             return {
-              primary: '#E91E63',
-              secondary: '#9C27B0',
-              tertiary: '#673AB7',
-              background: 'rgba(255, 255, 255, 0.05)'
+              primary: "#E91E63",
+              secondary: "#9C27B0",
+              tertiary: "#673AB7",
+              background: "rgba(255, 255, 255, 0.05)",
             };
-          case 'code':
+          case "code":
             return {
-              primary: '#2196F3',
-              secondary: '#3F51B5',
-              tertiary: '#009688',
-              background: 'rgba(255, 255, 255, 0.05)'
+              primary: "#2196F3",
+              secondary: "#3F51B5",
+              tertiary: "#009688",
+              background: "rgba(255, 255, 255, 0.05)",
             };
-          case 'binary':
+          case "binary":
             return {
-              primary: '#FF5722',
-              secondary: '#795548',
-              tertiary: '#607D8B',
-              background: 'rgba(255, 255, 255, 0.05)'
+              primary: "#FF5722",
+              secondary: "#795548",
+              tertiary: "#607D8B",
+              background: "rgba(255, 255, 255, 0.05)",
             };
         }
       }
@@ -121,21 +121,21 @@ const CodingBackground: React.FC<CodingBackgroundProps> = ({
     // Character sets for different styles - UPDATED to use only English characters
     const getCharacterSet = () => {
       switch (style) {
-        case 'matrix':
-          return 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+-=[]{}|;:,./<>?';
-        case 'terminal':
-          return '$ > ~ # % & * + = | \\ / ? ! @ ^ _ - . , ; : " \' ` [ ] { } ( ) < > 0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
-        case 'code':
-          return '{}[]();,.<>=+-*/%&|^~!?:@#$_abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-        case 'binary':
-          return '01';
+        case "matrix":
+          return "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+-=[]{}|;:,./<>?";
+        case "terminal":
+          return "$ > ~ # % & * + = | \\ / ? ! @ ^ _ - . , ; : \" ' ` [ ] { } ( ) < > 0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+        case "code":
+          return "{}[]();,.<>=+-*/%&|^~!?:@#$_abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        case "binary":
+          return "01";
         default:
-          return '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+          return "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
       }
     };
 
     const characters = getCharacterSet();
-    const fontSize = style === 'binary' ? 12 : 14;
+    const fontSize = style === "binary" ? 12 : 14;
     const columns = Math.floor(canvas.width / fontSize);
 
     // Initialize drops
@@ -148,10 +148,11 @@ const CodingBackground: React.FC<CodingBackgroundProps> = ({
       drops[i] = Math.random() * canvas.height;
       dropSpeeds[i] = (Math.random() * config.speed + 0.5) * fontSize;
       dropOpacities[i] = Math.random() * config.opacity + 0.3;
-      
+
       // Assign random colors from the color scheme
       const colorOptions = [colors.primary, colors.secondary, colors.tertiary];
-      dropColors[i] = colorOptions[Math.floor(Math.random() * colorOptions.length)];
+      dropColors[i] =
+        colorOptions[Math.floor(Math.random() * colorOptions.length)];
     }
 
     // Animation function
@@ -173,7 +174,7 @@ const CodingBackground: React.FC<CodingBackgroundProps> = ({
         // Set color with enhanced opacity
         ctx.fillStyle = dropColors[i];
         ctx.globalAlpha = dropOpacities[i];
-        
+
         // Add glow effect for better visibility
         ctx.shadowColor = dropColors[i];
         ctx.shadowBlur = theme === Theme.DARK ? 3 : 2;
@@ -185,10 +186,15 @@ const CodingBackground: React.FC<CodingBackgroundProps> = ({
           drops[i] = 0;
           dropSpeeds[i] = (Math.random() * config.speed + 0.5) * fontSize;
           dropOpacities[i] = Math.random() * config.opacity + 0.3;
-          
+
           // Reassign color
-          const colorOptions = [colors.primary, colors.secondary, colors.tertiary];
-          dropColors[i] = colorOptions[Math.floor(Math.random() * colorOptions.length)];
+          const colorOptions = [
+            colors.primary,
+            colors.secondary,
+            colors.tertiary,
+          ];
+          dropColors[i] =
+            colorOptions[Math.floor(Math.random() * colorOptions.length)];
         }
 
         // Move drop down
@@ -204,7 +210,7 @@ const CodingBackground: React.FC<CodingBackgroundProps> = ({
     animate();
 
     return () => {
-      window.removeEventListener('resize', resizeCanvas);
+      window.removeEventListener("resize", resizeCanvas);
       if (animationRef.current) {
         cancelAnimationFrame(animationRef.current);
       }
@@ -216,13 +222,13 @@ const CodingBackground: React.FC<CodingBackgroundProps> = ({
       ref={canvasRef}
       className={`pointer-events-none ${className}`}
       style={{
-        position: 'absolute',
+        position: "absolute",
         top: 0,
         left: 0,
-        width: '100%',
-        height: '100%',
+        width: "100%",
+        height: "100%",
         zIndex: 0,
-        opacity: 0.8
+        opacity: 0.8,
       }}
     />
   );

@@ -4,6 +4,8 @@ import { AuthContext } from '../../contexts/AuthContext';
 import { AuthContextType } from '../../types';
 import { GoogleIcon } from '../icons';
 import { Turnstile } from '@marsidev/react-turnstile';
+import { sendWelcomeEmail } from "../../utils/emailPlaceholder";
+
 
 interface RegisterFormProps {
   onSwitchToLogin: () => void;
@@ -17,6 +19,8 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSwitchToLogin, onSuccess 
   const [confirmPassword, setConfirmPassword] = useState('');
   const [captchaToken, setCaptchaToken] = useState<string | undefined>();
   const [captchaError, setCaptchaError] = useState<string | null>(null);
+  const [subscribeEmails, setSubscribeEmails] = useState(false);
+
   const turnstileSiteKey = '0x4AAAAAABhuYfA0fxpwvokl';
   
   const auth = useContext(AuthContext) as AuthContextType;
@@ -28,6 +32,9 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSwitchToLogin, onSuccess 
     if (password !== confirmPassword) {
       setFormError("Passwords do not match.");
       return;
+    }
+    if (subscribeEmails) {
+      sendWelcomeEmail(email);
     }
     if (!name.trim()) {
       setFormError("Full Name is required.");
@@ -69,7 +76,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSwitchToLogin, onSuccess 
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
+    <form onSubmit={handleSubmit} className="space-y-4 overflow-y-auto max-h-[80vh]">
        <div>
         <button
           type="button"
@@ -160,6 +167,23 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSwitchToLogin, onSuccess 
           className="mt-1 block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-brand-primary focus:border-brand-primary sm:text-sm dark:bg-gray-700 dark:text-white"
         />
       </div>
+
+      <div className="flex items-center gap-3 w-full ">
+        <input
+          type="checkbox"
+          id="subscribeEmails"
+          checked={subscribeEmails}
+          onChange={(e) => setSubscribeEmails(e.target.checked)}
+          className="h-4 w-4 accent-[#FF6806] cursor-pointer"
+        />
+        <label 
+          htmlFor="subscribeEmails" 
+          className="text-sm text-gray-700 dark:text-gray-300 cursor-pointer"
+        >
+          Send me occasional product updates and promotional emails
+        </label>
+      </div>
+
 
       <div className="my-4 flex justify-center"> {/* Centering classes moved here */}
         {!turnstileSiteKey ? (

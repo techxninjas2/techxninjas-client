@@ -1,5 +1,15 @@
 # 🌐 TechXNinjas – The Student-Centric Tech Community Platform
 
+<p align="center">
+  <img alt="Build" src="https://img.shields.io/github/actions/workflow/status/techxninjas/techxninjas-client/ci.yml?label=build&style=for-the-badge">
+  <img alt="License" src="https://img.shields.io/github/license/techxninjas/techxninjas-client?style=for-the-badge">
+  <img alt="Next.js" src="https://img.shields.io/badge/Next.js-13-black?logo=next.js&style=for-the-badge">
+  <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-4.9-blue?logo=typescript&style=for-the-badge">
+  <img alt="TailwindCSS" src="https://img.shields.io/badge/TailwindCSS-3.3-blue?logo=tailwindcss&style=for-the-badge">
+  <img alt="Vercel" src="https://img.shields.io/badge/Deployed-Vercel-black?logo=vercel&style=for-the-badge">
+  <img alt="Open Source" src="https://img.shields.io/badge/Open%20Source-GSSoC%202025-success?style=for-the-badge">
+</p>
+
 Welcome to the official repository of **TechXNinjas**, a student-first community
 platform built to empower learners across India (and beyond) with tech
 resources, events, articles, courses, and collaboration opportunities — all

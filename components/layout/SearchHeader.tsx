@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { Link } from 'react-router-dom';
-// Added for icon use and consistent styling
-import { Search, X } from 'lucide-react';
-import { UserCircle } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
+import { Search, X, User } from 'lucide-react';
 import { supabase } from '../../lib/supabaseClient';
 import { BRAND_NAME } from '../../constants';
 
@@ -24,56 +22,77 @@ const SearchHeader: React.FC = () => {
   const [showResults, setShowResults] = useState(false);
   const [isHeaderVisible, setIsHeaderVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
+  const [error, setError] = useState<string | null>(null);
 
   const searchRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const navigate = useNavigate();
 
   const handleScroll = useCallback(() => {
-    const currentScrollY = window.scrollY;
-    const isDesktop = window.innerWidth >= 1024;
+    try {
+      const currentScrollY = window.scrollY;
+      const isDesktop = window.innerWidth >= 1024;
 
-    if (isDesktop) {
-      setIsHeaderVisible(true);
-    } else {
-      if (currentScrollY > lastScrollY && currentScrollY > 100) {
-        setIsHeaderVisible(false);
-      } else {
+      if (isDesktop) {
         setIsHeaderVisible(true);
+      } else {
+        if (currentScrollY > lastScrollY && currentScrollY > 100) {
+          setIsHeaderVisible(false);
+        } else {
+          setIsHeaderVisible(true);
+        }
       }
+      
+      setLastScrollY(currentScrollY);
+    } catch (err) {
+      console.error('Scroll handling error:', err);
     }
-    
-    setLastScrollY(currentScrollY);
   }, [lastScrollY]);
 
   useEffect(() => {
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+    try {
+      window.addEventListener('scroll', handleScroll, { passive: true });
+      return () => window.removeEventListener('scroll', handleScroll);
+    } catch (err) {
+      console.error('Scroll event listener error:', err);
+    }
   }, [handleScroll]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (searchRef.current && !searchRef.current.contains(event.target as Node)) {
-        setShowResults(false);
+      try {
+        if (searchRef.current && !searchRef.current.contains(event.target as Node)) {
+          setShowResults(false);
+        }
+      } catch (err) {
+        console.error('Click outside handler error:', err);
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    try {
+      document.addEventListener('mousedown', handleClickOutside);
+      return () => document.removeEventListener('mousedown', handleClickOutside);
+    } catch (err) {
+      console.error('Event listener error:', err);
+    }
   }, []);
 
   const performSearch = async (query: string) => {
     if (!query.trim()) {
       setSearchResults([]);
+      setError(null);
       return;
     }
 
     setIsSearching(true);
+    setError(null);
+    
     try {
       const searchTerm = query.trim();
       const results: SearchResult[] = [];
 
-      const [eventsResponse, articlesResponse] = await Promise.all([
+      const [eventsResponse, articlesResponse] = await Promise.allSettled([
         supabase
           .from('events')
           .select('id, title, slug, description, tags, image_url')
@@ -87,8 +106,9 @@ const SearchHeader: React.FC = () => {
           .limit(5)
       ]);
 
-      if (eventsResponse.data) {
-        results.push(...eventsResponse.data.map(event => ({
+      // Handle events response
+      if (eventsResponse.status === 'fulfilled' && eventsResponse.value.data) {
+        results.push(...eventsResponse.value.data.map(event => ({
           id: event.id,
           title: event.title,
           type: 'event' as const,
@@ -97,10 +117,14 @@ const SearchHeader: React.FC = () => {
           tags: event.tags,
           image_url: event.image_url
         })));
+      } else if (eventsResponse.status === 'rejected') {
+        console.error('Events search error:', eventsResponse.reason);
+        setError('Failed to load events. Please try again.');
       }
 
-      if (articlesResponse.data) {
-        results.push(...articlesResponse.data.map(article => ({
+      // Handle articles response
+      if (articlesResponse.status === 'fulfilled' && articlesResponse.value.data) {
+        results.push(...articlesResponse.value.data.map(article => ({
           id: article.id,
           title: article.title,
           type: 'article' as const,
@@ -109,258 +133,304 @@ const SearchHeader: React.FC = () => {
           tags: article.tags,
           featured_image: article.featured_image
         })));
+      } else if (articlesResponse.status === 'rejected') {
+        console.error('Articles search error:', articlesResponse.reason);
+        setError('Failed to load articles. Please try again.');
       }
 
       setSearchResults(results);
-    } catch (error) {
-      console.error('Search error:', error);
-      setSearchResults([]);
+    } catch (err) {
+      console.error('Unexpected search error:', err);
+      setError('An unexpected error occurred. Please try again later.');
     } finally {
       setIsSearching(false);
     }
   };
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const query = e.target.value;
-    setSearchQuery(query);
-    setShowResults(true);
+    try {
+      const query = e.target.value;
+      setSearchQuery(query);
+      setShowResults(true);
+      setError(null);
 
-    if (debounceRef.current) {
-      clearTimeout(debounceRef.current);
+      if (debounceRef.current) {
+        clearTimeout(debounceRef.current);
+      }
+
+      debounceRef.current = setTimeout(() => {
+        performSearch(query);
+      }, 300);
+    } catch (err) {
+      console.error('Search change error:', err);
+      setError('Failed to process search. Please try again.');
     }
-
-    debounceRef.current = setTimeout(() => {
-      performSearch(query);
-    }, 300);
   };
 
   const handleResultClick = () => {
-    setShowResults(false);
-    setSearchQuery('');
-    inputRef.current?.blur();
+    try {
+      setShowResults(false);
+      setSearchQuery('');
+      inputRef.current?.blur();
+    } catch (err) {
+      console.error('Result click error:', err);
+    }
   };
 
   const clearSearch = () => {
-    setSearchQuery('');
-    setSearchResults([]);
-    setShowResults(false);
-    inputRef.current?.focus();
+    try {
+      setSearchQuery('');
+      setSearchResults([]);
+      setShowResults(false);
+      setError(null);
+      inputRef.current?.focus();
+    } catch (err) {
+      console.error('Clear search error:', err);
+    }
+  };
+
+  const handleAccountClick = (e: React.MouseEvent) => {
+    try {
+      e.preventDefault();
+      navigate('/login');
+    } catch (err) {
+      console.error('Account navigation error:', err);
+    }
   };
 
   const getResultLink = (result: SearchResult) => {
-    switch (result.type) {
-      case 'event':
-        return `/events/${result.slug}`;
-      case 'article':
-        return `/articles/${result.slug}`;
-      case 'course':
-        return '/courses';
-      case 'giveaway':
-        return '/giveaways';
-      default:
-        return '/';
+    try {
+      switch (result.type) {
+        case 'event':
+          return `/events/${result.slug}`;
+        case 'article':
+          return `/articles/${result.slug}`;
+        case 'course':
+          return '/courses';
+        case 'giveaway':
+          return '/giveaways';
+        default:
+          return '/';
+      }
+    } catch (err) {
+      console.error('Link generation error:', err);
+      return '/';
     }
   };
 
   const getTypeLabel = (type: string) => {
-    switch (type) {
-      case 'event':
-        return 'Event';
-      case 'article':
-        return 'Article';
-      case 'course':
-        return 'Course';
-      case 'giveaway':
-        return 'Giveaway';
-      default:
-        return '';
+    try {
+      switch (type) {
+        case 'event':
+          return 'Event';
+        case 'article':
+          return 'Article';
+        case 'course':
+          return 'Course';
+        case 'giveaway':
+          return 'Giveaway';
+        default:
+          return '';
+      }
+    } catch (err) {
+      console.error('Type label error:', err);
+      return '';
     }
   };
 
   const getTypeColor = (type: string) => {
-    switch (type) {
-      case 'event':
-        return 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200';
-      case 'article':
-        return 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200';
-      case 'course':
-        return 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200';
-      case 'giveaway':
-        return 'bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200';
-      default:
-        return 'bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200';
+    try {
+      switch (type) {
+        case 'event':
+          return 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200';
+        case 'article':
+          return 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200';
+        case 'course':
+          return 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200';
+        case 'giveaway':
+          return 'bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200';
+        default:
+          return 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200';
+      }
+    } catch (err) {
+      console.error('Type color error:', err);
+      return 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200';
     }
+  };
+
+  const renderSearchResults = () => {
+    if (error) {
+      return (
+        <div className="p-4 text-center">
+          <p className="text-sm text-red-500 dark:text-red-400">
+            {error}
+          </p>
+          <button
+            onClick={() => performSearch(searchQuery)}
+            className="mt-2 px-3 py-1 text-sm bg-gray-100 dark:bg-gray-700 rounded hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
+          >
+            Retry
+          </button>
+        </div>
+      );
+    }
+
+    if (isSearching) {
+      return (
+        <div className="p-4 text-center">
+          <div className="animate-spin rounded-full h-6 w-6 border-t-2 border-b-2 border-blue-500 mx-auto"></div>
+          <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">Searching...</p>
+        </div>
+      );
+    }
+
+    if (searchResults.length > 0) {
+      return (
+        <div className="py-2">
+          {searchResults.map((result) => (
+            <Link
+              key={`${result.type}-${result.id}`}
+              to={getResultLink(result)}
+              onClick={handleResultClick}
+              className="block px-4 py-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+            >
+              <div className="flex items-start gap-3">
+                {(result.image_url || result.featured_image) ? (
+                  <img
+                    src={result.image_url || result.featured_image}
+                    alt={result.title}
+                    className="w-12 h-12 object-cover rounded-lg flex-shrink-0"
+                    onError={(e) => {
+                      const target = e.currentTarget;
+                      target.style.display = 'none';
+                    }}
+                  />
+                ) : (
+                  <div className="w-12 h-12 bg-gray-200 dark:bg-gray-700 rounded-lg flex items-center justify-center">
+                    <span className="text-xs text-gray-500 dark:text-gray-400">
+                      {result.type.charAt(0).toUpperCase()}
+                    </span>
+                  </div>
+                )}
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2 mb-1">
+                    <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${getTypeColor(result.type)}`}>
+                      {getTypeLabel(result.type)}
+                    </span>
+                  </div>
+                  <h3 className="text-sm font-medium text-gray-900 dark:text-white line-clamp-1">
+                    {result.title}
+                  </h3>
+                  {result.description && (
+                    <p className="text-xs text-gray-500 dark:text-gray-400 line-clamp-2 mt-1">
+                      {result.description}
+                    </p>
+                  )}
+                  {result.tags && result.tags.length > 0 && (
+                    <div className="flex flex-wrap gap-1 mt-2">
+                      {result.tags.slice(0, 3).map((tag, index) => (
+                        <span
+                          key={index}
+                          className="text-xs bg-gray-100 text-gray-600 dark:bg-gray-700 dark:text-gray-300 px-1.5 py-0.5 rounded"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </div>
+            </Link>
+          ))}
+        </div>
+      );
+    }
+
+    if (searchQuery) {
+      return (
+        <div className="p-4 text-center">
+          <p className="text-sm text-gray-500 dark:text-gray-400">
+            No results found for "{searchQuery}"
+          </p>
+        </div>
+      );
+    }
+
+    return null;
   };
 
   return (
     <header 
       className={`fixed top-0 left-0 right-0 transition-transform duration-300 ease-in-out ${
         isHeaderVisible ? 'translate-y-0' : '-translate-y-full'
-      }`}
-      style={{
-        backgroundColor: window.innerWidth >= 1024 
-          ? 'rgba(255, 255, 255, 0.8)' 
-          : 'rgba(255, 255, 255, 0.9)',
-        backdropFilter: 'blur(10px)',
-        WebkitBackdropFilter: 'blur(10px)',
-        zIndex: 60
-      }}
+      } bg-white/90 dark:bg-gray-900/90 backdrop-blur-md border-b border-gray-200 dark:border-gray-700 z-50`}
     >
-      
+      <div className="container mx-auto px-4 py-3">
+        <div className="flex items-center justify-between gap-4">
+          {/* Logo on the left */}
+          <Link
+            to="/"
+            className="flex items-center gap-3 group"
+            aria-label="Home"
+          >
+            <div className="w-10 h-10 rounded-full bg-gradient-to-r from-blue-600 to-indigo-700 flex items-center justify-center group-hover:from-blue-500 group-hover:to-indigo-600 transition-colors">
+              <span className="text-white font-bold text-lg">TX</span>
+            </div>
+            <span className='hidden lg:block text-lg font-semibold text-gray-800 dark:text-white'>
+              {BRAND_NAME}
+            </span>
+          </Link>
 
-      <div className="border-b border-gray-200 dark:border-gray-700">
-        <div className="container mx-auto px-4 py-3">
-          <div className="flex items-center justify-between gap-4">
-            <div className="flex-1 max-w-2xl mx-auto lg:mx-0" ref={searchRef}>
+          {/* Search bar in the center */}
+          <div className="flex-1 max-w-2xl mx-4" ref={searchRef}>
+            <div className="relative">
               <div className="relative">
-                <div className="relative">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-                  <input
-                    ref={inputRef}
-                    type="text"
-                    placeholder="Search events, articles, courses, giveaways..."
-                    value={searchQuery}
-                    onChange={handleSearchChange}
-                    onFocus={() => setShowResults(true)}
-
-                    // Added focus-visible styles for keyboard accessibility
-                    className="w-full pl-10 pr-10 py-3 text-sm border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-primary focus:border-transparent dark:bg-gray-700 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-brand-primary"
-                  />
-                  {searchQuery && (
-                    <button
-                      onClick={clearSearch}
-                      className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
-                    >
-                      <X className="w-4 h-4" />
-                    </button>
-                  )}
-                </div>
-
-                {showResults && (searchQuery || searchResults.length > 0) && (
-                  <div 
-                    className="absolute top-full left-0 right-0 mt-1 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg max-h-96 overflow-y-auto"
-                    style={{ zIndex: 70 }}
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 dark:text-gray-400 w-5 h-5" />
+                <input
+                  ref={inputRef}
+                  type="text"
+                  placeholder="Search events, articles, courses, giveaways..."
+                  value={searchQuery}
+                  onChange={handleSearchChange}
+                  onFocus={() => setShowResults(true)}
+                  className="w-full pl-10 pr-10 py-2.5 text-sm border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 placeholder-gray-500 dark:placeholder-gray-400 transition-all"
+                  aria-label="Search"
+                />
+                {searchQuery && (
+                  <button
+                    onClick={clearSearch}
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 dark:text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
+                    aria-label="Clear search"
                   >
-                    {isSearching ? (
-                      <div className="p-4 text-center">
-                        <div className="animate-spin rounded-full h-6 w-6 border-t-2 border-b-2 border-brand-primary mx-auto"></div>
-                        <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">Searching...</p>
-                      </div>
-                    ) : searchResults.length > 0 ? (
-                      <div className="py-2">
-                        {searchResults.map((result) => (
-                          <Link
-                            key={`${result.type}-${result.id}`}
-                            to={getResultLink(result)}
-                            onClick={handleResultClick}
-                            className="block px-4 py-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
-                          >
-                            <div className="flex items-start gap-3">
-                              {(result.image_url || result.featured_image) && (
-                                <img
-                                  src={result.image_url || result.featured_image}
-                                  alt={result.title}
-                                  className="w-12 h-12 object-cover rounded-lg flex-shrink-0"
-                                />
-                              )}
-                              <div className="flex-1 min-w-0">
-                                <div className="flex items-center gap-2 mb-1">
-                                  <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${getTypeColor(result.type)}`}>
-                                    {getTypeLabel(result.type)}
-                                  </span>
-                                </div>
-                                <h3 className="text-sm font-medium text-gray-900 dark:text-white line-clamp-1">
-                                  {result.title}
-                                </h3>
-                                {result.description && (
-                                  <p className="text-xs text-gray-500 dark:text-gray-400 line-clamp-2 mt-1">
-                                    {result.description}
-                                  </p>
-                                )}
-                                {result.tags && result.tags.length > 0 && (
-                                  <div className="flex flex-wrap gap-1 mt-2">
-                                    {result.tags.slice(0, 3).map((tag, index) => (
-                                      <span
-                                        key={index}
-                                        className="text-xs bg-gray-100 text-gray-600 dark:bg-gray-700 dark:text-gray-400 px-1.5 py-0.5 rounded"
-                                      >
-                                        {tag}
-                                      </span>
-                                    ))}
-                                  </div>
-                                )}
-                              </div>
-                            </div>
-                          </Link>
-                        ))}
-                      </div>
-                    ) : searchQuery ? (
-                      <div className="p-4 text-center">
-                        <p className="text-sm text-gray-500 dark:text-gray-400">
-                          No results found for "{searchQuery}"
-                        </p>
-                      </div>
-                    ) : null}
-                  </div>
+                    <X className="w-4 h-4" />
+                  </button>
                 )}
               </div>
-            </div>
 
-            <div className="flex items-center gap-3">
-              <Link
-                to="/"
-                className="flex items-center gap-3 text-brand-primary hover:text-brand-ninja-gold transition-colors"
-              >
-                <div className="circular-logo">
-                  <img
-  src="https://jzzyrbaapysjydvjyars.supabase.co/storage/v1/object/sign/techxninjas/TechXNinjas_Logo.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8xZjMxMzJhZC04ZDM5LTQ1NGMtODUwMS05NWY1Y2Y5Mzg0MjciLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ0ZWNoeG5pbmphcy9UZWNoWE5pbmphc19Mb2dvLnBuZyIsImlhdCI6MTc1MDQ2MTMyMSwiZXhwIjoxNzgxOTk3MzIxfQ.0exGeZ2G_kT17zy3hXISdw1WE8p82T9Go1y04EhRYGM"
-  alt="TechXNinjas Logo"
-  onError={(e: React.SyntheticEvent<HTMLImageElement, Event>) => {
-    const target = e.currentTarget; // ✅ Safe in React
-    target.style.display = 'none';
-    const parent = target.parentElement;
-    if (parent) {
-      parent.innerHTML = '<span class="text-white font-bold text-lg">TX</span>';
-    }
-  }}
-/>
+              {/* Search results dropdown */}
+              {showResults && (searchQuery || searchResults.length > 0 || isSearching || error) && (
+                <div 
+                  className="absolute top-full left-0 right-0 mt-1 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg max-h-96 overflow-y-auto z-50"
+                  style={{ zIndex: 70 }}
+                >
+                  {renderSearchResults()}
                 </div>
-                <div className="hidden lg:flex items-center gap-2">
-  <img
-    src="https://jzzyrbaapysjydvjyars.supabase.co/storage/v1/object/sign/techxninjas/TechXNinjas_Text.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8xZjMxMzJhZC04ZDM5LTQ1NGMtODUwMS05NWY1Y2Y5Mzg0MjciLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ0ZWNoeG5pbmphcy9UZWNoWE5pbmphc19UZXh0LnBuZyIsImlhdCI6MTc1MDQ2MTMzMywiZXhwIjoxNzgxOTk3MzMzfQ.0VCZ-IVZyA6GlsNkhJFwH_OaXa4c6gtFiwzx6QKBTHc"
-    alt="TechXNinjas Text Logo"
-    className="h-6 object-contain"
-    onError={(e: React.SyntheticEvent<HTMLImageElement, Event>) => {
-      const target = e.currentTarget;
-      target.style.display = 'none';
-      const parent = target.parentElement;
-      if (parent) {
-        parent.innerHTML = `<span class='text-base font-semibold text-brand-primary'>TechXNinjas</span>`;
-      }
-    }}
-  />
-</div>
-
-              </Link>
+              )}
             </div>
           </div>
+
+          {/* Account icon linking to login/signup */}
+          <button
+            onClick={handleAccountClick}
+            className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+            aria-label="Account"
+          >
+            <User className="w-6 h-6 text-gray-600 dark:text-gray-400" />
+          </button>
         </div>
       </div>
     </header>
-  );<img
-  src="https://jzzyrbaapysjydvjyars.supabase.co/storage/v1/object/sign/techxninjas/TechXNinjas_Text.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8xZjMxMzJhZC04ZDM5LTQ1NGMtODUwMS05NWY1Y2Y5Mzg0MjciLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ0ZWNoeG5pbmphcy9UZWNoWE5pbmphc19UZXh0LnBuZyIsImlhdCI6MTc1MDQ2MTMzMywiZXhwIjoxNzgxOTk3MzMzfQ.0VCZ-IVZyA6GlsNkhJFwH_OaXa4c6gtFiwzx6QKBTHc"
-  alt={`${BRAND_NAME} Text Logo`}
-  className="h-8 object-contain"
-  onError={(e: React.SyntheticEvent<HTMLImageElement, Event>) => {
-    const target = e.currentTarget; // ✅ Use currentTarget instead of target
-    target.style.display = 'none';
-    const parent = target.parentElement;
-    if (parent) {
-      parent.innerHTML = `<span class="text-xl font-bold text-brand-primary">${BRAND_NAME}</span>`;
-    }
-  }}
-/>
-
+  );
 };
 
 export default SearchHeader;

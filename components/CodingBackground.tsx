@@ -15,7 +15,7 @@ const CodingBackground: React.FC<CodingBackgroundProps> = ({
   style = 'matrix'
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const animationRef = useRef<number>();
+  const animationRef = useRef<number | null>(null);
   const { theme } = useContext(ThemeContext) || { theme: Theme.LIGHT };
 
   useEffect(() => {
@@ -48,69 +48,83 @@ const CodingBackground: React.FC<CodingBackgroundProps> = ({
 
     const config = getIntensityConfig();
 
-    // Color schemes based on theme
+    // Enhanced color schemes for better visibility in both themes
     const getColorScheme = () => {
       if (theme === Theme.DARK) {
         switch (style) {
           case 'matrix':
             return {
-              primary: '#00FF00',
+              primary: '#00FF41', // Brighter green for better visibility
               secondary: '#008F11',
               tertiary: '#00AA00',
-              background: 'rgba(0, 0, 0, 0.02)'
+              background: 'rgba(0, 0, 0, 0.05)' // Slightly more opaque
             };
           case 'terminal':
             return {
               primary: '#00FFFF',
               secondary: '#0088AA',
               tertiary: '#00AAAA',
-              background: 'rgba(0, 0, 0, 0.02)'
+              background: 'rgba(0, 0, 0, 0.05)'
             };
           case 'code':
             return {
               primary: '#9933FF',
               secondary: '#6600CC',
               tertiary: '#7722DD',
-              background: 'rgba(0, 0, 0, 0.02)'
+              background: 'rgba(0, 0, 0, 0.05)'
             };
           case 'binary':
             return {
               primary: '#0066CC',
               secondary: '#004499',
               tertiary: '#0055BB',
-              background: 'rgba(0, 0, 0, 0.02)'
+              background: 'rgba(0, 0, 0, 0.05)'
+            };
+          default:
+            return {
+              primary: '#00FF41',
+              secondary: '#008F11',
+              tertiary: '#00AA00',
+              background: 'rgba(0, 0, 0, 0.05)'
             };
         }
       } else {
-        // Light theme - more visible colors
+        // Light theme - more visible colors with higher contrast
         switch (style) {
           case 'matrix':
             return {
-              primary: '#FF6B35',
-              secondary: '#F7931E',
-              tertiary: '#FFB627',
-              background: 'rgba(255, 255, 255, 0.05)'
+              primary: '#0A7E36', // Darker green for light background
+              secondary: '#0C5E2C',
+              tertiary: '#0E8F44',
+              background: 'rgba(255, 255, 255, 0.1)' // More opaque for better visibility
             };
           case 'terminal':
             return {
-              primary: '#E91E63',
-              secondary: '#9C27B0',
-              tertiary: '#673AB7',
-              background: 'rgba(255, 255, 255, 0.05)'
+              primary: '#007D9C',
+              secondary: '#005E7A',
+              tertiary: '#008FBB',
+              background: 'rgba(255, 255, 255, 0.1)'
             };
           case 'code':
             return {
-              primary: '#2196F3',
-              secondary: '#3F51B5',
-              tertiary: '#009688',
-              background: 'rgba(255, 255, 255, 0.05)'
+              primary: '#5A1E8F',
+              secondary: '#4A0C7A',
+              tertiary: '#6A22AA',
+              background: 'rgba(255, 255, 255, 0.1)'
             };
           case 'binary':
             return {
-              primary: '#FF5722',
-              secondary: '#795548',
-              tertiary: '#607D8B',
-              background: 'rgba(255, 255, 255, 0.05)'
+              primary: '#C54500',
+              secondary: '#A53500',
+              tertiary: '#E05500',
+              background: 'rgba(255, 255, 255, 0.1)'
+            };
+          default:
+            return {
+              primary: '#0A7E36',
+              secondary: '#0C5E2C',
+              tertiary: '#0E8F44',
+              background: 'rgba(255, 255, 255, 0.1)'
             };
         }
       }
@@ -144,10 +158,13 @@ const CodingBackground: React.FC<CodingBackgroundProps> = ({
     const dropOpacities: number[] = [];
     const dropColors: string[] = [];
 
+    // Adjust opacity based on theme for better visibility
+    const themeOpacityMultiplier = theme === Theme.DARK ? 1 : 1.3;
+
     for (let i = 0; i < columns; i++) {
       drops[i] = Math.random() * canvas.height;
       dropSpeeds[i] = (Math.random() * config.speed + 0.5) * fontSize;
-      dropOpacities[i] = Math.random() * config.opacity + 0.3;
+      dropOpacities[i] = Math.random() * config.opacity * themeOpacityMultiplier + 0.3;
       
       // Assign random colors from the color scheme
       const colorOptions = [colors.primary, colors.secondary, colors.tertiary];
@@ -184,7 +201,7 @@ const CodingBackground: React.FC<CodingBackgroundProps> = ({
         if (y > canvas.height && Math.random() > 0.975) {
           drops[i] = 0;
           dropSpeeds[i] = (Math.random() * config.speed + 0.5) * fontSize;
-          dropOpacities[i] = Math.random() * config.opacity + 0.3;
+          dropOpacities[i] = Math.random() * config.opacity * themeOpacityMultiplier + 0.3;
           
           // Reassign color
           const colorOptions = [colors.primary, colors.secondary, colors.tertiary];
@@ -222,7 +239,7 @@ const CodingBackground: React.FC<CodingBackgroundProps> = ({
         width: '100%',
         height: '100%',
         zIndex: 0,
-        opacity: 0.8
+        opacity: theme === Theme.DARK ? 0.9 : 0.7 // Adjusted for better visibility
       }}
     />
   );

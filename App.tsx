@@ -5,7 +5,7 @@ import Footer from './components/layout/Footer';
 import ScrollToTopButton from './components/ScrollToTopButton';
 import ScrollToTop from './components/ScrollToTop';
 import WhatsAppButton from './components/WhatsAppButton';
-import { HomePage } from './components/pages/HomePage'; 
+import {HomePage} from './components/pages/HomePage'; 
 import EventsPage from './components/pages/EventsPage';
 import EventDetailPage from './components/pages/EventDetailPage';
 import ArticlesPage from './components/pages/ArticlesPage';

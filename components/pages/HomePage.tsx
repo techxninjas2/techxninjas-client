@@ -26,6 +26,11 @@ import TestimonialsSlider from '../TestimonialsSlider';
 import MentorsSlider from '../MentorsSlider';
 import { getTestimonials, getHomepageMentors } from '../../services/homeService';
 import { Testimonial, HomepageMentor } from '../../types';
+import SrishtiSection from "@/components/SrishtiSection";
+
+
+
+
 
 const HeroSection: React.FC = () => {
   const highlights = [
@@ -441,6 +446,7 @@ const ExploreFeaturesSection: React.FC = () => {
 
 export const HomePage: React.FC = () => {
   usePageTitle("Home");
+
   return (
     <div className="bg-white dark:bg-gray-800">
       <HeroSection />
@@ -448,6 +454,10 @@ export const HomePage: React.FC = () => {
       <OurJourneySection />
       <WhyTechXNinjasSection />
       <TestimonialsSection />
+
+      {/* ✅ Your new custom section */}
+      <SrishtiSection />
+
       <MentorsSection />
       <ExploreFeaturesSection />
     </div>

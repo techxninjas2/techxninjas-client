@@ -1,0 +1,24 @@
+{
+    "facts":[
+        "Email was invented before the world wide web.",
+        "The first 1GB hard drive was announced in 1980 and weighed over 500 pounds.",
+        "More than 90% of the world’s currency exists only on computers.",
+        "TYPEWRITER is the longest word you can type using only the top row of a keyboard.",
+        "The first website is still online: info.cern.ch.",
+        "Bill Gates' house was designed using a Macintosh computer.",
+        "The first computer mouse was made of wood.",
+        "More than 5 billion YouTube videos are watched every day.",
+        "The password for the first computer was just 'password'.",
+        "Over 90% of the world’s data was generated in the last two years.",
+        "Google was originally named Backrub.",
+        "There are over 700 programming languages in existence today.",
+        "The first computer bug was a real bug — a moth found stuck in a Harvard Mark II computer in 1947.",
+        "The first email ever sent was by Ray Tomlinson to himself in 1971.",
+        "More than 6,000 new computer viruses are created and released every month.",
+        "Modern AI models like GPT-4 have over 1 trillion parameters — more than the number of synapses in a frog’s brain.",
+        "AI voice cloning can mimic human voices with uncanny accuracy using just a few seconds of recorded audio.",
+        "The Transformer architecture, which powers GPT models, was originally designed for translation tasks — not general AI.",
+        "GANs (Generative Adversarial Networks) can hallucinate ultra-high-resolution images of cities that don’t exist — usable for urban planning simulations.",
+        "AI can predict earthquakes by analyzing subtle patterns in seismic noise that human geologists might miss."
+  ]
+}

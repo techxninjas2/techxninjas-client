@@ -199,10 +199,10 @@ const SearchHeader: React.FC = () => {
       }`}
       style={{
         backgroundColor: window.innerWidth >= 1024 
-          ? 'rgba(255, 255, 255, 0.8)' 
-          : 'rgba(255, 255, 255, 0.9)',
-        backdropFilter: 'blur(10px)',
-        WebkitBackdropFilter: 'blur(10px)',
+          ? 'rgba(255, 255, 255, 0.3)' 
+          : 'rgba(255, 255, 255, 0.4)',
+        backdropFilter: 'blur(15px)',
+        WebkitBackdropFilter: 'blur(15px)',
         zIndex: 60
       }}
     >

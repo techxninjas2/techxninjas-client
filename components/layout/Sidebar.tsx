@@ -272,17 +272,37 @@ const Sidebar: React.FC<SidebarProps> = ({
         ref={sidebarRef}
         onMouseEnter={handleMouseEnterSidebar}
         onMouseLeave={handleMouseLeaveSidebar}
-        className={`fixed top-[64px] left-0 h-[calc(100vh-64px)] bg-white dark:bg-gray-800 shadow-lg transition-all duration-300 ease-in-out flex flex-col ${currentWidthClass} py-4`}
+        className={`fixed top-0 left-0 h-screen bg-white dark:bg-gray-800 shadow-lg transition-all duration-300 ease-in-out flex flex-col ${currentWidthClass} py-4`}
         style={{ 
-          zIndex: 40,
+          zIndex: 1000,
           position: 'fixed'
         }}
         aria-label="Main navigation sidebar"
       >
-        <div className={`flex items-center mb-6 ${isEffectivelyOpen ? 'px-4 justify-between' : 'px-0 justify-center'}`}>
-          {isEffectivelyOpen && (
-            <Link to="/" className="text-2xl font-bold text-brand-primary">{BRAND_NAME}</Link>
-          )}
+        <div className={`flex items-center mb-6 ${isEffectivelyOpen ? 'px-4 justify-between' : 'px-2 justify-center'}`}>
+          <Link 
+            to="/" 
+            className="flex items-center gap-2 text-brand-primary hover:text-brand-ninja-gold transition-colors"
+          >
+            <div className="w-8 h-8 flex-shrink-0">
+              <img
+                src="/techxninjas_logo.png"
+                alt="TechXNinjas Logo"
+                className="w-full h-full object-contain"
+                onError={(e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+                  const target = e.currentTarget;
+                  target.style.display = 'none';
+                  const parent = target.parentElement;
+                  if (parent) {
+                    parent.innerHTML = '<span class="text-brand-primary font-bold text-lg flex items-center justify-center w-8 h-8 bg-gray-100 dark:bg-gray-700 rounded">TX</span>';
+                  }
+                }}
+              />
+            </div>
+            {isEffectivelyOpen && (
+              <span className="text-xl font-bold">{BRAND_NAME}</span>
+            )}
+          </Link>
         </div>
 
         <nav className={`flex-grow space-y-1.5 ${isEffectivelyOpen ? 'px-4' : 'px-2'}`}>

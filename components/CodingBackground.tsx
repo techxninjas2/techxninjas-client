@@ -15,7 +15,7 @@ const CodingBackground: React.FC<CodingBackgroundProps> = ({
   style = 'matrix'
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const animationRef = useRef<number>();
+  const animationRef = useRef<number | null>(null);
   const { theme } = useContext(ThemeContext) || { theme: Theme.LIGHT };
 
   useEffect(() => {

@@ -380,7 +380,7 @@ const ExploreFeaturesSection: React.FC = () => {
         style="terminal"
         className="absolute inset-0 z-0"
       />
-      <div className="relative flex flex-col justify-between container mx-auto px-4 md:px-8 max-w-screen-xl text-center relative z-10">
+      <div className="relative flex flex-col justify-between container mx-auto px-4 md:px-8 max-w-screen-xl text-center z-10">
 
         <RevealOnScroll direction="up" duration={800}>
           <h2 className="text-3xl font-bold mb-12 text-brand-dark-gray dark:text-white">

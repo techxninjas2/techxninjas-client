@@ -107,7 +107,7 @@ const CommunityStatsSection: React.FC = () => {
     { value: '500+', label: 'Certificates Issued', icon: Award, color: 'text-brand-ninja-gold' },
   ];
   return (
-    <section className="relative py-16 bg-brand-off-white dark:bg-brand-dark-gray overflow-hidden">
+    <section className="relative py-16 overflow-hidden">
       <CodingBackground 
         intensity="low" 
         style="binary"
@@ -156,7 +156,7 @@ const OurJourneySection: React.FC = () => {
     { emoji: '🚀', title: 'Community Takes Flight', text: 'From a small group to a thriving, supportive network.' },
   ];
   return (
-    <section className="relative py-16 bg-white dark:bg-gray-800 overflow-hidden">
+    <section className="relative py-16 overflow-hidden">
       <CodingBackground 
         intensity="low" 
         style="code"
@@ -215,7 +215,7 @@ const WhyTechXNinjasSection: React.FC = () => {
     'A peer-to-peer vibe (not corporate!)',
   ];
   return (
-    <section className="relative py-16 bg-brand-off-white dark:bg-brand-dark-gray overflow-hidden">
+    <section className="relative py-16 overflow-hidden">
       <CodingBackground 
         intensity="low" 
         style="terminal"
@@ -289,7 +289,7 @@ const TestimonialsSection: React.FC = () => {
   }, []);
 
   return (
-    <section className="relative py-16 bg-white dark:bg-gray-800 overflow-hidden">
+    <section className="relative py-16 overflow-hidden">
       <CodingBackground 
         intensity="low" 
         style="code"
@@ -335,7 +335,7 @@ const MentorsSection: React.FC = () => {
   }, []);
 
   return (
-    <section className="relative py-16 bg-brand-off-white dark:bg-brand-dark-gray overflow-hidden">
+    <section className="relative py-16 overflow-hidden">
       <CodingBackground 
         intensity="low" 
         style="binary"
@@ -374,7 +374,7 @@ const ExploreFeaturesSection: React.FC = () => {
   ];
 
   return (
-    <section className="relative py-16 bg-white dark:bg-gray-800 overflow-hidden">
+    <section className="relative py-16 overflow-hidden">
       <CodingBackground 
         intensity="low" 
         style="terminal"

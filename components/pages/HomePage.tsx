@@ -40,11 +40,9 @@ const HeroSection: React.FC = () => {
     <section 
       className="relative bg-gradient-to-br from-brand-dark-gray via-brand-medium-gray to-brand-ninja-gold text-white py-20 md:py-32 overflow-hidden"
     >
-      <CodingBackground 
-        intensity="medium" 
-        style="matrix"
-        className="absolute inset-0 z-0"
-      />
+      <CodingBackground intensity="low" style="code" className="fixed inset-0 w-full h-full z-0" />
+      <div className="absolute top-0 left-0 w-full h-8 pointer-events-none fade-top" />
+      <div className="absolute bottom-0 left-0 w-full h-8 pointer-events-none fade-bottom" />
       <div className="container mx-auto px-4 text-center relative z-10">
         <RevealOnScroll direction="down" duration={1000}>
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-orange-500 dark:text-white">
@@ -108,11 +106,9 @@ const CommunityStatsSection: React.FC = () => {
   ];
   return (
     <section className="relative py-16 overflow-hidden">
-      <CodingBackground 
-        intensity="low" 
-        style="binary"
-        className="absolute inset-0 z-0"
-      />
+      <CodingBackground intensity="low" style="code" className="fixed inset-0 w-full h-full z-0" />
+      <div className="absolute top-0 left-0 w-full h-8 pointer-events-none fade-top" />
+      <div className="absolute bottom-0 left-0 w-full h-8 pointer-events-none fade-bottom" />
       <div className="container mx-auto px-4 text-center relative z-10">
         <RevealOnScroll direction="up" duration={800}>
           <h2 className="text-3xl font-bold mb-4 text-brand-dark-gray dark:text-brand-off-white">
@@ -157,11 +153,9 @@ const OurJourneySection: React.FC = () => {
   ];
   return (
     <section className="relative py-16 overflow-hidden">
-      <CodingBackground 
-        intensity="low" 
-        style="code"
-        className="absolute inset-0 z-0"
-      />
+      <CodingBackground intensity="low" style="code" className="fixed inset-0 w-full h-full z-0" />
+      <div className="absolute top-0 left-0 w-full h-8 pointer-events-none fade-top" />
+      <div className="absolute bottom-0 left-0 w-full h-8 pointer-events-none fade-bottom" />
       <div className="container mx-auto px-4 relative z-10">
         <RevealOnScroll direction="up" duration={800}>
           <h2 className="text-3xl font-bold text-center mb-12 text-brand-dark-gray dark:text-white">
@@ -216,11 +210,9 @@ const WhyTechXNinjasSection: React.FC = () => {
   ];
   return (
     <section className="relative py-16 overflow-hidden">
-      <CodingBackground 
-        intensity="low" 
-        style="terminal"
-        className="absolute inset-0 z-0"
-      />
+      <CodingBackground intensity="low" style="code" className="fixed inset-0 w-full h-full z-0" />
+      <div className="absolute top-0 left-0 w-full h-8 pointer-events-none fade-top" />
+      <div className="absolute bottom-0 left-0 w-full h-8 pointer-events-none fade-bottom" />
       <div className="container mx-auto px-4 relative z-10">
         <RevealOnScroll direction="up" duration={800}>
           <h2 className="text-3xl font-bold text-center mb-12 text-brand-dark-gray dark:text-brand-off-white">
@@ -290,11 +282,9 @@ const TestimonialsSection: React.FC = () => {
 
   return (
     <section className="relative py-16 overflow-hidden">
-      <CodingBackground 
-        intensity="low" 
-        style="code"
-        className="absolute inset-0 z-0"
-      />
+      <CodingBackground intensity="low" style="code" className="fixed inset-0 w-full h-full z-0" />
+      <div className="absolute top-0 left-0 w-full h-8 pointer-events-none fade-top" />
+      <div className="absolute bottom-0 left-0 w-full h-8 pointer-events-none fade-bottom" />
       <div className="container mx-auto px-4 relative z-10">
         <RevealOnScroll direction="up" duration={800}>
           <h2 className="text-3xl font-bold text-center mb-12 text-brand-dark-gray dark:text-white">
@@ -336,11 +326,9 @@ const MentorsSection: React.FC = () => {
 
   return (
     <section className="relative py-16 overflow-hidden">
-      <CodingBackground 
-        intensity="low" 
-        style="binary"
-        className="absolute inset-0 z-0"
-      />
+      <CodingBackground intensity="low" style="code" className="fixed inset-0 w-full h-full z-0" />
+      <div className="absolute top-0 left-0 w-full h-8 pointer-events-none fade-top" />
+      <div className="absolute bottom-0 left-0 w-full h-8 pointer-events-none fade-bottom" />
       <div className="container mx-auto px-4 relative z-10">
         <RevealOnScroll direction="up" duration={800}>
           <h2 className="text-3xl font-bold text-center mb-4 text-brand-dark-gray dark:text-brand-off-white">
@@ -375,11 +363,9 @@ const ExploreFeaturesSection: React.FC = () => {
 
   return (
     <section className="relative py-16 overflow-hidden">
-      <CodingBackground 
-        intensity="low" 
-        style="terminal"
-        className="absolute inset-0 z-0"
-      />
+      <CodingBackground intensity="low" style="code" className="fixed inset-0 w-full h-full z-0" />
+      <div className="absolute top-0 left-0 w-full h-8 pointer-events-none fade-top" />
+      <div className="absolute bottom-0 left-0 w-full h-8 pointer-events-none fade-bottom" />
       <div className="relative flex flex-col justify-between container mx-auto px-4 md:px-8 max-w-screen-xl text-center relative z-10">
 
         <RevealOnScroll direction="up" duration={800}>
@@ -442,7 +428,7 @@ const ExploreFeaturesSection: React.FC = () => {
 export const HomePage: React.FC = () => {
   usePageTitle("Home");
   return (
-    <div className="bg-white dark:bg-gray-800">
+    <div>
       <HeroSection />
       <CommunityStatsSection />
       <OurJourneySection />

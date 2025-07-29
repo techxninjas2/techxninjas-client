@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@google/genai": "^1.5.1",
+    "@google/generative-ai": "^0.24.1",
     "@marsidev/react-turnstile": "^0.4.1",
     "@supabase/supabase-js": "^2.50.5",
     "@tailwindcss/vite": "^4.1.11",

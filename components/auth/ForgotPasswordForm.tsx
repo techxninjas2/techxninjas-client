@@ -1,46 +1,52 @@
-import React, { useState, useContext } from 'react';
-import { AuthContext } from '../../contexts/AuthContext';
-import { AuthContextType } from '../../types';
-import { ArrowLeftIcon } from '../icons';
-import { Turnstile } from '@marsidev/react-turnstile';
+import React, { useState, useContext } from "react";
+import { AuthContext } from "../../contexts/AuthContext";
+import { AuthContextType } from "../../types";
+import { ArrowLeftIcon } from "../icons";
+import { Turnstile } from "@marsidev/react-turnstile";
 
 interface ForgotPasswordFormProps {
   onSwitchToLogin: () => void;
   onSuccess: () => void; // Called after successful email submission
 }
 
-const ForgotPasswordForm: React.FC<ForgotPasswordFormProps> = ({ onSwitchToLogin, onSuccess }) => {
-  const [email, setEmail] = useState('');
+const ForgotPasswordForm: React.FC<ForgotPasswordFormProps> = ({
+  onSwitchToLogin,
+  onSuccess,
+}) => {
+  const [email, setEmail] = useState("");
   const auth = useContext(AuthContext) as AuthContextType;
   const [captchaToken, setCaptchaToken] = useState<string | undefined>();
   const [captchaError, setCaptchaError] = useState<string | null>(null);
-  const turnstileSiteKey = '0x4AAAAAABhuYfA0fxpwvokl';
+  const turnstileSiteKey = "0x4AAAAAABhuYfA0fxpwvokl";
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!auth) return;
     if (!captchaToken) {
-        setCaptchaError("Please complete the CAPTCHA challenge.");
-        return;
+      setCaptchaError("Please complete the CAPTCHA challenge.");
+      return;
     }
-    auth.clearError(); 
+    auth.clearError();
     // setMessage(null); // Local message not used, AuthModal displays global errors
 
     try {
       await auth.resetPasswordForEmail(email, captchaToken);
       // Message is handled by AuthContext alert.
-      onSuccess(); 
+      onSuccess();
     } catch (error: any) {
       console.error("Forgot password failed:", error);
     } finally {
-        setCaptchaToken(undefined); // Reset token
+      setCaptchaToken(undefined); // Reset token
     }
   };
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div>
-        <label htmlFor="email-forgot" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+        <label
+          htmlFor="email-forgot"
+          className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+        >
           Email address
         </label>
         <input
@@ -55,26 +61,45 @@ const ForgotPasswordForm: React.FC<ForgotPasswordFormProps> = ({ onSwitchToLogin
         />
       </div>
 
-      <div className="my-4 flex justify-center"> {/* Centering classes moved here */}
-        {!turnstileSiteKey ? (
-            <div className="p-3 bg-yellow-50 dark:bg-yellow-900 border border-yellow-300 dark:border-yellow-700 text-yellow-700 dark:text-yellow-200 rounded-md text-sm text-center">
-                CAPTCHA is not configured. Please contact support.
+      <div className="my-4 w-full">
+        {/* CAPTCHA container with proper sizing to prevent cut-off */}
+        <div className="captcha-container">
+          {!turnstileSiteKey ? (
+            <div className="p-3 bg-yellow-50 dark:bg-yellow-900 border border-yellow-300 dark:border-yellow-700 text-yellow-700 dark:text-yellow-200 rounded-md text-sm text-center max-w-full">
+              CAPTCHA is not configured. Please contact support.
             </div>
-        ) : (
-            <Turnstile
+          ) : (
+            <div className="captcha-wrapper">
+              <Turnstile
                 siteKey={turnstileSiteKey}
                 onSuccess={setCaptchaToken}
-                onError={() => { setCaptchaError("CAPTCHA challenge failed. Please refresh and try again."); setCaptchaToken(undefined); }}
-                onExpire={() => { setCaptchaError("CAPTCHA challenge expired. Please refresh and try again."); setCaptchaToken(undefined); }}
-                options={{ theme: document.documentElement.classList.contains('dark') ? 'dark' : 'light' }}
-                // className="flex justify-center" // Removed from here
-            />
-        )}
+                onError={() => {
+                  setCaptchaError(
+                    "CAPTCHA challenge failed. Please refresh and try again."
+                  );
+                  setCaptchaToken(undefined);
+                }}
+                onExpire={() => {
+                  setCaptchaError(
+                    "CAPTCHA challenge expired. Please refresh and try again."
+                  );
+                  setCaptchaToken(undefined);
+                }}
+                options={{
+                  theme: document.documentElement.classList.contains("dark")
+                    ? "dark"
+                    : "light",
+                }}
+              />
+            </div>
+          )}
+        </div>
         {captchaError && (
-            <p className="mt-2 text-xs text-red-600 dark:text-red-400 text-center">{captchaError}</p>
+          <p className="mt-2 text-xs text-red-600 dark:text-red-400 text-center max-w-full break-words">
+            {captchaError}
+          </p>
         )}
       </div>
-
 
       <div>
         <button
@@ -82,7 +107,7 @@ const ForgotPasswordForm: React.FC<ForgotPasswordFormProps> = ({ onSwitchToLogin
           disabled={auth.loading || !captchaToken || !turnstileSiteKey}
           className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-brand-primary hover:bg-ninja-gold focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-primary disabled:opacity-50 dark:focus:ring-offset-gray-800"
         >
-          {auth.loading ? 'Sending...' : 'Send Reset Link'}
+          {auth.loading ? "Sending..." : "Send Reset Link"}
         </button>
       </div>
 

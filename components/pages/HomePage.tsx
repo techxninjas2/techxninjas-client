@@ -62,10 +62,9 @@ const HeroSection: React.FC = () => {
           {highlights.map((highlight, index) => (
             <RevealOnScroll key={index} direction="up" delay={400 + index * 100} duration={800}>
               <div className="flex items-center bg-white/70 dark:bg-white/20 backdrop-blur-sm text-gray-800 dark:text-white rounded-full shadow-md text-xs md:text-sm py-1 md:py-2 px-3 md:px-4">
-  <highlight.icon className="w-5 h-5 mr-2 text-brand-primary" />
-  {highlight.text}
-</div>
-
+                <highlight.icon className="w-5 h-5 mr-2 text-brand-primary" />
+                {highlight.text}
+              </div>
             </RevealOnScroll>
           ))}
         </div>
@@ -94,6 +93,12 @@ const HeroSection: React.FC = () => {
             </a>
           </div>
         </RevealOnScroll>
+      </div>
+      {/* SVG Wave Divider for smooth transition */}
+      <div className="pointer-events-none select-none w-full overflow-hidden leading-none relative z-10" style={{marginTop: '-1px'}}>
+        <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-24 md:h-32 lg:h-40">
+          <path d="M0,32L60,37.3C120,43,240,53,360,69.3C480,85,600,107,720,112C840,117,960,107,1080,90.7C1200,75,1320,53,1380,42.7L1440,32L1440,120L1380,120C1320,120,1200,120,1080,120C960,120,840,120,720,120C600,120,480,120,360,120C240,120,120,120,60,120L0,120Z" fill="#f8fafc" fillOpacity="1" />
+        </svg>
       </div>
     </section>
   );
@@ -379,7 +384,7 @@ const ExploreFeaturesSection: React.FC = () => {
         style="terminal"
         className="absolute inset-0 z-0"
       />
-      <div className="relative flex flex-col justify-between container mx-auto px-4 md:px-8 max-w-screen-xl text-center relative z-10">
+      <div className="relative flex flex-col justify-between container mx-auto px-4 md:px-8 max-w-screen-xl text-center z-10">
 
         <RevealOnScroll direction="up" duration={800}>
           <h2 className="text-3xl font-bold mb-12 text-brand-dark-gray dark:text-white">

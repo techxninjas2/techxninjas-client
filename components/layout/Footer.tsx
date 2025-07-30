@@ -52,11 +52,11 @@ const Footer: React.FC<FooterProps> = ({ layoutStyle }) => {
 
   return (
     <footer
-      className="bg-gray-100 dark:bg-brand-dark-gray text-gray-700 dark:text-brand-medium-gray py-12"
+      className="bg-gray-100 dark:bg-black text-gray-700 dark:text-brand-medium-gray"
       style={layoutStyle}
     >
       <div className="container mx-auto px-4">
-        <div className="flex flex-wrap justify-center sm:justify-between gap-8 mb-10 text-sm text-gray-600 dark:text-gray-300">
+        <div className="flex flex-wrap justify-center sm:justify-between gap-10 mb-10 text-sm text-gray-600 dark:text-gray-300">
           {/* Column 1: TechXNinjas */}
           <div className="w-[200px] flex-shrink-0 text-center sm:text-left">
             <h5 className="text-xl font-bold text-brand-primary mb-4">

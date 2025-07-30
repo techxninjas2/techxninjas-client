@@ -67,7 +67,7 @@ const TestimonialsSlider: React.FC<TestimonialsSliderProps> = ({
       >
         {testimonials.map((testimonial) => (
           <SwiperSlide key={testimonial.id} className="flex">
-            <div className="bg-brand-off-white dark:bg-brand-dark-gray p-6 rounded-xl shadow-lg flex flex-col items-center text-center transform hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 backdrop-blur-sm bg-opacity-90 dark:bg-opacity-90 min-h-[340px] h-full w-full">
+            <div className="bg-brand-off-white/50 dark:bg-brand-dark-gray/70 backdrop-blur-md border border-brand-primary/20 dark:border-blue-400 shadow-lg rounded-xl p-6 flex flex-col items-center text-center transform hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 min-h-[340px] h-full w-full">
               <img
                 src={
                   testimonial.avatarUrl ||

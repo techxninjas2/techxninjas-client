@@ -26,6 +26,7 @@ import TestimonialsSlider from '../TestimonialsSlider';
 import MentorsSlider from '../MentorsSlider';
 import { getTestimonials, getHomepageMentors } from '../../services/homeService';
 import { Testimonial, HomepageMentor } from '../../types';
+import { WhatsAppIcon } from '../icons';
 
 const HeroSection: React.FC = () => {
   const highlights = [
@@ -38,7 +39,7 @@ const HeroSection: React.FC = () => {
 
   return (
     <section 
-      className="relative bg-gradient-to-br from-brand-dark-gray via-brand-medium-gray to-brand-ninja-gold text-white py-20 md:py-32 overflow-hidden"
+      className="relative text-white py-20 md:py-32 overflow-hidden"
     >
       <CodingBackground 
         intensity="medium" 
@@ -53,7 +54,7 @@ const HeroSection: React.FC = () => {
         </RevealOnScroll>
         
         <RevealOnScroll direction="up" delay={300} duration={1000}>
-          <p className="text-lg md:text-xl text-gray-700 dark:text-gray-200 mb-8 max-w-3xl mx-auto">
+          <p className="text-lg md:text-xl text-gray-700 dark:text-gray-300 mb-8 max-w-3xl mx-auto font-medium">
             Your ultimate platform for hackathons, tech challenges, community interaction, and professional growth in the world of technology.
           </p>
         </RevealOnScroll>
@@ -62,10 +63,9 @@ const HeroSection: React.FC = () => {
           {highlights.map((highlight, index) => (
             <RevealOnScroll key={index} direction="up" delay={400 + index * 100} duration={800}>
               <div className="flex items-center bg-white/70 dark:bg-white/20 backdrop-blur-sm text-gray-800 dark:text-white rounded-full shadow-md text-xs md:text-sm py-1 md:py-2 px-3 md:px-4">
-  <highlight.icon className="w-5 h-5 mr-2 text-brand-primary" />
-  {highlight.text}
-</div>
-
+                <highlight.icon className="w-5 h-5 mr-2 text-brand-primary" />
+                {highlight.text}
+              </div>
             </RevealOnScroll>
           ))}
         </div>
@@ -80,7 +80,7 @@ const HeroSection: React.FC = () => {
             </Link>
             <Link
               to="/courses" 
-              className="bg-brand-light-blue hover:bg-opacity-80 text-white font-semibold py-3 px-8 rounded-lg shadow-lg transition duration-300 text-lg transform hover:scale-105"
+              className="bg-brand-blue hover:bg-opacity-80 text-white font-semibold py-3 px-8 rounded-lg shadow-lg transition duration-300 text-lg transform hover:scale-105"
             >
               Browse Programs
             </Link>
@@ -90,7 +90,7 @@ const HeroSection: React.FC = () => {
               rel="noopener noreferrer"
               className="bg-green-500 hover:bg-green-600 text-white font-semibold py-3 px-8 rounded-lg shadow-lg transition duration-300 text-lg inline-flex items-center transform hover:scale-105"
             >
-              <MessageSquare className="w-5 h-5 mr-2" /> Join our WhatsApp Community
+              <WhatsAppIcon className="w-5 h-5 mr-2" /> Join our WhatsApp Community
             </a>
           </div>
         </RevealOnScroll>
@@ -123,20 +123,23 @@ const CommunityStatsSection: React.FC = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 my-10">
           {stats.map((stat, index) => (
             <RevealOnScroll key={index} direction="up" delay={300 + index * 150} duration={800}>
-              <div className="bg-white dark:bg-gray-700 p-6 rounded-xl shadow-lg transform hover:scale-105 transition-transform duration-300 backdrop-blur-sm bg-opacity-90 dark:bg-opacity-90">
-                <stat.icon className={`w-12 h-12 mx-auto mb-4 ${stat.color}`} />
-                <p className={`text-4xl font-extrabold ${stat.color} mb-2`}>
-                  <AnimatedCounter 
-                    end={stat.value} 
-                    duration={2000} 
-                    delay={500 + index * 200} 
-                  />
-                </p>
-                <p className="text-gray-600 dark:text-gray-300">{stat.label}</p>
+              <div className="animated-border-outline p-1 rounded-xl transition-transform transform hover:scale-105 duration-300">
+                <div className="bg-white dark:bg-gray-900 backdrop-blur-md p-6 rounded-lg h-full">
+                  <stat.icon className={`w-12 h-12 mx-auto mb-4 ${stat.color}`} />
+                  <p className={`text-4xl font-extrabold ${stat.color} mb-2`}>
+                    <AnimatedCounter 
+                      end={stat.value} 
+                      duration={2000} 
+                      delay={500 + index * 200} 
+                    />
+                  </p>
+                  <p className="text-gray-700 dark:text-gray-300 text-center">{stat.label}</p>
+                </div>
               </div>
             </RevealOnScroll>
           ))}
         </div>
+
         
         <RevealOnScroll direction="up" delay={1000} duration={800}>
           <p className="text-xl font-semibold text-brand-primary dark:text-brand-ninja-gold">

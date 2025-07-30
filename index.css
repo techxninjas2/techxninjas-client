@@ -530,3 +530,24 @@ html {
 .dark .testimonial-pagination .swiper-pagination-bullet:hover {
   background-color: #ff6806 !important; /* same orange for dark mode hover */
 }
+
+@keyframes borderFlow {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 200% 50%;
+  }
+}
+
+.animated-border-outline {
+  position: relative;
+  border: 1px solid transparent;
+  border-radius: 1rem;
+  background-image: linear-gradient(90deg, #cf974b, #4b5563, #ff6806);
+  /*outergradient*/background-origin: border-box;
+  background-clip: padding-box, border-box;
+  animation: borderFlow 2s linear infinite;
+  background-size: 300% 300%;
+  -webkit-animation: borderFlow 2s linear infinite;
+}

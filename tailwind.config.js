@@ -27,6 +27,7 @@ export default {
         'brand-off-white': '#f8f8f7', // Same as brand-secondary, good
         'brand-ninja-gold': '#cf974b', // Explicitly named
         'brand-light-blue': '#47abd0',
+        'brand-blue': '#00CAFF',
         'brand-medium-gray': '#9d9fa0',
       },
       fontFamily: {

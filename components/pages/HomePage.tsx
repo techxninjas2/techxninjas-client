@@ -123,7 +123,7 @@ const CommunityStatsSection: React.FC = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 my-10">
           {stats.map((stat, index) => (
             <RevealOnScroll key={index} direction="up" delay={300 + index * 150} duration={800}>
-              <div className="bg-white dark:bg-gray-700 p-6 rounded-xl shadow-lg transform hover:scale-105 transition-transform duration-300 backdrop-blur-sm bg-opacity-90 dark:bg-opacity-90">
+              <div className="bg-white dark:bg-gray-700 p-6 rounded-xl shadow-lg transform hover:scale-105 transition-transform duration-300 backdrop-blur-sm bg-opacity-90 dark:bg-opacity-90 lg:h-full">
                 <stat.icon className={`w-12 h-12 mx-auto mb-4 ${stat.color}`} />
                 <p className={`text-4xl font-extrabold ${stat.color} mb-2`}>
                   <AnimatedCounter 
@@ -175,7 +175,7 @@ const OurJourneySection: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {journeyPoints.map((point, index) => (
               <RevealOnScroll key={index} direction="up" delay={300 + index * 150} duration={800}>
-                <div className="relative bg-brand-off-white dark:bg-brand-dark-gray p-6 rounded-xl shadow-lg border-l-4 border-brand-primary dark:border-brand-ninja-gold backdrop-blur-sm bg-opacity-90 dark:bg-opacity-90">
+                <div className="relative bg-brand-off-white dark:bg-brand-dark-gray p-6 rounded-xl shadow-lg border-l-4 border-brand-primary dark:border-brand-ninja-gold backdrop-blur-sm bg-opacity-90 dark:bg-opacity-90 lg:h-full">
                   <div className="hidden md:block absolute top-1/2 -left-3.5 w-6 h-6 bg-brand-light-blue rounded-full border-4 border-white dark:border-gray-800 transform -translate-y-1/2"></div>
                   <div className="text-4xl mb-3">{point.emoji}</div>
                   <h3 className="text-xl font-semibold mb-2 text-brand-primary dark:text-brand-ninja-gold">{point.title}</h3>

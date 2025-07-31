@@ -1,4 +1,9 @@
 # 🌐 TechXNinjas – The Student-Centric Tech Community Platform
+![GitHub Stars](https://img.shields.io/github/stars/techxninjas2/techxninjas-client?style=social)
+![Forks](https://img.shields.io/github/forks/techxninjas2/techxninjas-client?style=social)
+![License](https://img.shields.io/github/license/techxninjas2/techxninjas-client)
+![Last Commit](https://img.shields.io/github/last-commit/techxninjas2/techxninjas-client)
+
 
 Welcome to the official repository of **TechXNinjas**, a student-first community
 platform built to empower learners across India (and beyond) with tech

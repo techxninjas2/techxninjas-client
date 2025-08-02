@@ -1,50 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- Charset & Viewport for Mobile -->
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>TechXNinjas</title>
+
+  <!-- Social Sharing Meta Tags -->
+  <meta property="og:site_name" content="TechXNinjas" />
+  <meta property="og:title" content="TechXNinjas - Learn, Build, Grow" />
+  <meta property="og:description" content="A community-driven platform to grow and collaborate in tech." />
+  <meta property="og:image" content="https://via.placeholder.com/1200x630.png?text=TechXNinjas" />
+  <meta property="og:url" content="http://localhost:5173" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:creator" content="@TechXNinjas" />
+
+  <!-- Performance Optimization -->
+  <link rel="preload" as="image" href="/assets/hero.png" />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="/favicon.ico" />
+
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-7M7G6QM7Q2"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-
     gtag('config', 'G-7M7G6QM7Q2');
   </script>
-  <!-- End Google tag (gtag.js) -->
+
+  <!-- Google AdSense -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7123326554551802" crossorigin="anonymous"></script>
-  <link rel="icon" type="image/png" href="techxninjas_logo.png" />
   <meta name="google-adsense-account" content="ca-pub-7123326554551802">
+
+  <!-- Styles and Fonts -->
   <link rel="stylesheet" href="/index.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Env Polyfill for Vite -->
   <script>
-    // Basic polyfill for process.env, which might be expected by some libraries.
-    // Vite handles VITE_ prefixed environment variables via import.meta.env.
-    // process.env.API_KEY for Gemini is assumed to be available from the execution environment.
     window.process = window.process || {};
     window.process.env = window.process.env || {};
   </script>
-<script type="importmap">
-{
-  "imports": {
-    "react-dom/": "https://esm.sh/react-dom@^19.1.0/",
-    "react-router-dom": "https://esm.sh/react-router-dom@^7.6.2",
-    "react/": "https://esm.sh/react@^19.1.0/",
-    "react": "https://esm.sh/react@^19.1.0",
-    "@google/genai": "https://esm.sh/@google/genai@^1.5.1",
-    "@supabase/supabase-js": "https://esm.sh/@supabase/supabase-js@^2.44.4",
-    "lucide-react": "https://esm.sh/lucide-react@^0.518.0"
+
+  <!-- Import Maps -->
+  <script type="importmap">
+  {
+    "imports": {
+      "react-dom/": "https://esm.sh/react-dom@^19.1.0/",
+      "react-router-dom": "https://esm.sh/react-router-dom@^7.6.2",
+      "react/": "https://esm.sh/react@^19.1.0/",
+      "react": "https://esm.sh/react@^19.1.0",
+      "@google/genai": "https://esm.sh/@google/genai@^1.5.1",
+      "@supabase/supabase-js": "https://esm.sh/@supabase/supabase-js@^2.44.4",
+      "lucide-react": "https://esm.sh/lucide-react@^0.518.0"
+    }
   }
-}
-</script>
+  </script>
 </head>
 <body class="bg-brand-background text-brand-text dark:bg-dark-background dark:text-dark-text font-sans antialiased">
   <!-- Google Tag Manager (noscript) -->
-  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-P23LTGN8"
-  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-  <!-- End Google Tag Manager (noscript) -->
+  <noscript>
+    <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-P23LTGN8"
+      height="0" width="0" style="display:none;visibility:hidden">
+    </iframe>
+  </noscript>
+  <!-- End Google Tag Manager -->
+
   <div id="root"></div>
   <script type="module" src="/index.tsx"></script>
 </body>

@@ -315,6 +315,177 @@ img {
   transform: translateZ(0);
 }
 
+/* Dramatic UI improvements for clear visual enhancement */
+
+/* Animated gradient background */
+@keyframes gradient-xy {
+  0%, 100% {
+    background-size: 400% 400%;
+    background-position: left center;
+  }
+  50% {
+    background-size: 200% 200%;
+    background-position: right center;
+  }
+}
+
+.animate-gradient-xy {
+  animation: gradient-xy 15s ease infinite;
+}
+
+/* Enhanced button animations */
+.bg-size-200 {
+  background-size: 200% 100%;
+}
+
+.bg-pos-0 {
+  background-position: 200% 0;
+}
+
+.bg-pos-100 {
+  background-position: 0 0;
+}
+
+/* Pulsing glow effect */
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(255, 104, 6, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(255, 104, 6, 0.6), 0 0 60px rgba(255, 104, 6, 0.4);
+  }
+}
+
+.pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+/* Enhanced card hover effects */
+.card-hover-lift {
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.card-hover-lift:hover {
+  transform: translateY(-15px) scale(1.05) rotateY(5deg);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+}
+
+/* Bouncing animation */
+@keyframes bounce-in {
+  0% {
+    transform: scale(0.3) translateY(100px);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.05) translateY(-10px);
+  }
+  70% {
+    transform: scale(0.9) translateY(0px);
+  }
+  100% {
+    transform: scale(1) translateY(0px);
+    opacity: 1;
+  }
+}
+
+.bounce-in {
+  animation: bounce-in 0.8s ease-out;
+}
+
+/* Smooth navbar styling */
+.navbar-smooth {
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.navbar-smooth:hover {
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Smooth scale animation */
+.hover-scale-102:hover {
+  transform: scale(1.02);
+}
+
+/* Enhanced ease-out transitions */
+.transition-smooth {
+  transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Custom shadow utilities */
+.shadow-3xl {
+  box-shadow: 0 35px 60px -12px rgba(0, 0, 0, 0.25), 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+}
+
+/* Enhanced UI improvements for better visual appeal */
+.gradient-border {
+  position: relative;
+  border-radius: 1rem;
+  background: linear-gradient(45deg, #ff6806, #47abd0, #cf974b);
+  padding: 2px;
+}
+
+.gradient-border::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  padding: 2px;
+  background: linear-gradient(45deg, #ff6806, #47abd0, #cf974b);
+  border-radius: inherit;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: subtract;
+}
+
+/* Glowing effect for cards */
+.glow-on-hover {
+  position: relative;
+  overflow: hidden;
+}
+
+.glow-on-hover::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 104, 6, 0.1), transparent);
+  transition: left 0.5s;
+}
+
+.glow-on-hover:hover::before {
+  left: 100%;
+}
+
+/* Floating animation for enhanced visual appeal */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+.float-animation {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Subtle shimmer effect */
+@keyframes shimmer {
+  0% {
+    background-position: -200px 0;
+  }
+  100% {
+    background-position: calc(200px + 100%) 0;
+  }
+}
+
+.shimmer {
+  background: linear-gradient(90deg, transparent 30%, rgba(255, 255, 255, 0.2) 50%, transparent 70%);
+  background-size: 200px 100%;
+  animation: shimmer 2s infinite;
+}
+
 /* Custom styles for event detail page */
 
 /* Hide scrollbar for the header navigation */

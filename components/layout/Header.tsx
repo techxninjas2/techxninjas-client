@@ -126,16 +126,23 @@ const Header: React.FC<HeaderProps> = ({ onMainContentLayoutChange }) => {
   }> = ({ to, label, icon: Icon, isSpecial, isAction, onClick }) => {
     const isActive = location.pathname === to || (isAction && location.pathname === '/dashboard' && user);
     
-    const baseClasses = "flex flex-col items-center justify-center p-1 flex-1 text-xs transition-colors duration-200";
-    const activeColorClass = "text-brand-primary";
-    const inactiveColorClass = "text-brand-text dark:text-dark-text";
+    const baseClasses = "flex flex-col items-center justify-center p-1 flex-1 text-xs transition-all duration-500 ease-out transform hover:scale-105";
+    const activeColorClass = "text-brand-primary font-semibold";
+    const inactiveColorClass = theme === 'dark' ? "text-gray-300" : "text-gray-600";
     
     let content;
 
     if (isSpecial) {
       content = (
-        <div className={`flex flex-col items-center justify-center w-16 h-16 p-1 rounded-full -mt-5 shadow-lg
-                        ${isActive ? 'bg-ninja-gold' : 'bg-brand-primary'} text-white`}>
+        <div className={`flex flex-col items-center justify-center w-16 h-16 p-1 rounded-full -mt-4 shadow-lg ring-2 transform hover:scale-105 transition-all duration-500 ease-out ${
+          theme === 'dark' ? 'ring-gray-600/30' : 'ring-gray-300/50'
+        } ${
+          isActive
+            ? 'bg-gradient-to-br from-brand-primary to-orange-500 text-white'
+            : theme === 'dark'
+              ? 'bg-gradient-to-br from-gray-100 to-white text-brand-primary'
+              : 'bg-gradient-to-br from-gray-100 to-white text-brand-primary'
+        }`}>
           <Icon className="w-6 h-6 mb-0.5" />
           <span className="text-xs leading-tight">{label}</span>
         </div>
@@ -169,10 +176,11 @@ const Header: React.FC<HeaderProps> = ({ onMainContentLayoutChange }) => {
       <SearchHeader />
       
       <div className="lg:hidden">
-        <nav className="fixed bottom-0 left-0 right-0 h-16 bg-transparent flex items-center justify-around px-1 z-30
-                       border-t border-gray-200 dark:border-gray-700 
-                       bg-opacity-90 backdrop-blur-md 
-                       bg-white dark:bg-gray-800">
+        <nav className={`fixed bottom-0 left-0 right-0 h-16 flex items-center justify-around px-2 z-30 shadow-lg backdrop-blur-md ${
+          theme === 'dark'
+            ? 'bg-gradient-to-r from-gray-800 via-gray-700 to-gray-800 border-t border-gray-600/50'
+            : 'bg-gradient-to-r from-white via-gray-50 to-white border-t border-gray-200'
+        }`}>
           {mobileNavItems.map(item => (
             <MobileBottomNavItem
               key={item.label}

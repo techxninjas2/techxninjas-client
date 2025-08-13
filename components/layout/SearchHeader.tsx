@@ -1,10 +1,12 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef, useCallback, useContext } from 'react';
 import { Link } from 'react-router-dom';
 // Added for icon use and consistent styling
 import { Search, X } from 'lucide-react';
 import { UserCircle } from 'lucide-react';
 import { supabase } from '../../lib/supabaseClient';
 import { BRAND_NAME } from '../../constants';
+import { ThemeContext } from '../../contexts/ThemeContext';
+import { ThemeContextType } from '../../types';
 
 interface SearchResult {
   id: string;
@@ -18,6 +20,7 @@ interface SearchResult {
 }
 
 const SearchHeader: React.FC = () => {
+  const { theme } = useContext(ThemeContext) as ThemeContextType;
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
   const [isSearching, setIsSearching] = useState(false);
@@ -193,28 +196,26 @@ const SearchHeader: React.FC = () => {
   };
 
   return (
-    <header 
-      className={`fixed top-0 left-0 right-0 transition-transform duration-300 ease-in-out ${
+    <header
+      className={`fixed top-0 left-0 right-0 transition-all duration-700 ease-out ${
         isHeaderVisible ? 'translate-y-0' : '-translate-y-full'
-      }`}
+      } bg-gradient-to-r from-gray-800 via-gray-700 to-gray-800 border-b border-gray-600/50 shadow-lg`}
       style={{
-        backgroundColor: window.innerWidth >= 1024 
-          ? 'rgba(255, 255, 255, 0.8)' 
-          : 'rgba(255, 255, 255, 0.9)',
-        backdropFilter: 'blur(10px)',
-        WebkitBackdropFilter: 'blur(10px)',
-        zIndex: 60
+        backdropFilter: 'blur(15px)',
+        WebkitBackdropFilter: 'blur(15px)',
+        zIndex: 60,
+        boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)'
       }}
     >
       
 
-      <div className="border-b border-gray-200 dark:border-gray-700">
+      <div className="border-b border-gray-600/30">
         <div className="container mx-auto px-4 py-3">
           <div className="flex items-center justify-between gap-4">
             <div className="flex-1 max-w-2xl mx-auto lg:mx-0" ref={searchRef}>
               <div className="relative">
                 <div className="relative">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4 transition-colors duration-300" />
                   <input
                     ref={inputRef}
                     type="text"
@@ -224,12 +225,12 @@ const SearchHeader: React.FC = () => {
                     onFocus={() => setShowResults(true)}
 
                     // Added focus-visible styles for keyboard accessibility
-                    className="w-full pl-10 pr-10 py-3 text-sm border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-primary focus:border-transparent dark:bg-gray-700 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-brand-primary"
+                    className="w-full pl-10 pr-10 py-2.5 text-sm border border-gray-500/30 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-primary/50 focus:border-brand-primary/50 bg-gray-700/80 text-white placeholder-gray-300 backdrop-blur-md shadow-md transition-all duration-300 ease-out focus-visible:outline focus-visible:outline-2 focus-visible:outline-brand-primary"
                   />
                   {searchQuery && (
                     <button
                       onClick={clearSearch}
-                      className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+                      className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-300 transition-colors duration-300"
                     >
                       <X className="w-4 h-4" />
                     </button>
@@ -309,33 +310,33 @@ const SearchHeader: React.FC = () => {
             <div className="flex items-center gap-3">
               <Link
                 to="/"
-                className="flex items-center gap-3 text-brand-primary hover:text-brand-ninja-gold transition-colors"
+                className="flex items-center gap-3 text-white hover:text-brand-primary transition-all duration-500 ease-out transform hover:scale-102"
               >
-                <div className="circular-logo">
+                <div className="circular-logo shadow-lg ring-2 ring-white/20 hover:ring-brand-primary/50 transition-all duration-500 ease-out transform hover:scale-105">
                   <img
   src="https://jzzyrbaapysjydvjyars.supabase.co/storage/v1/object/sign/techxninjas/TechXNinjas_Logo.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8xZjMxMzJhZC04ZDM5LTQ1NGMtODUwMS05NWY1Y2Y5Mzg0MjciLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ0ZWNoeG5pbmphcy9UZWNoWE5pbmphc19Mb2dvLnBuZyIsImlhdCI6MTc1MDQ2MTMyMSwiZXhwIjoxNzgxOTk3MzIxfQ.0exGeZ2G_kT17zy3hXISdw1WE8p82T9Go1y04EhRYGM"
   alt="TechXNinjas Logo"
   onError={(e: React.SyntheticEvent<HTMLImageElement, Event>) => {
-    const target = e.currentTarget; // ✅ Safe in React
+    const target = e.currentTarget;
     target.style.display = 'none';
     const parent = target.parentElement;
     if (parent) {
-      parent.innerHTML = '<span class="text-white font-bold text-lg">TX</span>';
+      parent.innerHTML = '<span class="font-bold text-lg text-white">TX</span>';
     }
   }}
 />
                 </div>
-                <div className="hidden lg:flex items-center gap-2">
+                <div className="hidden lg:flex items-center gap-3">
   <img
     src="https://jzzyrbaapysjydvjyars.supabase.co/storage/v1/object/sign/techxninjas/TechXNinjas_Text.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8xZjMxMzJhZC04ZDM5LTQ1NGMtODUwMS05NWY1Y2Y5Mzg0MjciLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ0ZWNoeG5pbmphcy9UZWNoWE5pbmphc19UZXh0LnBuZyIsImlhdCI6MTc1MDQ2MTMzMywiZXhwIjoxNzgxOTk3MzMzfQ.0VCZ-IVZyA6GlsNkhJFwH_OaXa4c6gtFiwzx6QKBTHc"
     alt="TechXNinjas Text Logo"
-    className="h-6 object-contain"
+    className="h-7 object-contain filter brightness-0 invert drop-shadow-sm transition-all duration-300"
     onError={(e: React.SyntheticEvent<HTMLImageElement, Event>) => {
       const target = e.currentTarget;
       target.style.display = 'none';
       const parent = target.parentElement;
       if (parent) {
-        parent.innerHTML = `<span class='text-base font-semibold text-brand-primary'>TechXNinjas</span>`;
+        parent.innerHTML = '<span class="text-lg font-semibold drop-shadow-sm text-white">TechXNinjas</span>';
       }
     }}
   />
@@ -347,20 +348,7 @@ const SearchHeader: React.FC = () => {
         </div>
       </div>
     </header>
-  );<img
-  src="https://jzzyrbaapysjydvjyars.supabase.co/storage/v1/object/sign/techxninjas/TechXNinjas_Text.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8xZjMxMzJhZC04ZDM5LTQ1NGMtODUwMS05NWY1Y2Y5Mzg0MjciLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ0ZWNoeG5pbmphcy9UZWNoWE5pbmphc19UZXh0LnBuZyIsImlhdCI6MTc1MDQ2MTMzMywiZXhwIjoxNzgxOTk3MzMzfQ.0VCZ-IVZyA6GlsNkhJFwH_OaXa4c6gtFiwzx6QKBTHc"
-  alt={`${BRAND_NAME} Text Logo`}
-  className="h-8 object-contain"
-  onError={(e: React.SyntheticEvent<HTMLImageElement, Event>) => {
-    const target = e.currentTarget; // ✅ Use currentTarget instead of target
-    target.style.display = 'none';
-    const parent = target.parentElement;
-    if (parent) {
-      parent.innerHTML = `<span class="text-xl font-bold text-brand-primary">${BRAND_NAME}</span>`;
-    }
-  }}
-/>
-
+  );
 };
 
 export default SearchHeader;

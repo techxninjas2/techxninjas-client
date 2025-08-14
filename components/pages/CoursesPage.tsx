@@ -278,8 +278,8 @@ const CoursesPage: React.FC = () => {
         </RevealOnScroll>
 
         <RevealOnScroll direction="up" delay={300} duration={800}>
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 mb-8 backdrop-blur-sm bg-opacity-95 dark:bg-opacity-95">
-            <div className="flex items-center gap-3 mb-4">
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-2 mb-8 backdrop-blur-sm bg-opacity-95 dark:bg-opacity-95">
+            <div className="flex items-center gap-3 p-2">
               <div className="flex-1 relative">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
                 <input

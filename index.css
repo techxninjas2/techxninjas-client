@@ -530,3 +530,12 @@ html {
 .dark .testimonial-pagination .swiper-pagination-bullet:hover {
   background-color: #ff6806 !important; /* same orange for dark mode hover */
 }
+
+/* Hide scrollbar but keep scrolling */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;  
+  scrollbar-width: none;     
+}

@@ -91,7 +91,7 @@ const App: React.FC = () => {
               <Route path="/events" element={<EventsPage />} />
               <Route path="/events/:slug" element={<EventDetailPage />} />
               <Route path="/articles" element={<ArticlesPage />} />
-              <Route path="/articles/:slug" element={<ArticleDetailPage />} />
+              <Route path="/articles/:id" element={<ArticleDetailPage />} />
               <Route path="/courses" element={<CoursesPage />} />
               <Route path="/courses/:slug" element={<CourseDetailPage />} />
               <Route path="/giveaways" element={<PlaceholderPage title="Giveaways" />} />

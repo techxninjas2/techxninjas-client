@@ -26,6 +26,7 @@ import ThemeToggle from './components/ThemeToggle';
 import TechFactGenerator from './components/TechFactGenerator';
 import { SpeedInsights } from "@vercel/speed-insights/react";
 import { Analytics } from '@vercel/analytics/react';
+import { BrowserCompatibility, BrowserUpgradeRecommendation } from './components/BrowserCompatibility';
 
 const PlaceholderPage: React.FC<{ title: string }> = ({ title }) => {
   usePageTitle(title); 
@@ -77,56 +78,67 @@ const App: React.FC = () => {
 
   return (
     <ErrorBoundary>
-      <BrowserRouter> 
-        <ScrollToTop />
-        <div className="flex flex-col min-h-screen">
-          <Header onMainContentLayoutChange={handleMainContentLayoutChange} />
-          <main 
-            id="main-content" 
-            className="flex-grow transition-all duration-300 ease-in-out"
-            style={mainContentLayout}
-          >
-            <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/events" element={<EventsPage />} />
-              <Route path="/events/:slug" element={<EventDetailPage />} />
-              <Route path="/articles" element={<ArticlesPage />} />
-              <Route path="/articles/:slug" element={<ArticleDetailPage />} />
-              <Route path="/courses" element={<CoursesPage />} />
-              <Route path="/courses/:slug" element={<CourseDetailPage />} />
-              <Route path="/giveaways" element={<PlaceholderPage title="Giveaways" />} />
-              <Route path="/contact-us" element={<ContactUsPage />} />
-              <Route path="/about-us" element={<PlaceholderPage title="About Us" />} />
-              <Route 
-                path="/dashboard" 
-                element={
-                  <ProtectedRoute>
-                    <UserProfilePage />
-                  </ProtectedRoute>
-                } 
-              />
-              <Route 
-                path="/creator-dashboard" 
-                element={
-                  <ProtectedRoute>
-                    <CreatorDashboardPage />
-                  </ProtectedRoute>
-                } 
-              />
-              <Route path="/profile/:username" element={<PublicProfilePage />} />
-              <Route path="/terms" element={<TermsOfServicePage />} />
-              <Route path="/privacy" element={<PrivacyPolicyPage />} />
-              {/* Catch all route for 404 */}
-              <Route path="*" element={<PlaceholderPage title="Page Not Found" />} />
-            </Routes>
-          </main>
-          <Footer layoutStyle={mainContentLayout} />
-          <ScrollToTopButton />
-          <WhatsAppButton />
-        </div>
-        <SpeedInsights />
-        <Analytics />
-      </BrowserRouter>
+      <BrowserCompatibility 
+        showWarnings={true}
+        fallbackComponent={
+          <div className="min-h-screen flex items-center justify-center bg-gray-50">
+            <div className="max-w-2xl mx-auto p-8">
+              <BrowserUpgradeRecommendation />
+            </div>
+          </div>
+        }
+      >
+        <BrowserRouter> 
+          <ScrollToTop />
+          <div className="flex flex-col min-h-screen">
+            <Header onMainContentLayoutChange={handleMainContentLayoutChange} />
+            <main 
+              id="main-content" 
+              className="flex-grow transition-all duration-300 ease-in-out"
+              style={mainContentLayout}
+            >
+              <Routes>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/events" element={<EventsPage />} />
+                <Route path="/events/:slug" element={<EventDetailPage />} />
+                <Route path="/articles" element={<ArticlesPage />} />
+                <Route path="/articles/:slug" element={<ArticleDetailPage />} />
+                <Route path="/courses" element={<CoursesPage />} />
+                <Route path="/courses/:slug" element={<CourseDetailPage />} />
+                <Route path="/giveaways" element={<PlaceholderPage title="Giveaways" />} />
+                <Route path="/contact-us" element={<ContactUsPage />} />
+                <Route path="/about-us" element={<PlaceholderPage title="About Us" />} />
+                <Route 
+                  path="/dashboard" 
+                  element={
+                    <ProtectedRoute>
+                      <UserProfilePage />
+                    </ProtectedRoute>
+                  } 
+                />
+                <Route 
+                  path="/creator-dashboard" 
+                  element={
+                    <ProtectedRoute>
+                      <CreatorDashboardPage />
+                    </ProtectedRoute>
+                  } 
+                />
+                <Route path="/profile/:username" element={<PublicProfilePage />} />
+                <Route path="/terms" element={<TermsOfServicePage />} />
+                <Route path="/privacy" element={<PrivacyPolicyPage />} />
+                {/* Catch all route for 404 */}
+                <Route path="*" element={<PlaceholderPage title="Page Not Found" />} />
+              </Routes>
+            </main>
+            <Footer layoutStyle={mainContentLayout} />
+            <ScrollToTopButton />
+            <WhatsAppButton />
+          </div>
+          <SpeedInsights />
+          <Analytics />
+        </BrowserRouter>
+      </BrowserCompatibility>
     </ErrorBoundary>
   );
 };

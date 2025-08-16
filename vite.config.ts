@@ -14,8 +14,8 @@ export default defineConfig(({ mode }) => {
       }
     },
     build: {
-      // Performance optimizations
-      target: 'es2015',
+      // Enhanced browser compatibility
+      target: ['es2015', 'chrome58', 'firefox57', 'safari11', 'edge16'],
       minify: 'terser',
       terserOptions: {
         compress: {
@@ -49,5 +49,22 @@ export default defineConfig(({ mode }) => {
         overlay: false,
       },
     },
+    // Add polyfills for better browser compatibility
+    plugins: [
+      {
+        name: 'browser-compatibility',
+        transformIndexHtml(html) {
+          return html;
+        },
+        configureServer(server) {
+          server.middlewares.use((req, res, next) => {
+            // Add CORS headers for better compatibility
+            res.setHeader('Cross-Origin-Embedder-Policy', 'unsafe-none');
+            res.setHeader('Cross-Origin-Opener-Policy', 'unsafe-none');
+            next();
+          });
+        }
+      }
+    ]
   };
 });

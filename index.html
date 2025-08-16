@@ -19,13 +19,26 @@
   <meta name="google-adsense-account" content="ca-pub-7123326554551802">
   <link rel="stylesheet" href="/index.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Import Maps Polyfill for older browsers -->
+  <script async src="https://unpkg.com/es-module-shims@1.8.0/dist/es-module-shims.js"></script>
+  
   <script>
     // Basic polyfill for process.env, which might be expected by some libraries.
     // Vite handles VITE_ prefixed environment variables via import.meta.env.
     // process.env.API_KEY for Gemini is assumed to be available from the execution environment.
     window.process = window.process || {};
     window.process.env = window.process.env || {};
+    
+    // Feature detection for import maps support
+    window.supportsImportMaps = 'importMap' in HTMLScriptElement.prototype;
+    
+    // Fallback for browsers that don't support import maps
+    if (!window.supportsImportMaps) {
+      console.log('Import maps not supported, using polyfill');
+    }
   </script>
+
 <script type="importmap">
 {
   "imports": {
@@ -46,6 +59,30 @@
   height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <!-- End Google Tag Manager (noscript) -->
   <div id="root"></div>
-  <script type="module" src="/index.tsx"></script>
+  
+  <!-- Fallback loading for older browsers -->
+  <script>
+    // Check if the browser supports ES modules and import maps
+    const supportsESModules = 'noModule' in HTMLScriptElement.prototype;
+    const supportsImportMaps = 'importMap' in HTMLScriptElement.prototype;
+    
+    if (supportsESModules) {
+      // Modern browsers - load the main module
+      const script = document.createElement('script');
+      script.type = 'module';
+      script.src = '/index.tsx';
+      document.body.appendChild(script);
+    } else {
+      // Very old browsers - show fallback message
+      document.getElementById('root').innerHTML = `
+        <div style="text-align: center; padding: 2rem; font-family: Arial, sans-serif;">
+          <h2>Browser Not Supported</h2>
+          <p>This application requires a modern browser that supports ES modules.</p>
+          <p>Please update your browser to the latest version or try a different browser.</p>
+          <p>Recommended browsers: Chrome 61+, Firefox 60+, Safari 10.1+, Edge 16+</p>
+        </div>
+      `;
+    }
+  </script>
 </body>
 </html>

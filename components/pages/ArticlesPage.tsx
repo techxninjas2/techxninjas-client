@@ -1,42 +1,45 @@
 import React, { useRef, useEffect } from "react";
 import ArticleCard from "../ArticleCard";
-import mockArticles  from "../../utils/mockArticles";
+import mockArticles from "../../utils/mockArticles";
 
 const ArticlesPage: React.FC = () => {
   const scrollRef = useRef<HTMLDivElement>(null);
+  const scrollInterval = useRef<NodeJS.Timeout | null>(null);
 
-  // Auto scroll on hover
-  useEffect(() => {
-    let interval: NodeJS.Timeout;
+  // Handle auto scroll on hover
+  const startAutoScroll = () => {
+    if (scrollInterval.current) return; // avoid multiple intervals
+    scrollInterval.current = setInterval(() => {
+      if (scrollRef.current) {
+        scrollRef.current.scrollBy({ left: 0.2, behavior: "smooth" });
+      }
+    }, 1000);
+  };
 
-    const handleMouseEnter = () => {
-      interval = setInterval(() => {
-        if (scrollRef.current) {
-          scrollRef.current.scrollLeft += 2; // smooth auto scroll
-        }
-      }, 20);
-    };
-
-    const handleMouseLeave = () => {
-      clearInterval(interval);
-    };
-
-    const container = scrollRef.current;
-    if (container) {
-      container.addEventListener("mouseenter", handleMouseEnter);
-      container.addEventListener("mouseleave", handleMouseLeave);
+  const stopAutoScroll = () => {
+    if (scrollInterval.current) {
+      clearInterval(scrollInterval.current);
+      scrollInterval.current = null;
     }
+  };
+
+  useEffect(() => {
+    const container = scrollRef.current;
+    if (!container) return;
+
+    container.addEventListener("mouseenter", startAutoScroll);
+    container.addEventListener("mouseleave", stopAutoScroll);
 
     return () => {
-      clearInterval(interval);
+      stopAutoScroll();
       if (container) {
-        container.removeEventListener("mouseenter", handleMouseEnter);
-        container.removeEventListener("mouseleave", handleMouseLeave);
+        container.removeEventListener("mouseenter", startAutoScroll);
+        container.removeEventListener("mouseleave", stopAutoScroll);
       }
     };
   }, []);
 
-  // Infinite scroll effect
+  // Infinite looping
   useEffect(() => {
     const container = scrollRef.current;
     if (!container) return;
@@ -44,7 +47,6 @@ const ArticlesPage: React.FC = () => {
     const handleScroll = () => {
       const { scrollLeft, scrollWidth, clientWidth } = container;
 
-      // If scrolled to the very end, reset to start
       if (scrollLeft + clientWidth >= scrollWidth - 10) {
         container.scrollLeft = 0;
       }
@@ -54,7 +56,7 @@ const ArticlesPage: React.FC = () => {
     return () => container.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Duplicate articles for infinite effect
+  // Duplicate for infinite effect
   const infiniteArticles = [...mockArticles, ...mockArticles];
 
   return (

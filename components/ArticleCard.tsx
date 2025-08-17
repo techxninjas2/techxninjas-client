@@ -1,4 +1,5 @@
-import { Link } from "react-router-dom";
+import React from "react";
+import { useNavigate } from "react-router-dom";
 
 interface Article {
   id: number;
@@ -11,45 +12,42 @@ interface Article {
 }
 
 const ArticleCard: React.FC<{ article: Article }> = ({ article }) => {
+  const navigate = useNavigate();
+
   return (
-    <div className="w-[380px] h-[500px] bg-white dark:bg-gray-900 rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 flex flex-col overflow-hidden group">
-      {/* Image Section */}
-      <div className="relative h-56 overflow-hidden">
+    <div className="w-80 h-[460px] bg-white dark:bg-gray-800 rounded-2xl shadow-lg flex flex-col overflow-hidden transition-transform duration-300 hover:scale-105 relative">
+      {/* Image */}
+      {article.image && (
         <img
-          src={article.image || "https://picsum.photos/600/400?random=" + article.id}
+          src={article.image}
           alt={article.title}
-          className="w-full h-full object-cover transform transition-transform duration-500 group-hover:scale-110"
+          className="w-full h-44 object-cover"
         />
-        {article.category && (
-          <span className="absolute top-3 left-3 bg-gradient-to-r from-indigo-500 to-purple-600 text-white text-xs font-semibold px-3 py-1 rounded-full shadow-md">
+      )}
+
+      {/* Content */}
+      <div className="flex flex-col flex-grow p-6">
+        {article.category ? (
+          <span className="absolute top-3 left-3 bg-indigo-600 text-white text-xs font-semibold px-3 py-1 rounded-full shadow-lg">
             {article.category}
           </span>
-        )}
-      </div>
-
-      {/* Content Section */}
-      <div className="flex flex-col flex-grow p-6">
-        <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2 line-clamp-2">
+        ):null}
+        <h2 className="text-lg font-bold text-gray-900 dark:text-white line-clamp-2">
           {article.title}
-        </h3>
-        <p className="text-xs text-gray-500 mb-3">
-          By <span className="font-medium text-gray-700 dark:text-gray-300">{article.author}</span> •{" "}
-          {new Date(article.date).toLocaleDateString()}
+        </h2>
+        <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+          By {article.author} • {article.date}
         </p>
-        <p className="text-gray-600 dark:text-gray-300 text-sm line-clamp-4 flex-grow">
+        <p className="text-sm text-gray-600 dark:text-gray-300 mt-2 line-clamp-3">
           {article.content}
         </p>
-      </div>
 
-      {/* Footer */}
-      <div className="px-6 py-4 border-t border-gray-100 dark:border-gray-700 flex justify-between items-center">
-        <Link
-          to={`/articles/${article.id}`}
-          className="text-indigo-600 hover:text-indigo-800 dark:text-indigo-400 dark:hover:text-indigo-300 text-sm font-semibold flex items-center gap-1"
+        <button
+          onClick={() => navigate(`/articles/${article.id}`)}
+          className="mt-auto text-end hover:underline text-blue-700 text-sm font-semibold px-4 py-2 rounded-lg transition"
         >
-          Read More 
-          <span className="transform group-hover:translate-x-1 transition-transform">→</span>
-        </Link>
+          Read More →
+        </button>
       </div>
     </div>
   );

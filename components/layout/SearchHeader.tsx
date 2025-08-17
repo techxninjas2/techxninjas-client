@@ -340,7 +340,7 @@ const SearchHeader: React.FC = () => {
               <div className="relative">
                 <div className="circular-logo logo-glow   rounded-full bg-gradient-to-br from-cyan-500/20 via-blue-500/20 to-purple-500/20 border border-cyan-500/40">
                   <img
-                    // src="https://jzzyrbaapysjydvjyars.supabase.co/storage/v1/object/sign/techxninjas/TechXNinjas_Logo.png ?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8xZjMxMzJhZC04ZDM5LTQ1NGMtODUwMS05NWY1Y2Y5Mzg0MjciLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ0ZWNoeG5pbmphcy9UZWNoWE5pbmphc19Mb2dvLnBuZyIsImlhdCI6MTc1MDQ2MTMyMSwiZXhwIjoxNzgxOTk3MzIxfQ.0exGeZ2G_kT17zy3hXISdw1WE8p82T9Go1y04EhRYGM"
+                     
                     src="/techxninjas_logo.png"
                     alt="TechXNinjas Logo"
                     className="w-12 h-12 rounded-full object-cover"

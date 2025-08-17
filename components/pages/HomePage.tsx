@@ -26,6 +26,7 @@ import TestimonialsSlider from '../TestimonialsSlider';
 import MentorsSlider from '../MentorsSlider';
 import { getTestimonials, getHomepageMentors } from '../../services/homeService';
 import { Testimonial, HomepageMentor } from '../../types';
+import Chatbot from '../Chatbot';
 
 const HeroSection: React.FC = () => {
   const highlights = [
@@ -450,6 +451,7 @@ export const HomePage: React.FC = () => {
       <TestimonialsSection />
       <MentorsSection />
       <ExploreFeaturesSection />
+      <Chatbot/>
     </div>
   );
 };

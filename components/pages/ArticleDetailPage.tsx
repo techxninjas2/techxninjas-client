@@ -10,8 +10,17 @@ const ArticleDetailPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-950">
+    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-950 relative z-50">
       {/* Hero Section */}
+      {/* Floating Back Button */}
+      <div className="absolute top-6 left-6 z-50">
+        <Link
+          to="/articles"
+          className="px-4 py-2 bg-black/90 dark:bg-gray-800/90 backdrop-blur-md rounded-full shadow-md text-sm font-medium text-white dark:text-gray-200 hover:bg-indigo-600 hover:text-white transition-all duration-300"
+        >
+          ← Back
+        </Link>
+      </div>
       <div className="relative w-full h-[60vh]">
         <img
           src={article.image || "https://picsum.photos/1200/800?random=" + article.id}
@@ -30,15 +39,7 @@ const ArticleDetailPage = () => {
         </div>
       </div>
 
-      {/* Floating Back Button */}
-      <div className="absolute top-6 left-6 z-20">
-        <Link
-          to="/articles"
-          className="px-4 py-2 bg-white/90 dark:bg-gray-800/90 backdrop-blur-md rounded-full shadow-md text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-indigo-600 hover:text-white transition-all duration-300"
-        >
-          ← Back
-        </Link>
-      </div>
+      
 
       {/* Article Content */}
       <div className="max-w-4xl mx-auto px-6 py-12">

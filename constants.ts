@@ -4,7 +4,7 @@ import { Event } from './types';
 export const BRAND_NAME = "TechXNinjas";
 
 // Gemini API Model Name
-export const GEMINI_MODEL_TEXT_GENERATION = 'gemini-2.5-flash-preview-04-17';
+export const GEMINI_MODEL_TEXT_GENERATION = 'gemini-2.5-flash-preview-05-20';
 // For image generation, if used: export const GEMINI_MODEL_IMAGE_GENERATION = 'imagen-3.0-generate-002';
 
 export const WHATSAPP_COMMUNITY_LINK = "https://chat.whatsapp.com/KTGVdxdO5nTBsy53eG4zOr"; // Updated WhatsApp link

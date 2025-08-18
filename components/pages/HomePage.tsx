@@ -45,6 +45,8 @@ const HeroSection: React.FC = () => {
         style="matrix"
         className="absolute inset-0 z-0"
       />
+      {/* Smooth transition gradient overlay */}
+      <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-b from-transparent to-brand-off-white dark:to-brand-dark-gray z-5"></div>
       <div className="container mx-auto px-4 text-center relative z-10">
         <RevealOnScroll direction="down" duration={1000}>
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-orange-500 dark:text-white">
@@ -380,7 +382,7 @@ const ExploreFeaturesSection: React.FC = () => {
         style="terminal"
         className="absolute inset-0 z-0"
       />
-      <div className="relative flex flex-col justify-between container mx-auto px-4 md:px-8 max-w-screen-xl text-center relative z-10">
+      <div className="relative flex flex-col justify-between container mx-auto px-4 md:px-8 max-w-screen-xl text-center z-10">
 
         <RevealOnScroll direction="up" duration={800}>
           <h2 className="text-3xl font-bold mb-12 text-brand-dark-gray dark:text-white">

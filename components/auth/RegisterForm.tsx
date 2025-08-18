@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../contexts/AuthContext';
 import { AuthContextType } from '../../types';
-import { GoogleIcon } from '../icons';
+import { GoogleIcon, GitHubIcon } from '../icons';
 import { Turnstile } from '@marsidev/react-turnstile';
 
 interface RegisterFormProps {
@@ -68,9 +68,23 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSwitchToLogin, onSuccess 
     }
   };
 
+  const handleGitHubSignIn = async () => {
+    if (!auth) return;
+    // Optional: gate GitHub Sign-In button with CAPTCHA if desired
+    // if (!captchaToken) { setCaptchaError("Please complete the CAPTCHA first."); return; }
+    auth.clearError();
+    try {
+      await auth.signInWithGitHub(captchaToken); // Pass token if gating
+    } catch (error) {
+      console.error("GitHub Sign up failed from button:", error);
+    } finally {
+        setCaptchaToken(undefined); // Reset token
+    }
+  };
+
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-       <div>
+      <div className="space-y-3">
         <button
           type="button"
           onClick={handleGoogleSignIn}
@@ -80,6 +94,16 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSwitchToLogin, onSuccess 
           <GoogleIcon className="w-5 h-5 mr-2" />
           Sign up with Google
         </button>
+        
+        <button
+          type="button"
+          onClick={handleGitHubSignIn}
+          disabled={auth.loading /* Potentially add || !captchaToken if gating GitHub button */}
+          className="w-full flex items-center justify-center py-2.5 px-4 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm text-sm font-medium text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-primary disabled:opacity-50 dark:focus:ring-offset-gray-800"
+        >
+          <GitHubIcon className="w-5 h-5 mr-2" />
+          Sign up with GitHub
+        </button>
       </div>
 
       <div className="relative">
@@ -88,7 +112,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSwitchToLogin, onSuccess 
         </div>
         <div className="relative flex justify-center text-sm">
           <span className="px-2 bg-white dark:bg-gray-800 text-gray-500 dark:text-gray-400">
-            Or register with email
+            Or continue with email
           </span>
         </div>
       </div>

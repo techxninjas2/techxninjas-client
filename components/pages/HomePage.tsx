@@ -1,3 +1,18 @@
+// Example HomePage.tsx
+import React from "react";
+
+const HomePage: React.FC = () => {
+  return (
+    <div className="min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-white">
+      <div className="container mx-auto px-4 py-8">
+        <h2 className="text-3xl font-bold">Welcome to TechXNinjas</h2>
+        <p className="mt-4">This is a sample page with theme support.</p>
+      </div>
+    </div>
+  );
+};
+
+export default HomePage;
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import {

@@ -1,3 +1,10 @@
+import ThemeToggle from "../ThemeToggle";
+
+// Inside your JSX:
+<div className="flex items-center space-x-4">
+  {/* Existing nav items */}
+  <ThemeToggle />
+</div>
 import React, { useState, useEffect, useContext, useRef, useCallback, useMemo } from 'react';
 import { Link, NavLink, useNavigate, useLocation } from 'react-router-dom';
 import { ThemeContext } from '../../contexts/ThemeContext';

@@ -223,7 +223,7 @@ const Footer: React.FC<FooterProps> = ({ layoutStyle }) => {
 
         <div className="border-t border-gray-300 dark:border-gray-700 flex flex-col items-center justify-center gap-1 pt-2 mt-[-20px] text-sm text-center">
           <p>
-            &copy; {currentYear + 1} {BRAND_NAME}. All rights reserved.
+            &copy; {currentYear} {BRAND_NAME}. All rights reserved.
           </p>
           <p>Built with ❤️ by TechXNinjas Student Community.</p>
         </div>

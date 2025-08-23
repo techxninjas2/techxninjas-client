@@ -26,6 +26,8 @@ import ThemeToggle from './components/ThemeToggle';
 import TechFactGenerator from './components/TechFactGenerator';
 import { SpeedInsights } from "@vercel/speed-insights/react";
 import { Analytics } from '@vercel/analytics/react';
+import ResumeBuilderPage from './components/pages/ResumeBuilderPage';
+
 
 const PlaceholderPage: React.FC<{ title: string }> = ({ title }) => {
   usePageTitle(title); 
@@ -116,6 +118,7 @@ const App: React.FC = () => {
               <Route path="/profile/:username" element={<PublicProfilePage />} />
               <Route path="/terms" element={<TermsOfServicePage />} />
               <Route path="/privacy" element={<PrivacyPolicyPage />} />
+              <Route path="/ResumeBuilderPage" element={<ResumeBuilderPage />} />
               {/* Catch all route for 404 */}
               <Route path="*" element={<PlaceholderPage title="Page Not Found" />} />
             </Routes>

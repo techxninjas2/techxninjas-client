@@ -20,6 +20,7 @@ html {
   src: url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 }
 
+
 /* Scrollbar optimization */
 ::-webkit-scrollbar {
   width: 8px;
@@ -44,6 +45,9 @@ html {
 .dark ::-webkit-scrollbar-thumb:hover {
   background: #718096;
 }
+
+
+
 
 html, body, #root {
   height: 100%;
@@ -530,3 +534,4 @@ html {
 .dark .testimonial-pagination .swiper-pagination-bullet:hover {
   background-color: #ff6806 !important; /* same orange for dark mode hover */
 }
+

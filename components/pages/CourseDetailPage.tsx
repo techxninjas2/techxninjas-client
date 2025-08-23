@@ -19,7 +19,8 @@ import {
   AlertCircle,
   MessageCircle,
   ThumbsUp,
-  User
+  User,
+  Globe
 } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 import { getCourseBySlug, enrollInCourse } from '../../services/courseService';

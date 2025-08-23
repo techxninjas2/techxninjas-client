@@ -17,6 +17,7 @@ import {
   TrendingUp,
   CheckCircle,
 } from 'lucide-react';
+//import { ResumeBuilder_Page } from './ResumeBuilderPage'
 import { WHATSAPP_COMMUNITY_LINK } from '../../constants';
 import usePageTitle from '../usePageTitle';
 import CodingBackground from '../CodingBackground';
@@ -62,9 +63,9 @@ const HeroSection: React.FC = () => {
           {highlights.map((highlight, index) => (
             <RevealOnScroll key={index} direction="up" delay={400 + index * 100} duration={800}>
               <div className="flex items-center bg-white/70 dark:bg-white/20 backdrop-blur-sm text-gray-800 dark:text-white rounded-full shadow-md text-xs md:text-sm py-1 md:py-2 px-3 md:px-4">
-  <highlight.icon className="w-5 h-5 mr-2 text-brand-primary" />
-  {highlight.text}
-</div>
+          <highlight.icon className="w-5 h-5 mr-2 text-brand-primary" />
+          {highlight.text}
+        </div>
 
             </RevealOnScroll>
           ))}
@@ -365,7 +366,7 @@ const MentorsSection: React.FC = () => {
 
 const ExploreFeaturesSection: React.FC = () => {
   const features = [
-    { name: 'Resume Builder', icon: FileText, dev: true },
+    { name: 'Resume Builder', icon: FileText, dev: false, link: '/ResumeBuilderPage', external: true},
     { name: 'Shareable Portfolio Page', icon: Globe, dev: true },
     { name: 'Earn TechPoints', icon: Gift, dev: true },
     { name: 'Join Our WhatsApp Community', icon: MessageSquare, dev: false, link: WHATSAPP_COMMUNITY_LINK, external: true },
@@ -404,17 +405,26 @@ const ExploreFeaturesSection: React.FC = () => {
                     {feature.name}
                   </h4>
 
-                  {feature.dev && (
+                  {feature.dev && !feature.link && (
                     <span className="absolute top-2 right-2 bg-yellow-400 text-yellow-800 text-xs font-semibold px-2 py-0.5 rounded-full">
                       In Development
                     </span>
                   )}
 
-                  {feature.link && (
+                  {feature.link && feature.external && (
                     <Link
                       to={feature.link}
                       target={feature.external ? "_blank" : "_self"}
                       rel={feature.external ? "noopener noreferrer" : ""}
+                      className="text-sm text-brand-light-blue hover:underline mt-2 inline-block"
+                    >
+                      Access Now <ArrowRight className="inline w-4 h-4" />
+                    </Link>
+                  )}
+
+                  {feature.link && !feature.external && (
+                    <Link
+                      to={feature.link}
                       className="text-sm text-brand-light-blue hover:underline mt-2 inline-block"
                     >
                       Access Now <ArrowRight className="inline w-4 h-4" />
